@@ -1,0 +1,42 @@
+import express from 'express'
+let router = express.Router()
+
+import AuthorModel from '../db/models/authorModel'
+
+// middleware that is specific to this router
+router.use(function timeLog(req, res, next) {
+  console.log('Time: ', Date.now())
+  next()
+});
+
+// define the home page route
+router.get('/', function(req, res) {
+  res.send('List of author')
+})
+
+router.get('/analytics/', function(req, res) {
+  res.send('analytics endpoint')
+})
+
+router.get('/:uuidAuthor', function(req, res) {
+  res.send('A author')
+})
+
+router.get('/:uuidAuthor/posts/', function(req, res) {
+  // Just an example, it's not currently working
+  AuthorModel.findPosts(req.body.uuidPost).exec(function(err, posts) {
+    if(err) {
+      res.status = 500
+      res.json({err: err})
+    } else {
+      res.status = 200
+      res.json(posts)
+    }
+  })
+})
+
+router.get('/search', function(req, res) {
+  res.send('search option')
+})
+
+module.exports = router
