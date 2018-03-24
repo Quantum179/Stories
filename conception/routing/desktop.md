@@ -28,6 +28,8 @@ Story component, display the story content.
 ##### /chronicles
 ChroniclesContainer and ChronicleList with all chronicles already published. Get the API chronicles data fetch it into a list.
 
+##### /chronicles/:idChronicleName
+
 ## Blog Route
 
 ##### /blog

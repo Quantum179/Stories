@@ -149,3 +149,38 @@ Add reporter role to an existing user
 ## Admin Route
 
 TODO
+
+## Comment Route
+
+##### - GET /comments/:idPost
+Get comments of a specific post
+
+##### - POST /comments/:idPost
+Add a comment on a post
+
+##### - GET /comments/:idComment
+Get a comment
+
+##### - PATCH /comments/:idComment
+Update a comment
+
+##### - DELETE /comments/:idComment
+Delete a comment
+
+## Reply Route
+
+##### - GET /replies/:idComment
+Get all replies of a comment
+
+##### - POST /replies/:idComment
+Add a reply on a comment
+
+## Review Route
+
+##### - GET /reviews/:idStory
+Get all reviews of a story
+
+##### - POST /reviews/:idStory
+Add a review to a story
+
+#####

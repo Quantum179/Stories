@@ -1,0 +1,12 @@
+{
+  "name": "stories-desktop",
+  "version": "0.0.1",
+  "description": "Desktop client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Steeven Tell-Brute",
+  "license": "ISC"
+}

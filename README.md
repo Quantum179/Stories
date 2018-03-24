@@ -18,21 +18,38 @@ Novels from Tales of Universe
 - Subscribers dashboard
 - Lexique : book design, animated pages,
 
+# Conception
+
+ - use object oriented design pattern
+  - Composite for mag chapters and sections rendering
+- Find places where Object Composition is better than inheritance : https://medium.com/code-monkey/object-composition-in-javascript-2f9b9077b5e6
+
 # R&D
 
 # Tech tools
+
+## API
+
+- Express.js
+- Passport.js (and multiple strategies)
+- MongoDB with Mongoose module
+- Socket.io
+- Helmet for security
 
 ## Desktop
 - React
 - Pug
 - Stylus
 - Plain CSS (Introduce first custom UI Framework based on React)
-- - CSS Component, plain exportable design blocks
-- React-Native, Ionic (Mobile Client)
+ - CSS Component, plain exportable design blocks
 - React-Router, R&D Routing Design Pattern : <https://reacttraining.com/react-router/web/guides/philosophy>
-- Express, Socket.io, MongoDB (Server API)
 - R&D async functions (for animations)
 - Try to stay plain as possible
+
+## Mobile
+
+- React-Native or Ionic ?
+- R&D on mobile dev best practices
 
 # Deployment
 
@@ -44,13 +61,15 @@ Novels from Tales of Universe
 - Strategy Pattern for Auth API (passport) : <http://robdodson.me/javascript-design-patterns-strategy/>
 - Custom server methods to read/write database
 - Scripts for database config (tasks runner)
-- Helmet for secure API : https://helmetjs.github.io/
+- Helmet for secured API : https://helmetjs.github.io/
 
 ## Desktop
 
 - React Animations : https://medium.com/react-native-training/react-animations-in-depth-433e2b3f0e8e
 - Performance optimization (react addons perf) : https://www.toptal.com/react/optimizing-react-performance
 , https://reactjs.org/docs/perf.html
+- SEO best practices :
+- Canvas based component to avoid copy-paste on text
 
 ## Mobile
 
@@ -78,13 +97,15 @@ TODO : Big UX R&D
 - Modular CSS : https://medium.com/@pioul/modular-css-with-react-61638ae9ea3e
 - https://codemyui.com/pure-css-animation-opening-flipping-pages-book/
 
+
 ### Unstructures links
 
 - Entropy, vector animation : <https://www.youtube.com/watch?v=5ns5t7m3IzU>
 - Fractals, Golden Ratio (personal inspiration) : <https://www.youtube.com/watch?v=4Rx35q-zJRk>
 - Golden Ratio Web Design Videos : <https://www.youtube.com/watch?v=RgB9wh0OI_M>,
 https://www.youtube.com/watch?v=NXKYUpWfCjA
-
+- Inspiration Blog :https://www.bucketlistly.blog/
+- Animation website : https://lmgonzalves.com/writing
 - Web design trends (search more) : <https://www.youtube.com/watch?v=7Dcu_bip8EM>
 - Popmotion : <https://popmotion.io/learn/get-started/>
 - Greensock for animations (try with stylus) : <https://greensock.com/> , <https://greensock.com/examples-showcases>
