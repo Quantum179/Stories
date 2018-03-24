@@ -1,6 +1,6 @@
 import jwtStrategy from './strategies/jwtStrategy'
-import twitterStrategy from './strategies/twitterStrategy'
-import facebookStrategy from './strategies/facebookStrategy'
+//import twitterStrategy from './strategies/twitterStrategy'
+//import facebookStrategy from './strategies/facebookStrategy'
 
 // TODO Quantum : Facebook, Twitter, Instagram and others strategies
 
@@ -8,8 +8,8 @@ import facebookStrategy from './strategies/facebookStrategy'
 export default function() {
 
     passport.use(jwtStrategy)
-    passport.use(facebookStrategy)
-    passport.use(twitterStrategy)
+    //passport.use(facebookStrategy)
+    //passport.use(twitterStrategy)
 
     return {
         initialize: function() {
@@ -17,9 +17,12 @@ export default function() {
         },
         session: function() {
             return passport.session()
-        }
-        authenticate: function() {
-            return passport.authenticate("jwt")
+        },
+        authenticate: function(strategy) {
+          if(strategy)
+            return passport.authenticate(strategy)
+          else
+            return passport.authenticate('jwt')
         }
     }
 }

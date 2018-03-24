@@ -5,21 +5,30 @@ var options = { discriminatorKey: 'role', timestamps: true}; // TODO Quantum : d
 
 var AuthorSchema = new Schema (
   {
-    authorName : String
+    authorName : String,
     posts: [{type: Schema.Types.ObjectId, ref: 'Post'}],
-    subscribers: [{type: Schema.Types.ObjectId, ref: 'User'}]
+    subscribers: [{type: Schema.Types.ObjectId, ref: 'User'}],
+
   },
   options
 )
 
 // Author instance methods
-
+AuthorSchema.methods.findPosts = function() {
+  return this.model('Author').find({_id: this._id})
+  .select('posts')
+  .populate('posts', "-_id")
+}
 
 // Author static methods
-AuthorSchema.static.findPosts = function(uuidAuthor) {
-  return this.model('Author').find({uuidAuthor: uuidAuthor})
-          .select({'posts -_id'})
-          .populate('posts')
+AuthorSchema.static.findByID = function(idAuthor) {
+  return this.find({'_id': idAuthor})
+}
+
+AuthorSchema.static.findPosts = function(idAuthor) {
+  return this.find({'_id': idAuthor})
+          .select('posts')
+          .populate('posts', "-_id")
 
           //TOTHINK Quantum : sort and limit options dynamically handled or not ?
 }

@@ -1,14 +1,13 @@
 import express from 'express'
 let router = express.Router()
 
-
 // define the home page route
 router.get('/', function(req, res) {
-  res.send('List of posts')
+  res.send('List of chronicles')
 })
 // define the about route
-router.get('/:uuidPost', function(req, res) {
-  res.send('A post')
+router.get('/:idChronicle', function(req, res) {
+  res.send('A Chronicle')
 })
 
-module.exports = router
+export default router

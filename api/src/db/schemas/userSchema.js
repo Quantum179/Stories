@@ -3,10 +3,16 @@ var Schema = mongoose.Schema
 import { isEmail } from 'validator'
 var options = { discriminatorKey: 'role', timestamps: true}; // TODO Quantum : delete role field in result queries
 
-export default new Schema (
+var UserSchema = new Schema (
   {
-    name:  String,
-    surname: String,
+    name: {
+      type: {
+        first: String,
+        last: String
+      },
+      required:true
+    },
+    // TODO Quantum : use Mongoose virtual to create fullName field
     username: {
       type: String,
       required: true,
@@ -17,15 +23,15 @@ export default new Schema (
     // Mongoose updateAt
     email: {
       type : String,
-      required : isEmail
+      required : isEmail,
+      unique: true
     },
-    password: {
-      type : String,
-      required : true
+    password: {type : String, required : true},
       //TODO Quantum : hashed password validator
-    },
     followings : [{type: Schema.Types.ObjectId, ref: 'User'}],
     followers : [{type: Schema.Types.ObjectId, ref: 'User'}]
   },
   options
 )
+
+export default UserSchema

@@ -1,8 +1,4 @@
-import mongoose from 'mongoose'
 import storySchema from '../schemas/storySchema'
+import PostModel from './postModel'
 
-var StoryModel = mongoose.model('Story', storySchema)
-
-// TODO Quantum : story methods for queries
-
-export default StoryModel
+export default PostModel.discriminator('Story', storySchema)

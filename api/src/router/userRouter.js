@@ -2,8 +2,8 @@
 import express from 'express'
 let router = express.Router()
 
-import UserModel from '../db/userModel'
-import PostModel from '../db/postModel'
+import UserModel from '../db/models/userModel'
+import PostModel from '../db/models/postModel'
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {

@@ -4,7 +4,7 @@ var ExtractJwt = passportJWT.ExtractJwt
 var JWTStrategy = passportJWT.Strategy
 var jwtOptions = {}
 
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader()
+jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
 jwtOptions.secretOrKey = 'storieswebsite'
 
 export default new JWTStrategy(jwtOptions, function(payload, done) {

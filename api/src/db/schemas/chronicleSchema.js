@@ -4,7 +4,7 @@ var options = { discriminatorKey: 'type', timestamps: true}; // TODO Quantum : d
 
 var ChronicleSchema = new Schema(
   {
-    numberChronicle: Number,
+    chronicleNumber: Number,
     relatedHeroes: [{type: Schema.Types.ObjectId, ref: 'Definition'}]
   }
 )

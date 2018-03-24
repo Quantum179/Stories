@@ -1,7 +1,7 @@
 import express from 'express'
 let router = express.Router()
 
-import AdminModel from '../../db/adminModel'
+import AdminModel from '../db/models/adminModel'
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -9,13 +9,13 @@ router.use(function timeLog(req, res, next) {
   next()
 })
 
-// define the home page route
-router.get('/', function(req, res) {
-  res.send('List of posts')
-})
-// define the about route
-router.get('/:uuidPost', function(req, res) {
-  res.send('A post')
+
+router.post('/', function(req, res) {
+  res.send('Login admin')
 })
 
-module.exports = router
+router.get('/dashboard', function(req, res) {
+  res.send('Dashboard admin')
+})
+
+export default router

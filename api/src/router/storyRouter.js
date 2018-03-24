@@ -1,8 +1,7 @@
 
 import express from 'express'
 let router = express.Router()
-
-import TopicModel from '../db/TopicModel'
+//import auth from '../auth'
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -10,13 +9,17 @@ router.use(function timeLog(req, res, next) {
   next()
 })
 
-// define the home page route
 router.get('/', function(req, res) {
-  res.send('List of topics')
-})
-// define the about route
-router.get('/:uuidTopic', function(req, res) {
-  res.send('A topic')
+  res.send('List of stories')
 })
 
-module.exports = router
+router.get('/:idStory', function(req, res) {
+  
+})
+
+router.post('/', function(req, res) {
+  res.send('Story added')
+})
+
+
+export default router

@@ -4,6 +4,7 @@ var Schema = mongoose.Schema
 export default new Schema(
   {
     title: String,
-    description: String //TODO Quantum : limit description size
+    description: String,
+    articles: [{type: Schema.Types.ObjectId, ref: "Article"}]
   }
 )

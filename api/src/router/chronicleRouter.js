@@ -6,8 +6,8 @@ router.get('/', function(req, res) {
   res.send('List of chronicles')
 })
 // define the about route
-router.get('/:uuidChronicle', function(req, res) {
+router.get('/:idChronicle', function(req, res) {
   res.send('A Chronicle')
 })
 
-module.exports = router
+export default router

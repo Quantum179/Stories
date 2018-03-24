@@ -5,29 +5,30 @@ const app = express()
 const server = http.Server(app)
 
 // Auth Middleware
-import auth from './src/auth'
+//import auth from './src/auth'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 app.use(cors)
 app.use(bodyParser.json())
-app.use(auth.initialize())
+//app.use(auth.initialize())
 //app.use(auth.session())
 
 // Security Middleware
 import helmet from 'helmet'
 app.use(helmet())
 
-// Router Middleware
-import Router from './src/router'
-new Router(app)
-
 // Database Configuration
 import mongoose from 'mongoose'
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost/stories')
 
+// Router Middleware
+import Router from './src/router'
+new Router(app)
+
+
 // Web Sockets Configuration
-import SocketIO from 'socket-io'
+import SocketIO from 'socket.io'
 var io = new SocketIO(server)
 
 // Environment Configuration

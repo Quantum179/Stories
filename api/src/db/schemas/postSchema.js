@@ -6,12 +6,11 @@ export default new Schema (
   {
     title : String,
     description : String, // TODO Quantum : limit description size
-    author : { type: Schema.Types.ObjectId, ref: 'Author' },
+    author : {type: Schema.Types.ObjectId, ref: 'Author'},
     // mongoose createAt
     // Mongoose updateAt
     isTrending : Boolean,
     likes : Number,
-    shares : Number,
     comments : [{type: Schema.Types.ObjectId, ref: 'Comment'}],
     chapters: [{type: Schema.Types.ObjectId, ref:'Chapter'}]
     // TODO Quantum : handle shares
