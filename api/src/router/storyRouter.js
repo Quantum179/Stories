@@ -1,6 +1,7 @@
 
 import express from 'express'
 let router = express.Router()
+import { Story } from '../db/models'
 //import auth from '../auth'
 
 // middleware that is specific to this router
@@ -14,7 +15,7 @@ router.get('/', function(req, res) {
 })
 
 router.get('/:idStory', function(req, res) {
-  
+
 })
 
 router.post('/', function(req, res) {

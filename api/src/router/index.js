@@ -9,19 +9,24 @@ import chronicleRouter from './chronicleRouter'
 import magazineRouter from './magazineRouter'
 import blogRouter from './blogRouter'
 
+import { Router } from 'express'
+
+
+
 //import juryRouter from './juryRouter'
 //import postRouter from './postRouter'
+
 
 // TODO Quantum : declare sanitazer middleware
 
 // router.js export
-export default class Router {
+export default class AppRouter extends Router {
 
-  constructor(app, ...models) {
+  constructor(app) {
+      super()
 
       //app.use('/auth', authRouter)
 
-      // TODO Quantum : find a way to organize all requests on admin, author and reporter collections inside postRouter
       app.use('/admin', adminRouter)
       app.use('/users', userRouter)
       app.use('/authors', authorRouter)
@@ -34,16 +39,14 @@ export default class Router {
       //app.get('/users/:uuidAuthor/posts/:uuidPost')
       //app.get('/users/:uuidAuthor/posts/:uuidPost/comments/')
 
-      // TODO Quantum : find a way to organize all requests on novel, story and chronicle collections inside postRouter
-
       //app.use('/posts', postRouter)
 
       app.use('/stories', storyRouter)
       app.use('/chronicles', chronicleRouter)
-      app.use('/magazine', magazineRouter)
 
       // TODO Quantum : add articles and topics routes in blog route
       app.use('/blog', blogRouter)
+      app.use('/magazine', magazineRouter)
 
       //app.use('/topics', topicRouter)
 

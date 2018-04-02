@@ -12,8 +12,9 @@ export default new Schema (
     isTrending : Boolean,
     likes : Number,
     comments : [{type: Schema.Types.ObjectId, ref: 'Comment'}],
-    chapters: [{type: Schema.Types.ObjectId, ref:'Chapter'}]
+    chapters: [{type: Schema.Types.ObjectId, ref:'Chapter'}],
     // TODO Quantum : handle shares
+    keywords: [String]
   },
   options
 )

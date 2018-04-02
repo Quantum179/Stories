@@ -1,7 +1,7 @@
 import express from 'express'
 let router = express.Router()
 
-// define the home page route
+// Get Saturn's chronicles home page news and a list of latest chronicles
 router.get('/', function(req, res) {
   res.send('List of chronicles')
 })

@@ -2,18 +2,33 @@
 import express from 'express'
 let router = express.Router()
 
-import UserModel from '../db/models/userModel'
-import PostModel from '../db/models/postModel'
+import models from '../db/models'
+
+import utils from '../utils'
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now())
+  //console.log('Time: ', Date.now())
+
   next()
 })
 
 
 router.get('/', function(req, res) {
-
+  req = utils.validateRequest(req)
+  //TODO Quantum : filter req.body
+  models.User.getUsers(null, (err, users) => {
+    if(err) {
+      res.status(500)
+      res.json(utils.parseError(err, "Server Error"))
+    } else if (!users){
+      res.status(404)
+      res.json(utils.parseError(true, "No user found"))
+    } else {
+      res.status(200)
+      res.json(utils.parsePayload('users', users.length + ' users found', users))
+    }
+  })
 })
 
 router.get('/:uuidUser', function(req, res) {

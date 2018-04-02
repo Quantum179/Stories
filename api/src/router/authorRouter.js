@@ -11,7 +11,7 @@ router.use(function timeLog(req, res, next) {
 
 // define the home page route
 router.get('/', function(req, res) {
-  res.send('List of author')
+  res.send('List of authors')
 })
 
 router.get('/analytics/', function(req, res) {
