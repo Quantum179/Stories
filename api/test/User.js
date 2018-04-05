@@ -19,9 +19,9 @@ describe('Users', () => {
         chai.request(api)
             .get('/users')
             .end((err, res) => {
-                res.status.should.be('200');
+                res.status.should.eql(200);
                 res.users.should.be.a('array');
-                res.users.length.should.be.eql(0);
+                res.users.length.should.eql(0);
               done();
             });
       });
@@ -43,8 +43,8 @@ describe('Users', () => {
             .post('/users')
             .send(user)
             .end((err, res) => {
-                res.status(500);
-                res.message.should.be.eql('Server Error');
+                res.status.should.eql(500);
+                res.message.should.eql('Server Error');
               done();
             });
       });
@@ -61,7 +61,7 @@ describe('Users', () => {
             .post('/users')
             .send(user)
             .end((err, res) => {
-                res.status.be(201)
+                res.status.should.eql(201)
                 res.user.should.be.a('object')
                 res.message.eql('User successfully added!')
                 res.user.should.have.property('name');
