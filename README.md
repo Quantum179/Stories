@@ -17,12 +17,21 @@ Novels from Tales of Universe
 - Newsletters
 - Subscribers dashboard
 - Lexique : book design, animated pages,
+- Reading timeline of friends : automatic search of author informations. Link with Author Dashboard if he's a subscriber or others official websites. (Introducing Universe AI)
 
 # Conception
 
  - use object oriented design pattern
   - Composite for mag chapters and sections rendering
 - Find places where Object Composition is better than inheritance : https://medium.com/code-monkey/object-composition-in-javascript-2f9b9077b5e6
+
+# Search AI
+
+- Tensorflow and overall python deep R&D : https://www.tensorflow.org/
+- Scikit videos : https://github.com/justmarkham/scikit-learn-videos
+- Data Sciences overall R&D : https://www.kdnuggets.com/
+- Data Mining techniques for analyze data from the Internet : https://www.searchtechnologies.com/blog/web-data-mining-tools-techniques
+
 
 # R&D
 
