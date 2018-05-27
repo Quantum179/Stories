@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 
 import chai from 'chai'
 import chaiHttp from 'chai-http'
-import api from '../api'
+import app from '../app'
 let should = chai.should();
 
 chai.use(chaiHttp);
@@ -16,7 +16,7 @@ describe('Users', () => {
     });
   describe('GET /users', () => {
       it('it should GET all the users', (done) => {
-        chai.request(api)
+        chai.request(app)
             .get('/users')
             .end((err, res) => {
                 res.status.should.eql(200);
@@ -39,7 +39,7 @@ describe('Users', () => {
             password: "testpass"
           }
 
-        chai.request(api)
+        chai.request(app)
             .post('/users')
             .send(user)
             .end((err, res) => {
@@ -57,7 +57,7 @@ describe('Users', () => {
             password: "testpass"
           }
 
-        chai.request(api)
+        chai.request(app)
             .post('/users')
             .send(user)
             .end((err, res) => {

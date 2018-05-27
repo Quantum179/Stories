@@ -29,6 +29,7 @@
 - Script for database task : https://www.npmjs.com/package/shelljs
 - Passport Example : https://jonathanmh.com/express-passport-json-web-token-jwt-authentication-beginners/
 https://dev.to/aurelkurtula/working-with-instagram-api-and-passportjs-in-a-node-application--5068
+- Mongoose error handling : http://thecodebarbarian.com/mongoose-error-handling
 
 # Releases
 

@@ -7,7 +7,7 @@ Novels from Tales of Universe
 - Novels dashboard
 - Blog posts dashboard
 - Saturn's Chronicles
-- UniMag
+- ExoMag
 - Editor Mode with markdown support (for writers and reporters)
 - Admin dashboard
 - Online chatrooms and chatbots

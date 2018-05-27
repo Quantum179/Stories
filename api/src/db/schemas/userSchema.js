@@ -42,14 +42,24 @@ UserSchema.virtual('fullName').get(function () {
 });
 
 //Methods model
-
-//Statics model
-UserSchema.statics.getUserById = function(id, cb) {
-  return this.find(idUser)
+UserSchema.methods.register = function(cb) {
+  //TODO : create hash password
+  return this.save()
   .exec(cb)
 }
-UserSchema.statics.getUsers = function(ids, cb) {
-  return this.find({})
+
+
+//Statics model
+UserSchema.statics.findOne = function(query = {}, fields, cb) {
+  return this.findOne(query, fields)
+  .exec(cb)
+}
+UserSchema.statics.findMany = function(query = {}, fields, cb) {
+  return this.find(query, fields)
+  .exec(cb)
+}
+UserSchema.statics.findById = function(id, fields, cb) {
+  return this.findById(id, fields)
   .exec(cb)
 }
 UserSchema.statics.addUser = function(user) {
