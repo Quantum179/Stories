@@ -30,6 +30,8 @@
 - Passport Example : https://jonathanmh.com/express-passport-json-web-token-jwt-authentication-beginners/
 https://dev.to/aurelkurtula/working-with-instagram-api-and-passportjs-in-a-node-application--5068
 - Mongoose error handling : http://thecodebarbarian.com/mongoose-error-handling
+MongoDB access control : https://stackoverflow.com/questions/41615574/mongodb-server-has-startup-warnings-access-control-is-not-enabled-for-the-dat
+MongoDB in production: http://www.fizerkhan.com/blog/posts/Things-you-should-consider-for-MongoDB-in-production.html
 
 # Releases
 

@@ -5,6 +5,7 @@ var options = { discriminatorKey: 'type', timestamps: true}; // TODO Quantum : d
 var CommentSchema = new Schema(
   {
     author: {type: Schema.Types.ObjectId, ref: 'Author'},
+    source: {type: Schema.Types.ObjectId, required: true},
     content: String,
     likes: [{type: Schemas.Types.ObjectId, ref: 'User'}],
     replies: [{type: Schemas.Types.ObjectId, ref:'Comment'}]

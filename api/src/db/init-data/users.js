@@ -2,8 +2,8 @@ export default [
   {
     "name": {"first": "Quantum", "last": "Universe"},
     "username": "Quantum",
-    "role": "Admin",
+    "roles": ["Admin"],
     "email": "testmail@gmail.com",
-    "password": "testpass"
+    "password": "$2b$10$o6nuelFZrPgeYYIyIK11GeGWC.vT72QpjcVmtGAg.u4um7Y7/MkD."
   }
 ]

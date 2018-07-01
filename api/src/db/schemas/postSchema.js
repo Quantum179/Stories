@@ -4,15 +4,22 @@ var options = { discriminatorKey: 'type', timestamps: true}; // TODO Quantum : d
 
 export default new Schema (
   {
-    title : String,
+    title : {
+      type: String,
+      required: true
+    },
     description : String, // TODO Quantum : limit description size
-    author : {type: Schema.Types.ObjectId, ref: 'Author'},
+    author : {
+      type: Schema.Types.ObjectId, 
+      ref: 'Author', 
+      required: true
+    },
     // mongoose createAt
     // Mongoose updateAt
     isTrending : Boolean,
     likes : Number,
     comments : [{type: Schema.Types.ObjectId, ref: 'Comment'}],
-    chapters: [{type: Schema.Types.ObjectId, ref:'Chapter'}],
+    chapters: [{type: Schema.Types.ObjectId, ref:'Chapter'}], //min 1 chapter 
     // TODO Quantum : handle shares
     keywords: [String]
   },

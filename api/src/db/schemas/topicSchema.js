@@ -3,8 +3,11 @@ var Schema = mongoose.Schema
 
 export default new Schema(
   {
-    title: String,
+    name: String,
     description: String,
-    articles: [{type: Schema.Types.ObjectId, ref: "Article"}]
+    //discussions: [{type: Schema.Types.ObjectId, ref: "Discussion"}]
+    //articles: [{type: Schema.Types.ObjectId, ref: "Article"}]
+
+    
   }
 )

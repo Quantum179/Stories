@@ -1,8 +1,6 @@
 import express from 'express'
 let router = express.Router()
 
-import AuthorModel from '../db/models/authorModel'
-
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
   console.log('Time: ', Date.now())

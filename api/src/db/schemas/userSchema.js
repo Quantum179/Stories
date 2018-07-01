@@ -1,7 +1,21 @@
 import mongoose from 'mongoose'
 var Schema = mongoose.Schema
 import { isEmail } from 'validator'
-var options = { discriminatorKey: 'role', timestamps: true}; // TODO Quantum : delete role field in result queries
+import bcrypt from 'bcrypt'
+import { baseUrl } from '../../constants'
+
+
+var options = { 
+  discriminatorKey: 'type', 
+  timestamps: true,
+   toObject: {
+    virtuals: true
+  }
+  ,toJSON: {
+    virtuals: true
+  }
+  ,id:false 
+}; // TODO Quantum : delete role field in result queries
 
 var UserSchema = new Schema (
   {
@@ -12,7 +26,6 @@ var UserSchema = new Schema (
       },
       required: true
     },
-    // TODO Quantum : use Mongoose virtual to create fullName field
     username: {
       type: String,
       required: true,
@@ -23,53 +36,61 @@ var UserSchema = new Schema (
     // Mongoose updateAt
     email: {
       type : String,
-      required : isEmail,
+      required : true,
       unique: true
     },
     password: {type : String, required : true},
       //TODO Quantum : hashed password validator
     followings : [{type: Schema.Types.ObjectId, ref: 'User'}],
     followers : [{type: Schema.Types.ObjectId, ref: 'User'}],
-    status : String
-    //TODO Quantum : valider le status de connexion d'un user : en ligne, occupé, en jeu, chatbot, invisible
+    status : String, //en ligne, occupé, en jeu, chatbot, invisible
+
+
+    readings: [{type: Schema.Types.ObjectId, ref: 'Reading'}]
+
+    //TODO: Analysis for notifications
   },
   options
 )
 
 // Virtual fields
-UserSchema.virtual('fullName').get(function () {
-  return this.name.first + ' ' + this.name.last;
-});
+ UserSchema.virtual('url').get(function(){
+  return baseUrl + 'users/' + this._id //TODO: add global constant
+})  
+
+//Hooks model
+UserSchema.pre('save', function(next) {
+  //TODO : try to refactor this in UserSchema pre save hook function
+  bcrypt.hash(this.password, saltRounds, function(err, hash) {
+    if(!err) {
+      this.password = hash    
+    }
+      
+  })
+  //TODO : check if anything else is missing
+  console.log("test pre")
+  next()
+})
 
 //Methods model
-UserSchema.methods.register = function(cb) {
-  //TODO : create hash password
-  return this.save()
-  .exec(cb)
-}
-
 
 //Statics model
-UserSchema.statics.findOne = function(query = {}, fields, cb) {
-  return this.findOne(query, fields)
-  .exec(cb)
-}
-UserSchema.statics.findMany = function(query = {}, fields, cb) {
+UserSchema.statics.getMany = function(query = {}, fields = null) {
   return this.find(query, fields)
-  .exec(cb)
+    .exec()
 }
-UserSchema.statics.findById = function(id, fields, cb) {
+UserSchema.statics.getOne = function(query = {}, fields = null) {
+  return this.findOne(query, fields)
+    .exec()
+}
+UserSchema.statics.getById = function(id, fields = null) {
   return this.findById(id, fields)
-  .exec(cb)
+    .exec()
 }
+
 UserSchema.statics.addUser = function(user) {
   return this.create(user)
-  .exec(cb)
-}
-UserSchema.statics.addUsers = function(users) {
-  return this.create(users)
-  .exec(cb)
-}
+} 
 
 // --- EXPORT MODULE ---
 export default UserSchema

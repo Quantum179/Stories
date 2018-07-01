@@ -5,9 +5,24 @@ var MagNumberSchema = new Schema(
   {
     title: String,
     numberMag: Number,
-    chapters: [{type: Schema.Types.ObjectId, ref: "MapChapter"}]
+    description: String,
+    chapters: [{type: Schema.Types.ObjectId, ref: "MagChapter"}],
+    likes: Number,
+    isTrending: Boolean, //refactor in interface with post and others schemas with this
+    comments: [{type: Schema.Types.ObjectId, ref: "Comment"}]
   }
 )
 
+
+//Statics
+MagNumberSchema.statics.getOne = function(query = {}, fields = null) {
+  return this.findOne(query, fields)
+    .exec()
+}
+
+MagNumberSchema.statics.getById = function(id = {}, fields = null) {
+  return this.findById(id, fields)
+    .exec()
+}
 
 export default MagNumberSchema

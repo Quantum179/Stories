@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+/* import mongoose from 'mongoose'
 //model user
 
 import chai from 'chai'
@@ -8,25 +8,31 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('Users', () => {
+describe('Auth', () => {
     beforeEach((done) => {
         Users.remove({}, (err) => {
            done();
         });
     });
-  describe('GET /users', () => {
-      it('it should GET all the users', (done) => {
+  describe('POST /auth/login', () => {
+      it('it should connected a validated user', (done) => {
+        let user =  {
+            email: "testmail@gmail.com",
+            password: "testpass"
+          }
         chai.request(app)
-            .get('/users')
+            .post('/auth/login')
             .end((err, res) => {
                 res.status.should.eql(200);
+                res.user.should.have.property('token');
+                res.user.should.have.property('user');
                 res.users.should.be.a('array');
                 res.users.length.should.eql(0);
               done();
             });
       });
   });
-  /* describe('POST /users', () => {
+  describe('POST /users', () => {
       it('it should not POST a user without a name', (done) => {
         let user =  {
             name: {},
@@ -68,5 +74,6 @@ describe('Users', () => {
               done();
             });
       });
-  }); */
+  });
 });
+ */

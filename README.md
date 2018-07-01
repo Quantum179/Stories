@@ -79,6 +79,8 @@ Novels from Tales of Universe
 , https://reactjs.org/docs/perf.html
 - SEO best practices :
 - Canvas based component to avoid copy-paste on text
+- React Context API (for multi-languages support, theme provider, modals, etc ?) : https://codeburst.io/what-can-react-context-api-do-for-you-multi-language-text-modals-and-theme-switchers-9cfbc8e5ee5e
+
 
 ## Mobile
 
@@ -105,6 +107,7 @@ TODO : Big UX R&D
 - React Component : https://hugogiraudel.com/2015/06/18/styling-react-components-in-sass/
 - Modular CSS : https://medium.com/@pioul/modular-css-with-react-61638ae9ea3e
 - https://codemyui.com/pure-css-animation-opening-flipping-pages-book/
+- Layout with shapes : http://jimmygleeson.com/HUCKBERRY
 
 
 ### Unstructures links
@@ -124,3 +127,6 @@ https://www.youtube.com/watch?v=NXKYUpWfCjA
 - Stick animation : <https://www.youtube.com/watch?v=mViKZJQcbpM>
 - Custom texts based on integrals (Try text-shadow, background-clip) : https://developer.mozilla.org/fr/docs/Web/CSS/background-clip
 http://jsfiddle.net/ThinkingStiff/mek5Z/
+- Trends Design : https://99designs.ca/blog/trends/web-design-trends-2018/#drop-shadows
+
+- Dev link : https://medium.freecodecamp.org/the-secret-to-being-a-top-developer-is-building-things-heres-a-list-of-fun-apps-to-build-aac61ac0736c
