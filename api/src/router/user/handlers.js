@@ -1,53 +1,34 @@
 import models from '../../db/models'
 import utils from '../../utils'
 import { BAD_REQUEST, SERVER_ERROR, NOT_VALID, NOT_FOUND } from '../../constants'
-let get_users = 'get-users',
-    get_user = 'get-user',
-    post_user = 'post-user'
+import router from '../story';
+let GET_USERS = 'get-users',
+    GET_USER = 'get-user',
+    POST_USER = 'post-user',
+    PATCH_USER = 'patch-user'
 
 //Helpers
-function formatRequest(req, handler) {
-    let data = {}
-  
-    try {
-      switch(handler) {
-        case get_users:
-          data.query = Object.assign({}, req.query.query)
-          break
-        case get_user:
-          data.id = req.params.idUser.toString()
-          break
-      }
-      data.fields = req.query.fields ? '' + req.query.fields : null
-    } 
-    catch(err) {
-      data.formatErr = err
-    }
-  
-    return data
-  }
-  
 function formatResponse(payload, handler) {
     let data = {}
 
     try {
         switch(handler) {
-            case get_users:
+            case GET_USERS:
                 data.message = `${payload.length} user(s) found` //TODO: create global function to format dynamic messages for handles
                 data.users = payload.map(u => {
-                    let user = utils.formatObject(u)
-                    user.password = undefined
-                    return user
+                    return formatUser(u)
                 })
                 break
-            case get_user:
-                data.message = "User " + payload.username + " found" //TODO : use fullName virtual property for a better message
-                let user = utils.formatObject(payload)
-                user.password = undefined
-                data.user = user
+            case GET_USER:
+                data.message = `User ${payload.username} found` //TODO : use fullName virtual property for a better message
+                data.user = formatUser(payload)
                 break
-            case post_user:
+            case POST_USER:
                 console.log('post-user')
+                break
+            case PATCH_USER:
+                data.message = `User ${payload.username} correctly updated`
+                data.user = formatUser(payload)
                 break
         }  
     }
@@ -57,16 +38,30 @@ function formatResponse(payload, handler) {
 
     return data
 }
+function formatPayload(data) {
+    let user = utils.formatObject(data)
+    user.password = undefined
+    user.email = undefined
+    return user
+}
 
 //Handlers methods
-function userMiddleware(req, res, next) {
+function requestMiddleware(req, res, next) {
     //TODO: use javascript composition to have a general middleware for derived middlewares routers.
     next()
 
     
 }
+function responseMiddleware(err, req, res, next) {
+    if(err) {
+        next(err)
+    } else {
+
+        next()
+    }
+}
 function getUsers(req, res) {
-    let {formatErr, query, fields, ...out} = formatRequest(req, get_users) 
+    let {formatErr, query, fields, ...out} = req.data
     
     if(formatErr) {
         return res.status(400).json(parseError(formatErr, BAD_REQUEST))
@@ -76,7 +71,7 @@ function getUsers(req, res) {
             if (!users || users.length == 0) {
                 return res.status(404).json(utils.parseError(true, "No user found"))
             } else {
-                return res.status(200).json(formatResponse(users, get_users)) //TODO : try to refactor this
+                return res.status(200).json(formatResponse(users, GET_USERS)) //TODO : try to refactor this
             }
             })
             .catch(function(err) {
@@ -85,18 +80,20 @@ function getUsers(req, res) {
             })  
     }
 }
-function getUser(req, res) {
-    let {formatErr, id, fields, ...out} = formatRequest(req, get_user) 
+function getUser(req, res, next) {
+    let {formatErr, id, fields, ...out} = formatRequest(req, GET_USER) 
   
     if(formatErr) {
-        return res.status(400).json(utils.parseError(formatErr, BAD_REQUEST))        
+        res.status(400)
+        next(formatErr)      
     } else {
         models.User.getById(id, fields)
             .then(function(user) {
             if (!user) {
+                next(404,)
                 return res.status(404).json(utils.parseError(true, NOT_FOUND))
             } else {
-                return res.status(200).json(formatResponse(user, get_user))
+                return res.status(200).json(formatResponse(user, GET_USER))
             }
             })
             .catch(function(err) {
@@ -108,16 +105,16 @@ function getProfile(req, res) {
 
 }
 function postUser(req, res) {
-    let {user, fields, ...out} = formatRequest(req, post_user)
+    let {user, fields, ...out} = formatRequest(req, POST_USER)
   
     if(formatErr) {
       return res.status(400).json(utils.parseError(formatErr, BAD_REQUEST))
     } else {
       models.User.create(user)
-        .then(function(savedUser) {
-            return res.status(201).json(formatResponse(savedUser, post_user))
+        .then(savedUser => {
+            return res.status(201).json(formatResponse(savedUser, POST_USER))
         })
-        .catch(function(err) {
+        .catch(err => {
             if(err === NOT_VALID) {
                 return res.status(400).json(utils.parseError(err, BAD_REQUEST))
             } else {
@@ -127,14 +124,36 @@ function postUser(req, res) {
     }
 }
 function patchUser(req, res) {
+    let {user, fields, ...out} = formatRequest(req, PATCH_USER)
+
+    if(formatErr) {
+        
+    } else {
+        models.User.updateUser(user, fields)
+            .then(updatedUser => {
+                return res.status(200).json(formatResponse(updatedUser, PATCH_USER))
+            })
+            .catch(err => {
+
+            })
+    }
 }
 function deleteUser(req, res) {
-    
+
 }
+
+router.use((err, req, res, next) => {
+    if(err) {
+        next(err)
+    }
+
+    next()
+})
 
 //Export handlers
 export  {
-    userMiddleware,
+    userRequest,
+    userResponse,
     getUsers,
     getUser,
     getProfile,

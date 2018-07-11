@@ -3,6 +3,7 @@ import express from 'express'
 const app = express()
 import http from 'http';
 const server = http.Server(app)
+import middlewares from './src/middlewares'
 
 //Settings Middleware
 import cors from 'cors'
@@ -12,9 +13,8 @@ app.use(bodyParser.json())
 
 // Security Middlewares
 import helmet from 'helmet'
-import {sanitizerMiddleware} from './src/middlewares'
 app.use(helmet())
-app.use(sanitizerMiddleware)
+app.use(middlewares.sanitizer)
 
 // Auth Middleware
 import passport from './src/passport'
@@ -32,21 +32,20 @@ db.once('open', function() {
 })
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// Router Middleware
- import Router from './src/router'
-new Router(app) 
-
 // Web Sockets Configuration
 import SocketIO from 'socket.io'
 var io = new SocketIO(server)
+
+// Router Middleware
+import Router from './src/router'
+app.use(middlewares.requestFormatter)
+new Router(app) 
+app.use(middlewares.responseFormatter)
 
 // Environment Configuration
 const env = process.env
 const IPADDR = env.IP
 const PORT = env.PORT || 5000
-
-
-
 
 // Run App
 server.listen(5000, () =>

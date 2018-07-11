@@ -4,13 +4,8 @@ var options = { discriminatorKey: 'type', timestamps: true}; // TODO Quantum : d
 
 var ChronicleSchema = new Schema(
   {
-    title: String,
     chronicleNumber: Number,
-    description: String,
-    definitions: [{type: Schema.Types.ObjectId, ref: 'Definition'}],
-    likes: Number,
-    comments : [{type: Schema.Types.ObjectId, ref: 'Comment'}],
-    isTrending: Boolean
+    theme: String
   }
 )
 

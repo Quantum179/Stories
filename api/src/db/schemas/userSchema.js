@@ -84,7 +84,7 @@ UserSchema.statics.getOne = function(query = {}, fields = null) {
     .exec()
 }
 UserSchema.statics.getById = function(id, fields = null) {
-  return this.findById(id, fields)
+  return this.findById({id: id}, fields)
     .exec()
 }
 

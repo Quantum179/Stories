@@ -7,23 +7,6 @@ let GET_STORIES = 'get-stories',
     POST_STORY = 'post-story'
 
 //Helpers
-function formatRequest(req, handler) {
-    let data = {}
-  
-    switch(handler) {
-      case GET_STORIES:
-        data.query = Object.assign({}, req.query.query)
-        data.fields = Object.assign({}, req.query.fields)
-        break
-      case GET_STORY:
-        data.id = Object.assign({}, req.params.idStory)
-        data.fields = Object.assign({}, req.query.fields)
-        break
-    }
-  
-    return data
-  }
-  
 function formatResponse(payload, handler) {
     let data = {}
   
@@ -48,37 +31,55 @@ function storyMiddleware(req, res, next) {
   next()
 }
 function getStories(req, res) {
-  let {query, fields, ...out} = formatRequest(req, GET_STORIES)
+  let {formatErr, query, fields, options, ...out} = req.data
 
-  models.Story.getMany(query, fields)
-    .then(function(stories) {
+  //TODO: get news (Elem new stories, very liked stories), latest stories, most liked
+  models.Story.getMany(query, fields, options)
+    .then(stories => {
       if (!stories || stories.length == 0) {
         return res.status(404).json(utils.parseError(true, NOT_FOUND))
       } else {
         return res.status(200).json(formatResponse(stories, GET_STORIES))
       }
     })
-    .catch(function(err) {
+    .catch(err => {
         return res.status(400).json(utils.parseError(err, BAD_REQUEST)) //TODO : refactor in global middleware (error handler for every route)
     })
 }
 function getStory(req, res) {
-  let {id, fields, ...out} = formatRequest(req, GET_STORY)
+  let {formatErr, id, fields, ...out} = formatRequest(req, GET_STORY)
 
-  models.Story.getById(id, fields)
-    .then(function(story) {
+  if(formatErr) {
+    return res.status(400).json(utils.parseError(formatErr, BAD_REQUEST))
+  } else {
+    models.Story.getById(id, fields)
+    .then(story => {
       if(!story)  {
         return res.status(404).json(utils.parseError(true, NOT_FOUND))
       } else {
         return res.status(200).json(formatResponse(story, GET_STORY))
       }
     })
-    .catch(function(err) {
+    .catch(err => {
       return res.status(400).json(utils.parseError(err, BAD_REQUEST))
-    })
+    })  
+  }
 }
 function postStory(req, res) {
+  let {formatErr, story, ...out} = formatRequest(req, POST_STORY)
 
+  if(formatErr) {
+    return res.status(400).json(utils.parseError(formatErr, BAD_REQUEST))
+  } else {
+    models.Story.create(story)
+      .then(savedStory => {
+        return res.status(201).json(formatResponse(savedStory, POST_STORY))
+      })
+      .catch(err => {
+        //TODO: duplicate properties
+        return res.status(400).json(utils.parseError(err, BAD_REQUEST))
+      })
+  }
 }
 function patchStory(req, res) {
   

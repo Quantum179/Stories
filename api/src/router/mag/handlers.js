@@ -9,10 +9,15 @@ function magMiddleware(req, res, next) {
 
 function getMag(req, res) {
     //TODO: get latest MagNumber, mag news, top trendings mag numbers and authors
-    res.status(201).json({msg: "mag"})
+
+    //carousel informations : news, must read
+    //magNumbers list
+    //side nav with top trendings and others
+
+    let {} = formatRequest(req, '')
 }
 function getMagNumber(req, res) {
-    let {id, fields, ...out} = formatRequest(_req, get_mag_number) 
+    let {id, fields, ...out} = req.data
 
     models.MagNumber.getById(id, fields)
         .then(magNumber => {

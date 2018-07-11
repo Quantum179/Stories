@@ -6,10 +6,12 @@ var MagNumberSchema = new Schema(
     title: String,
     numberMag: Number,
     description: String,
-    chapters: [{type: Schema.Types.ObjectId, ref: "MagChapter"}],
-    likes: Number,
+    chapters: [{type: Schema.Types.ObjectId, ref: "Post"}],
+
+    likes: [{type: Schemas.Types.ObjectId, ref: 'User'}],
     isTrending: Boolean, //refactor in interface with post and others schemas with this
-    comments: [{type: Schema.Types.ObjectId, ref: "Comment"}]
+    comments: [{type: Schema.Types.ObjectId, ref: "Comment"}],
+    ratings: [Number]
   }
 )
 

@@ -9,35 +9,7 @@ let LOGIN = 'login',
 
 
 //Helpers
-function createToken(user) {
-    return jwt.sign({email:user.email, idUser:user._id}, SECRET, { expiresIn: '1h' }) //TODO : add env variables (hash and jwt secrets)
-}
-function formatRequest(req, handler) {
-    let data = {}
-  
-    try {
-        switch(handler) {
-            case LOGIN:
-              data.email = req.body.email
-              data.password = req.body.password
-              data.fields = req.query.fields
-              break
-            case REGISTER:
-              data.user = req.body
-              data.wantsNews = req.query.wantsNews
-              data.fields = req.query.fields
-              break
-            case SUBSCRIBE:
-              console.log('test')
-              break
-        }    
-    }
-    catch(err) {
-        data.formatErr = err
-    }
 
-    return data
-}
 function formatResponse(payload, handler) {
     let data = {}
 
@@ -45,13 +17,13 @@ function formatResponse(payload, handler) {
         switch(handler) {
             case LOGIN:
                 data.message = 'User is now connected'
-                data.token = createToken(payload)
+                data.token = utils.createToken(payload)
                 data.user = utils.formatObject(payload)
                 //TODO : check if no others properties are needed by clients
                 break
             case REGISTER:
                 data.message = "Registration succeeds"
-                data.token = createToken(payload)
+                data.token = utils.createToken(payload)
                 let user = utils.formatObject(payload)
                 user.password = undefined
                 data.user = user
@@ -71,13 +43,13 @@ function authMiddleware(req, res, next) {
     next()
 }
 function login(req, res) {
-    let {formatErr, email, password, fields, ...out} = formatRequest(req, LOGIN) 
+    let {formatErr, email, password, fields, ...out} = req.data
 
     if(formatErr) {
         return res.status(400).json(utils.parseError(err, BAD_REQUEST))        
     } else {
     //TODO : Redirection when already logged (checks token in list)
-    models.User.getOne({"email" : email}, fields)
+    models.User.getOne(email, fields)
       .then(function(user) {
         if (!user) {
           return res.status(404).json(utils.parseError(true, NOT_FOUND))
@@ -97,7 +69,7 @@ function login(req, res) {
     }
 }
 function register(req, res) {
-    let {user, fields, wantsNews, ...out} = formatRequest(req, REGISTER)
+    let {user, fields, wantsNews, ...out} = req.data
   
     if(formatErr) {
       return res.status(400).json(parseError(formatErr, BAD_REQUEST))

@@ -13,14 +13,12 @@ var AuthorSchema = new Schema (
 
 // Author instance methods
 AuthorSchema.methods.findPosts = function() {
-  return this.model('Author').find({_id: this._id})
-  .select('posts')
-  .populate('posts', "-_id")
+
 }
 
 // Author static methods
-AuthorSchema.static.findByID = function(idAuthor) {
-  return this.find({'_id': idAuthor})
+AuthorSchema.static.findByID = function(id) {
+  return this.find({'_id': id})
 }
 
 AuthorSchema.static.findPosts = function(idAuthor) {

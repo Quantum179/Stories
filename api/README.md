@@ -32,6 +32,7 @@ https://dev.to/aurelkurtula/working-with-instagram-api-and-passportjs-in-a-node-
 - Mongoose error handling : http://thecodebarbarian.com/mongoose-error-handling
 MongoDB access control : https://stackoverflow.com/questions/41615574/mongodb-server-has-startup-warnings-access-control-is-not-enabled-for-the-dat
 MongoDB in production: http://www.fizerkhan.com/blog/posts/Things-you-should-consider-for-MongoDB-in-production.html
+- Scaling MongoDB : https://hackernoon.com/solving-invisible-scaling-issues-with-serverless-and-mongodb-1a065b5a6465
 
 # Releases
 

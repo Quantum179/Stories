@@ -12,4 +12,5 @@ router.get('/:idMagNumber', passport.jwtAuth(), getMagNumber)
 router.post('/', passport.jwtAuth(), postMagNumber)
 router.patch('/:idMagNumber', passport.jwtAuth(), patchMagNumber)
 router.delete('/:idMagNumber', passport.jwtAuth(), deleteMagNumber)
+
 export default router
