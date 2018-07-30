@@ -5,10 +5,10 @@ var options = { discriminatorKey: 'type', timestamps: true}; // TODO Quantum : d
 var CommentSchema = new Schema(
   {
     author: {type: Schema.Types.ObjectId, ref: 'Author'},
-    source: {type: Schema.Types.ObjectId, required: true},
+    source: {type: Schema.Types.ObjectId, required: true}, //http://mongoosejs.com/docs/populate.html#dynamic-ref
     content: String,
-    likes: [{type: Schemas.Types.ObjectId, ref: 'User'}],
-    replies: [{type: Schemas.Types.ObjectId, ref:'Comment'}]
+    likes: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    replies: [{type: Schema.Types.ObjectId, ref:'Comment'}]
     //Mongoose createAt
   },
   options

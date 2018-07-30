@@ -1,15 +1,4 @@
-import express from 'express'
-let router = express.Router()
-import passport from '../../passport'
-import {storyMiddleware, getStories, getStory, postStory, patchStory, deleteStory} from './handlers'
-//TODO: try object destructing (import {...handlers} from handlers)
+import configRouter from '../../factories/router'
+import routes from './routes'
 
-router.use(storyMiddleware)
-
-router.get('/', getStories)
-router.get('/:idStory', getStory)
-router.post('/', passport.jwtAuth(), postStory)
-router.patch('/:idStory', passport.jwtAuth(), patchStory)
-router.delete('/:idStory', passport.jwtAuth(), deleteStory)
-
-export default router
+export default configRouter(routes)

@@ -37,10 +37,11 @@ import SocketIO from 'socket.io'
 var io = new SocketIO(server)
 
 // Router Middleware
-import Router from './src/router'
+import router from './src/router'
 app.use(middlewares.requestFormatter)
-new Router(app) 
+new router(app) //TODO: use function object instead of class
 app.use(middlewares.responseFormatter)
+app.use(middlewares.errorHandler)
 
 // Environment Configuration
 const env = process.env

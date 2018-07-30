@@ -9,4 +9,9 @@ var ArticleSchema = new Schema (
   options
 )
 
+ArticleSchema.statics.findByTopic = function(topic, fields) {
+  return this.find({topic: topic}, fields)
+    .exec()
+}
+
 export default ArticleSchema

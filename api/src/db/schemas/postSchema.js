@@ -24,7 +24,7 @@ export default new Schema (
     //refactor
     isTrending: Boolean,
     ratings : [Number],
-    likes : [{type: Schemas.Types.ObjectId, ref: 'User'}],
+    likes : [{type: Schema.Types.ObjectId, ref: 'User'}],
     comments : [{type: Schema.Types.ObjectId, ref: 'Comment'}]
     //end refactor
 

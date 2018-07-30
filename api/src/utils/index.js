@@ -1,7 +1,19 @@
 import util from 'util'
+import sanitizer from 'sanitizer'
+import jwt from 'jsonwebtoken'
+import {secret, defaultMongooseFields} from '../constants'
 
 
 
+
+function removeDefaultFields(object) {
+  defaultMongooseFields.forEach(f => {
+    if(object.hasOwnProperty(f)) {
+      object[f] = undefined
+    }
+  })
+  return object
+}
 
 //TODO: change to declared functions and regular export
 export default {
@@ -14,16 +26,23 @@ export default {
   parseError: function(err, msg) {
     return Object.assign({}, {err:err, message:msg})
   },
-  formatObject: function(data) {
-    let object = data.toObject()
-    object.id = undefined
-    if(object.hasOwnProperty('__v')) {
-      object.__v = undefined
+  formatMongooseItem: function(item) {
+    if(Array.isArray(item)) {
+      return item.map(i => {
+        let _i = i.toObject()
+        return removeDefaultFields(_i)
+      })
+    } else {
+      return removeDefaultFields(item.toObject())
     }
-    //TODO: remove mongoose fields if hasOwnProperty
-    return object
   },
   createToken: function(user) {
     return jwt.sign({email:user.email, idUser:user._id}, SECRET, { expiresIn: '1h' }) //TODO : add env variables (hash and jwt secrets)
+  },
+  isMongoData: function(item) {
+    //TODO: simplify
+    return Array.isArray(item) ? 
+      item[0].constructor.name === 'model' : 
+      item.constructor.name === 'model'
   }
 }

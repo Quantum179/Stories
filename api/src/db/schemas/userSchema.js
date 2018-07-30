@@ -88,9 +88,19 @@ UserSchema.statics.getById = function(id, fields = null) {
     .exec()
 }
 
-UserSchema.statics.addUser = function(user) {
+UserSchema.statics.create = function(user) {
   return this.create(user)
 } 
+
+UserSchema.statics.update = function(id, user) {
+  return this.updateOne({_id: id}, {$set: user})
+    .exec()
+}
+
+UserSchema.statics.delete = function(id) {
+  return this.findByIdAndDelete(id)
+    .exec()
+}
 
 // --- EXPORT MODULE ---
 export default UserSchema
