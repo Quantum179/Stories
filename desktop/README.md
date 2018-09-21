@@ -5,6 +5,7 @@ Client version of an API/Client system. All importants actions must be registere
 
 # TODOS
 
+- use constants strings for Vuex store methods
 - find a better way to center login-btn in header
 - override v-btn active and focus styles
 - think about vuetify important overrides 
@@ -16,6 +17,8 @@ Client version of an API/Client system. All importants actions must be registere
 - use router-view to display sub components qnd think about inherited styles
 - implement "ExoList"
 - wraps router-link (Adapter design pattern) to simplify the tag creation (pass tag name and css classes as props)
+- try to add a vue command for new routes in vue cli (then propose a PR in github repo)
+- add translations for english (not urgent at all)
 
 # Research and Discover
 
@@ -30,5 +33,9 @@ Client version of an API/Client system. All importants actions must be registere
  https://codepen.io/andybarefoot/pen/PBPrex
  - https://fr.vuejs.org/v2/guide/components-registration.html
  - https://flaviocopes.com/vue-introduction/
-
+- Gradients inspirations : 
+ - https://atomiks.github.io/30-seconds-of-css/
+ - http://lea.verou.me/css3patterns/#starry-night
+ - https://css-tricks.com/easing-linear-gradients/
+ - https://css-tricks.com/snippets/css/css-linear-gradient/
 

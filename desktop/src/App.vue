@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import HeaderApp from './components/shared/HeaderApp.vue'
-import FooterApp from './components/shared/FooterApp.vue'
+import HeaderApp from './components/shared/app/HeaderApp.vue'
+import FooterApp from './components/shared/app/FooterApp.vue'
 
 export default {
   components: {

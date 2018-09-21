@@ -1,9 +1,10 @@
 <template>
-  <div id="home-carousel"></div>
+  
 </template>
 
 <script>
 export default {
+  
 }
 </script>
 

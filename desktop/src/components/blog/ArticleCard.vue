@@ -1,14 +1,15 @@
 <template>
-  <div id="stories">
+  <div>
     <v-container>
-      <stories-carousel :news="news"></stories-carousel>
-      <story-list :stories="stories"></story-list>
+      <exo-card v-if="!isSelected"></exo-card>
+      <exo-card v-if="isSelected"></exo-card>
     </v-container>
   </div>
 </template>
 
 <script>
 export default {
+  
 }
 </script>
 
