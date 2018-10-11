@@ -1,12 +1,11 @@
 import express from 'express'
 let router = express.Router()
-/* import {blogMiddleware, getBlog, getTopics, getTopic, getArticle} from './handlers'
 
-router.use(blogMiddleware)
+import {getBlog, getTopics, getTopic, getArticle} from './handlers'
 
 router.get('/', getBlog)
 router.get('/topics/', getTopics)
 router.get('/topics/:idTopic', getTopic)
-router.get('/topics/:idArticle', getArticle) */
+router.get('/topics/:idArticle', jwtAuth('PERMITTED_ARTICLE'), getArticle)
 
 export default router

@@ -10,8 +10,11 @@ passport.use(jwtStrategy)
 //_passport.use(instagramStrategy)
 
 
-passport.jwtAuth = function() {
+const jwtAuth = function(permissions) {
     return passport.authenticate('jwt', {session: false})
 }
 
-export default passport
+export default {
+    passport,
+    jwtAuth
+}

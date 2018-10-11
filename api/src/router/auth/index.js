@@ -1,4 +1,10 @@
-import createRouter from '../../factories/router'
-import routes from './routes'
+import express from 'express'
+let router = express.Router()
 
-export default createRouter(routes)
+import {postLogin, postRegister, postSubscribe} from './handlers'
+
+router.post('/login', postLogin)
+router.post('/register', postRegister)
+router.post('/subscribe', jwtAuth('USER'), postSubscribe)
+
+export default router

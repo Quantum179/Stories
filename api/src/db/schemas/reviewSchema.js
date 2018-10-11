@@ -4,6 +4,7 @@ var options = { discriminatorKey: 'role', timestamps: true}; // TODO Quantum : d
 
 export default new Schema (
   {
+    user: {type: Schema.Types.ObjectId, ref: 'User'},
     relatedParagraph: {type: Schema.Types.ObjectId, ref: 'Paragraph'},
     suggestedParagraph: {type: Schema.Types.ObjectId, ref: 'Paragraph'}
   },

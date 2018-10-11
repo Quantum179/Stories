@@ -88,13 +88,17 @@ UserSchema.statics.getById = function(id, fields = null) {
     .exec()
 }
 
-UserSchema.statics.create = function(user) {
+UserSchema.statics.add = function(user) {
   return this.create(user)
 } 
 
 UserSchema.statics.update = function(id, user) {
   return this.updateOne({_id: id}, {$set: user})
     .exec()
+}
+
+UserSchema.statics.updateMany = function(id, user) {
+
 }
 
 UserSchema.statics.delete = function(id) {

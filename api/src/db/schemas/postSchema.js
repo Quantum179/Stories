@@ -21,14 +21,9 @@ export default new Schema (
     // mongoose createAt
     // Mongoose updateAt
     
-    //refactor
-    isTrending: Boolean,
-    ratings : [Number],
-    likes : [{type: Schema.Types.ObjectId, ref: 'User'}],
-    comments : [{type: Schema.Types.ObjectId, ref: 'Comment'}]
-    //end refactor
 
-    // TODO Quantum : handle shares
+
+    //TODO : test virtual methods
    
   },
   options

@@ -21,10 +21,12 @@ import passport from './src/passport'
 app.use(passport.initialize())
 
 // Database Configuration
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import queryPlugin from './src/db/schemas/plugins/queryPlugin'
 var mongoDB = 'mongodb://localhost/stories';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
+mongoose.plugin(queryPlugin)
 
 var db = mongoose.connection;
 db.once('open', function() {
@@ -39,7 +41,7 @@ var io = new SocketIO(server)
 // Router Middleware
 import router from './src/router'
 app.use(middlewares.requestFormatter)
-new router(app) //TODO: use function object instead of class
+app.use('/api/v1', router) //TODO: use function object instead of class
 app.use(middlewares.responseFormatter)
 app.use(middlewares.errorHandler)
 

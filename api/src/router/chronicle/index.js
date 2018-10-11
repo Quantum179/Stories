@@ -1,13 +1,12 @@
 import express from 'express'
 let router = express.Router()
 
-// Get Saturn's chronicles home page news and a list of latest chronicles
-router.get('/', function(req, res) {
-  res.send('List of chronicles')
-})
-// define the about route
-router.get('/:idChronicle', function(req, res) {
-  res.send('A Chronicle')
-})
+import {getChronicles, getChronicle, getChroniclePreview, postChronicle, patchChronicle, deleteChronicle} from './handlers'
 
+router.get('/', getChronicles)
+router.get('/:id', jwtAuth('SUBSCRIBER'), getChronicle)
+router.get('/:id/preview', jwtAuth('USER'), getChroniclePreview)
+router.post('/', jwtAuth('ADMIN'), postChronicle)
+router.patch('/:id', jwtAuth('REVIEWER'), patchChronicle)
+router.delete('/:id', jwtAuth('ADMIN'), deleteChronicle)
 export default router

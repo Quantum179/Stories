@@ -6,6 +6,7 @@ var MagNumberSchema = new Schema(
     title: String,
     numberMag: Number,
     description: String,
+    preface: {type: Schema.Types.ObjectId, ref: 'Paragraph'},
     chapters: [{type: Schema.Types.ObjectId, ref: "Post"}],
 
     likes: [{type: Schema.Types.ObjectId, ref: 'User'}],
@@ -17,8 +18,8 @@ var MagNumberSchema = new Schema(
 
 
 //Statics
-MagNumberSchema.statics.getOne = function(query = {}, fields = null) {
-  return this.findOne(query, fields)
+MagNumberSchema.statics.getOne = function(query = {}, fields = null, options = null) {
+  let query = this.findOne(query, fields)
     .exec()
 }
 
