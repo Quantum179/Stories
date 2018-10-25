@@ -4,10 +4,13 @@
         <router-link to="/home" tag="h2" class="pointer">Stories</router-link>
       </v-toolbar-title>
       <v-toolbar-items>
-        <v-btn flat to="stories">Histoires</v-btn>
-        <v-btn flat to="chronicles">Chroniques</v-btn>
-        <v-btn flat to="blog">Blog</v-btn>
-        <v-btn flat to="mag">Magazine</v-btn>
+        <div class="categories">
+          <v-btn flat to="stories">Histoires</v-btn>
+          <v-btn flat to="chronicles">Chroniques</v-btn>
+          <v-btn flat to="blog">Blog</v-btn>
+          <v-btn flat to="mag">Magazine</v-btn>
+        </div>
+
         <v-btn to="login" color="primary" class="login-btn ma-2 py-4">LOGIN</v-btn>
       </v-toolbar-items>
   </v-toolbar>

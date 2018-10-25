@@ -13,9 +13,8 @@ import Chronicle from '@/components/chronicle/Chronicle'
 import ChronicleForm from '@/components/chronicle/ChronicleForm'
 
 import Blog from '@/components/blog/Blog'
-import Topics from '@/components/blog/Topics'
+import Topic from '@/components/blog/Topic'
 import Article from '@/components/blog/Article'
-import ArticleList from '@/components/blog/ArticleList'
 import ArticleForm from '@/components/blog/ArticleForm'
 
 import Mag from '@/components/mag/Mag'
@@ -83,14 +82,8 @@ export const routes = [
     component: Blog,
     children: [
       {
-        path: 'topics',
-        component: Topics,
-        children: [
-          {
-            path: ':topicName',
-            component: ArticleList
-          }
-        ]
+        path: ':topicName',
+        component: Topic
       },
       {
         path: ':articleName',

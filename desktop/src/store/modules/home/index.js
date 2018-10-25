@@ -1,24 +1,31 @@
-import { apiUrl } from '../../constants'
-import { OK } from 'http-status-code'
+import axios from 'axios'
+import { apiUrl } from '../../../constants'
+/* import { OK, INTERNAL_SERVAL_ERROR } from 'http-status-code' */
+
+import { actionTypes, mutationTypes } from './types'
 
 /* TODO : mettre ça côté API
 {
   name: 'Histoires',
+  label: 'Histoires',
   description: "Venez découvrir les divers recueils de nouvelles provenant de la galaxie d'Elem et des écrivains de la communauté de Stories.",
   routerSrc: '/stories'
 },
 {
   name: 'Les Chroniques de Saturn',
+  label: 'Chroniques'
   description: "Saturn, le Dieu de la Mort exerçant dans la galaxie d'Elem, adopte un rôle de narrateur pour nous raconter quelques contes d'Elem.",
   routerSrc: '/chronicles'
 },
 {
   name: 'Blog',
-  description: "De nombreux articles aux sujets variés sont disponibles sur le blog d'ExoSoft : littérature, informatique, Antilles et autres.",
+  label: 'Blog',
+  description: "De nombreux articles aux sujets variés sont disponibles sur le blog d'ExoSoft : littérature, numériques, Antilles et autres.",
   routerSrc: '/blog'
 },
 {
   name: 'ExoMag',
+  label: 'Mag'
   description: "Magazine mensuel d'ExoSoft. On peut y retrouver les meilleurs posts du mois et des articles exclusivement dédiés au Mag.",
   routerSrc: '/mag'
 } */
@@ -27,24 +34,36 @@ import { OK } from 'http-status-code'
 const state = {
   news: [],
   latestPosts: [],
-  categories: []
+  categories: [],
+  selectedCategory: null
 }
 
-// getters
-const getters = {}
+const { FETCH_HOME_INFOS } = actionTypes
+const { SET_HOME_NEWS, SET_LATEST_POSTS, SET_CATEGORIES, SET_SELECTED_CATEGORY } = mutationTypes
 
 // actions
 const actions = {
-  getHomeInfos ({ commit }) {
-    this.$http.get(apiUrl + '/home')
+  [FETCH_HOME_INFOS] ({ commit }) {
+    /*     let news = ['hey', 'lol', 'test']
+    let posts = ['hey', 'lol', 'test']
+    let categories = ['hey', 'lol', 'test']
+    commit(SET_HOME_NEWS, news)
+    commit(SET_LATEST_POSTS, posts)
+    commit(SET_CATEGORIES, categories) */
+    axios.get(apiUrl + '/home')
       .then(res => {
-        if (res.status === OK) {
+        if (res.status === 200) {
+          // TODO : sanitize api response data
           let {news, posts, categories} = res.data
-          commit('setHomeNews', news)
-          commit('setLatestPosts', posts)
-          commit('setCategories', categories)
+          commit(SET_HOME_NEWS, news)
+          commit(SET_LATEST_POSTS, posts)
+          commit(SET_CATEGORIES, categories)
         } else {
           // TODO
+          if (res.status === 500) {
+            // TODO: pop-up error state
+            // commit(DISPLAY_ERROR)
+          }
         }
       })
       .catch(err => {
@@ -55,21 +74,25 @@ const actions = {
 
 // mutations
 const mutations = {
-  setHomeNews (state, news) {
+  [SET_HOME_NEWS] (state, news) {
     state.news = news
   },
-  setLatestPosts (state, posts) {
+  [SET_LATEST_POSTS] (state, posts) {
     state.latestPosts = posts
   },
-  setCategories (state, categories) {
+  [SET_CATEGORIES] (state, categories) {
     state.categories = categories
+  },
+  [SET_SELECTED_CATEGORY] (state, category) {
+    if (state.selectedCategory.name !== category.name) {
+      state.selectedCategory = category
+    }
   }
 }
 
 export default {
   namespaced: true,
   state,
-  getters,
   actions,
   mutations
 }

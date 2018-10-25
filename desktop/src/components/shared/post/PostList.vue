@@ -4,18 +4,19 @@
   </v-container>
 </template>
 
-
 <script>
 import PostCard from './PostCard'
 export default {
-  data: function() {
+  data: function () {
     return {
       posts: []
     }
+  },
+  components: {
+    PostCard
   }
 }
 </script>
-
 
 <style lang="stylus">
 

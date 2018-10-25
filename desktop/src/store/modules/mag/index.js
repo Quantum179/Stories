@@ -1,22 +1,26 @@
+import axios from 'axios'
 import { apiUrl } from '../../../constants'
-import { OK } from 'http-status-code'
+
+import { actionTypes, mutationTypes } from './types'
+
+const { FETCH_MAG_INFOS, FETCH_MAG_NUMBER_DETAILS } = actionTypes
+const { SET_MAG_NEWS, SET_MAG_NUMBERS, SET_MAG_NUMBER_DETAILS, SET_SELECTED_MAG_NUMBER } = mutationTypes
 
 const state = {
   news: [],
   magNumbers: [],
-  selectedMagNumber: {}
+  selectedMagNumber: null,
+  magNumberDetails: null
 }
 
-const getters = {}
-
 const actions = {
-  getMagInfos ({ commit }) {
-    this.$http.get(apiUrl + '/mag')
+  [FETCH_MAG_INFOS] ({ commit }) {
+    axios.get(apiUrl + '/mag')
       .then(res => {
-        if (res.status === OK) {
+        if (res.status === 200) {
           let {news, magNumbers} = res.data
-          commit('setMagNews', news)
-          commit('setMagNumbers', magNumbers)
+          commit(SET_MAG_NEWS, news)
+          commit(SET_MAG_NUMBERS, magNumbers)
         } else {
           // TODO
         }
@@ -25,12 +29,12 @@ const actions = {
         console.log(err)
       })
   },
-  getMagNumber ({commit}, id) {
-    this.$http.get(apiUrl + '/mag' + id)
+  [FETCH_MAG_NUMBER_DETAILS] ({commit}, id) {
+    axios.get(apiUrl + '/mag/' + id)
       .then(res => {
-        if (res.status === OK) {
+        if (res.status === 200) {
           let {magNumber} = res.data
-          commit('setMagNumber', magNumber)
+          commit(SET_MAG_NUMBER_DETAILS, magNumber)
         } else {
           // TODO
         }
@@ -42,21 +46,23 @@ const actions = {
 }
 
 const mutations = {
-  setMagNews (state, news) {
+  [SET_MAG_NEWS] (state, news) {
     state.news = news
   },
-  setMagNumbers (state, magNumbers) {
+  [SET_MAG_NUMBERS] (state, magNumbers) {
     state.magNumbers = magNumbers
   },
-  setMagNumber (state, magNumber) {
+  [SET_SELECTED_MAG_NUMBER] (state, magNumber) {
     state.selectedMagNumber = magNumber
+  },
+  [SET_MAG_NUMBER_DETAILS] (state, magNumber) {
+    state.magNumberDetails = magNumber
   }
 }
 
 export default {
   namespaced: true,
   state,
-  getters,
   actions,
   mutations
 }
