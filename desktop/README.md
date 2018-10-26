@@ -3,6 +3,13 @@
 
 Client version of an API/Client system. All importants actions must be registered and state must stay immutable until validated mutation (Vuex) happens.
 
+# Run application
+```
+ngrok http 8080 -host-header="localhost:8080"
+
+
+```
+
 # TODOS
 
 - use constants strings for Vuex store methods

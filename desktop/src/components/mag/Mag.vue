@@ -1,6 +1,7 @@
 <template>
   <div id="mag">
     <v-container fluid>
+      <h1>ExoMag</h1>
       <exo-carousel :slides="news"></exo-carousel>
       <v-container>
           <mag-number-card v-for="magNumber in magNumbers" :key="magNumber.title"></mag-number-card>

@@ -4,6 +4,7 @@
     <home-opening v-else-if="display === 'intro'"></home-opening>
     <div v-else-if="display === 'home'">
         <div class="anim-item" v-if="selectedCategory == null">
+          <h1>Accueil</h1>
             <exo-carousel :slides="news"></exo-carousel>
             <post-list :posts="latestPosts"></post-list>
         </div>
@@ -31,13 +32,15 @@ const { FETCH_HOME_INFOS } = actionTypes
 export default {
   data () {
     return {
-      display: 'home'
+      display: 'home',
+      size: null
     }
   },
   computed: {
     ...mapState('home', ['news', 'latestPosts', 'categories', 'selectedCategory'])
   },
   mounted () {
+    this.size = window.screen.availWidth
     /* this[FETCH_HOME_INFOS]() */
     // TODO: $('#home').onScroll to set selected category
   },

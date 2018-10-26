@@ -1,2 +1,24 @@
 
 @import '~vuetify/src/stylus/main'
+
+// flex.styl
+.flex
+  display flex
+.flex-x 
+  @extend .flex
+  flex-direction row
+.flex-y
+  @extend .flex
+  flex-direction column
+.flex-x-between
+  @extend .flex-x
+  justify-content space-between
+  align-items center
+.flex-x-around
+  @extend .flex-x
+  justify-content space-around
+  align-items center
+
+// button.styl
+.v-btn
+  font-size 10px

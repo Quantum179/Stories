@@ -1,7 +1,6 @@
 <template>
-  <v-footer id="footer" class="pa-3" dark>
-    <v-spacer></v-spacer>
-    <div>&copy; {{ new Date().getFullYear() }} Exosoft</div>
+  <v-footer height="15" id="footer" class="pa-2" dark>
+    <div class="footer-title">&copy; {{ new Date().getFullYear() }} ExoSoft</div>
   </v-footer>
 </template>
 
@@ -11,4 +10,10 @@ export default {
 </script>
 
 <style lang="stylus">
+#footer
+  display flex
+  justify-content center
+
+.footer-title
+  font-size 8px
 </style>

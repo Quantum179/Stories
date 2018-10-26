@@ -9,7 +9,20 @@ const { SET_STORIES_NEWS, SET_STORIES, SET_STORY_DETAILS, SET_SELECTED_STORY } =
 
 const state = {
   news: [],
-  stories: [],
+  stories: [
+    {
+      title: 'Test story 1',
+      content: "Voici la premiere histoire de test que l'on va retrouver sur le site de Stories"
+    },
+    {
+      title: 'Test story 2',
+      content: "Voici la premiere histoire de test que l'on va retrouver sur le site de Stories"
+    },
+    {
+      title: 'Test story 3',
+      content: "Voici la premiere histoire de test que l'on va retrouver sur le site de Stories"
+    }
+  ],
   selectedStory: null,
   storyDetails: null
 }

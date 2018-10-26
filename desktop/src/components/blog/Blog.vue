@@ -2,6 +2,7 @@
   <div id="blog">
     <topic-nav :topics="topics"></topic-nav>
     <v-container>
+      <h1>Blog</h1>
       <exo-carousel :news="news"></exo-carousel>
       <article-list title="trending" :articles="trendingArticles"></article-list>
       <article-list title="latest" :articles="latestArticles"></article-list>
