@@ -2,8 +2,9 @@ import express from 'express'
 let router = express.Router()
 import {jwtAuth} from '../../passport'
 
-import {getStories, getStory, postStory, patchStory, deleteStory} from './handlers'
+import {getHome, getStories, getStory, postStory, patchStory, deleteStory} from './handlers'
 
+router.get('/home', getHome)
 router.get('/', getStories)
 router.get('/:id', jwtAuth('USER'), getStory)
 router.post('/', jwtAuth('AUTHOR'), postStory)

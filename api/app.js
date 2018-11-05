@@ -17,22 +17,12 @@ app.use(helmet())
 app.use(middlewares.sanitizer)
 
 // Auth Middleware
-import passport from './src/passport'
+import {passport} from './src/passport'
 app.use(passport.initialize())
 
 // Database Configuration
-import mongoose from 'mongoose';
-import queryPlugin from './src/db/schemas/plugins/queryPlugin'
-var mongoDB = 'mongodb://localhost/stories';
-mongoose.connect(mongoDB);
-mongoose.Promise = global.Promise;
-mongoose.plugin(queryPlugin)
-
-var db = mongoose.connection;
-db.once('open', function() {
-  console.log('open db')
-})
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+import {initDB, closeDB} from './src/db'
+initDB()
 
 // Web Sockets Configuration
 import SocketIO from 'socket.io'
@@ -60,8 +50,7 @@ server.on('close', function() {
 })
 
 process.on('SIGINT', function() {
-  console.log('bye')
-  db.close()
+  closeDB()
   server.close()
 })
 
@@ -69,4 +58,4 @@ process.on('SIGINT', function() {
 export default app
 
 
-// Todo Quantum : close database on disconnect
+

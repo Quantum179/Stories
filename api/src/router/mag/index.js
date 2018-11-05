@@ -10,3 +10,5 @@ router.get('/:id/preview', jwtAuth('USER'), getMagNumberPreview)
 router.post('/', jwtAuth('ADMIN'), postMagNumber)
 router.patch('/:id', jwtAuth('REVIEWER'), patchMagNumber)
 router.delete('/:id', jwtAuth('ADMIN'), deleteMagNumber)
+
+export default router

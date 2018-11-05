@@ -2,7 +2,7 @@ import sanitizer from 'sanitizer'
 import validator from 'validator'
 import utils from '../utils'
 import { getStatusText } from 'http-status-codes'
-
+import util from 'util'
 
 
 // ========== Export variables ==========
@@ -14,22 +14,20 @@ export default {
     },
     requestFormatter: function(req, res, next) {
         let data = {}
+        data.options = {}
         let keys = Object.keys(req.body) //TODO : use for in
 
         if(keys.length > 0) {
             keys.forEach(k => {data[k] = req.body[k]})
         }
-        if(req.params.hasOwnProperty('id')) {
+/*         if(req.params.hasOwnProperty('id')) {
             data.id = req.params.id
-        }
+        } */
         if(req.query.hasOwnProperty('query')) {
-            data.query = req.query.query || {}
+            data.options.query = req.query.query || {}
         }
         if(req.query.hasOwnProperty('fields')) {
-            data.fields = req.query.fields
-        }
-        if(req.query.hasOwnProperty('options')) {
-            data.options = req.query.options
+            data.options.fields = req.query.fields
         }
         
         req.data = data

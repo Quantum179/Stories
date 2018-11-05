@@ -14,9 +14,4 @@ ArticleSchema.statics.findByTopic = function(topic, fields) {
         .exec()
 }
 
-ArticleSchema.statics.getOneById = function(id, fields = null) {
-    return this.find({id:id}, fields)
-        .exec()
-}
-
 export default ArticleSchema

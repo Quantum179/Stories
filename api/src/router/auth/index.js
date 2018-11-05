@@ -1,5 +1,6 @@
 import express from 'express'
 let router = express.Router()
+import { jwtAuth } from '../../passport'
 
 import {postLogin, postRegister, postSubscribe} from './handlers'
 

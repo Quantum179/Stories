@@ -1,5 +1,5 @@
 import {OK, CREATED, BAD_REQUEST, NOT_FOUND} from 'http-status-codes'
-import models from '../../db/models'
+import MagNumberModel from '../../db/models/magNumberModel'
 
 export const getMag = (req, res, next) => {
     //TODO: get latest MagNumber, mag news, top trendings mag numbers and authors
@@ -12,7 +12,7 @@ export const getMag = (req, res, next) => {
 
 export const getMagNumber = (req, res, next) => {
     let {id, fields, ...out} = req.data
-    models.MagNumber.getById(id, fields)
+    MagNumberModel.getById(id, fields)
         .then(magNumber => {
             if(!magNumber) {
                 next({code: NOT_FOUND})
@@ -29,14 +29,14 @@ export const getMagNumber = (req, res, next) => {
 
 export const getMagNumberPreview = (req, res, next) => {
     let {id} = req.data
-    models.MagNumber.getById(id)
+    MagNumberModel.getById(id)
         .then()
         .catch()
 }
 
 export const postMagNumber = (req, res, next) => {
     let {magNumber} = req.data
-    models.MagNumber.create(magNumber)
+    MagNumberModel._create(magNumber)
       .then(savedMagNumber => {
         res.status(CREATED)
         res.locals.magNumber = savedMagNumber
@@ -49,7 +49,7 @@ export const postMagNumber = (req, res, next) => {
 
 export const patchMagNumber = (req, res, next) => {
     let {id, magNumber} = req.data
-    models.MagNumber.update(id, magNumber)
+    MagNumberModel._updateOne(id, magNumber)
       .then(updatedMagNumber => {
 
       })
@@ -61,6 +61,3 @@ export const patchMagNumber = (req, res, next) => {
 export const deleteMagNumber = (req, res, next) => {
     
 }
-
-
-export default routes

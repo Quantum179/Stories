@@ -1,5 +1,5 @@
 
-# RESTful API specifications
+# Routing API specifications
 
 ##### - GET /
 Get home informations of Stories website (top trendings, latest posts, news about Saturn's Chronicles and UniMag)

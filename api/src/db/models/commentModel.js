@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
 import commentSchema from '../schemas/commentSchema'
+import MessageModel from './messageModel'
 
-export default mongoose.model('Comment', commentSchema)
+export default MessageModel.discriminator('Comment', commentSchema)

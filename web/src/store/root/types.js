@@ -1,0 +1,12 @@
+export const getterTypes = {
+  GET_DRAWER_VALUE: 'GET_DRAWER_VALUE',
+  GET_DIALOG_VALUE: 'GET_DIALOG_VALUE'
+}
+export const actionTypes = {
+  TOGGLE_DRAWER_ACTION: 'TOGGLE_DRAWER_ACTION',
+  OPEN_DIALOG_ACTION: 'OPEN_DIALOG_ACTION'
+}
+export const mutationTypes = {
+  TOGGLE_DRAWER: 'TOGGLE_DRAWER',
+  OPEN_DIALOG: 'OPEN_DIALOG'
+}

@@ -6,29 +6,10 @@ var StorySchema = new Schema (
   {
     dimension: String,
     saga: String
-    //TODO Quamtum : composite design pattern
+    //TODO : composite design pattern
   }
 )
 
-
-StorySchema.statics.getMany = function(query, fields = null) {
-  return this.find(query, fields)
-    .exec()
-}
-StorySchema.statics.getOne = function(query, fields = null) {
-  return this.findOne(query, fields)
-    .exec()
-}
-StorySchema.statics.getById = function(id, fields = null) {
-  return this.findById(id, fields)
-  .exec()
-}
-StorySchema.statics.addStory = function(story) {
-  return this.create(story)
-}
-StorySchema.statics.addStories = function addStories(stories) {
-  return this.create(stories)
-}
-
+//TODO : check if plugins are also inherited
 
 export default StorySchema

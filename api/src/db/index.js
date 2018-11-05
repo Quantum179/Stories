@@ -1,25 +1,25 @@
-//DEV import
 import data from './init-data'
-//END DEV import
 import models from './models'
-var testEnv = 'DEV'
-import mongoose from 'mongoose'
+import Mongoose from 'mongoose'
+import queryPlugin from './schemas/plugins/queryPlugin'
+var mongoDB = 'mongodb://localhost/stories'
+var db
 
-var init = function() {
-    data.stories[0].author = mongoose.Types.ObjectId();
-    console.log(data.stories)
-    models.Story.addStories(data.stories)
-    .then(function(stories) {
-      console.log("default stories successfully added.")
-    })
-    .catch(function(err) {
-      console.log('oops : ' + err)
-    })
+export const initDB = () => {
+  Mongoose.connect(mongoDB);
+  Mongoose.Promise = global.Promise;
+
+  db = Mongoose.connection;
+  db.once('open', function() {
+    console.log('open db')
+  })
+  db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+  // Todo Quantum : close database on disconnect
+  //TODO : find how to implement global plugins
 }
 
-export default init
+export const closeDB = () => {
+  db.close()
+}
 
-
-''
-
-//TODO Quantum : export all models classes for app.set
+export const mongoose = Mongoose

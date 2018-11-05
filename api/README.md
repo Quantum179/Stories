@@ -19,6 +19,7 @@
 - Versioning API with version middleware ?
 - https://nodewebapps.com/2017/01/03/13-security-best-practices-for-your-web-application/
 - Prevent DDOS attacks : https://www.npmjs.com/package/express-rate-limit
+- Find a way to use req.params in requestMiddleware
 
 # Dev
 

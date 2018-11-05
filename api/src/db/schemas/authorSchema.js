@@ -7,18 +7,13 @@ var AuthorSchema = new Schema (
   {
     authorName : String,
     posts: [{type: Schema.Types.ObjectId, ref: 'Post'}],
-  },
-  options
+    readers: [{type: Schema.Types.ObjectId, ref: 'User'}]
+  }
 )
 
 // Author instance methods
 AuthorSchema.methods.findPosts = function() {
 
-}
-
-// Author static methods
-AuthorSchema.static.findByID = function(id) {
-  return this.find({'_id': id})
 }
 
 AuthorSchema.static.findPosts = function(idAuthor) {

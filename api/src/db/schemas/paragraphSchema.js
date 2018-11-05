@@ -23,7 +23,7 @@ ParagraphSchema.statics.getOne = function(query = {}, fields = null) {
 }
 
 ParagraphSchema.methods.render = function() {
-  return this.sentences.join("")
+  return this.sentences.join(" ")
 }
 
 export default ParagraphSchema

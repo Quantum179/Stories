@@ -5,13 +5,7 @@ import models from '../models'
 var TopicSchema = new Schema(
   {
     name: String,
-    description: String,
-    //discussions: [{type: Schema.Types.ObjectId, ref: "Discussion"}]
-    //articles: [{type: Schema.Types.ObjectId, ref: "Article"}]
-
-
-    
-
+    description: String
   }
 )
 

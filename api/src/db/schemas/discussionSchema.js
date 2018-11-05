@@ -3,9 +3,7 @@ var Schema = mongoose.Schema
 
 export default new Schema(
   {
-    title: String,
-    introduction: String,
-    comments: [{type: Schema.Types.ObjectId, ref: "Comment"}],
-    shares: Number //Do analysis for share schema
+    users: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    messages: [{type: Schema.Types.ObjectId, ref: 'Message'}]
   }
 )

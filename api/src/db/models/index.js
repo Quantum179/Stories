@@ -7,4 +7,4 @@ var User = userModel,
     Story = storyModel,
     MagNumber = magNumberModel
 
-export default {User, Story}
+export default {User, Story, MagNumber}
