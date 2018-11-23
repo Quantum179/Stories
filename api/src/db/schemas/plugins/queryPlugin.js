@@ -1,6 +1,5 @@
 //global plugin
-
-function buildAnRunQuery(query, options) {
+export const buildAnRunQuery = (query, options) => {
   if(Object.keys(options).length > 0) {
     let {fields, pop, sort, limit} = options
 

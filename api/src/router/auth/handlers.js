@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import {OK, CREATED, BAD_REQUEST, NOT_FOUND} from 'http-status-codes'
 import UserModel from '../../db/models/userModel'
+import { createToken } from '../../passport'
 
 export const postLogin = (req, res, next) => {
     let {email, password, fields, ...out} = req.data
@@ -17,7 +18,7 @@ export const postLogin = (req, res, next) => {
                   } else {
                   //check connexion status 
                     res.status(OK)
-                    res.locals.token = jwt.sign({id: user._id, username: user.username}, 'secret')
+                    res.locals.token = createToken(user)
                     next()
                   }
               })

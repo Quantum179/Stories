@@ -5,7 +5,18 @@ const { TOGGLE_DRAWER, OPEN_DIALOG } = mutationTypes
 
 export const state = {
   drawer: false,
-  dialog: false
+  dialog: false,
+  navCategories: [
+    { title: 'Histoires', icon: 'dashboard', src: 'stories' },
+    { title: 'Chroniques de Saturn', icon: 'dashboard', src: 'chronicles' },
+    { title: 'Blog', icon: 'dashboard', src: 'blog' },
+    { title: 'ExoMag', icon: 'dashboard', src: 'mag' }
+  ],
+  navOptions: [
+    { title: 'A Propos', icon: 'dashboard', src: 'aboutus' },
+    { title: 'Nous Contacter', icon: 'dashboard', src: 'contact' },
+    { title: 'Paramètres', icon: 'dashboard', src: 'settings' }
+  ]
 }
 
 export const getters = {

@@ -9,39 +9,14 @@ const { SET_STORIES_NEWS, SET_STORIES, SET_STORY_DETAILS, SET_SELECTED_STORY } =
 
 const state = {
   news: [],
-  stories: [
-    {
-      title: 'Première histoire',
-      content: "Voici la premiere histoire de test que l'on va retrouver sur le site de Stories"
-    },
-    {
-      title: 'Test Story 2',
-      content: "Voici la premiere histoire de test que l'on va retrouver sur le site de Stories"
-    },
-    {
-      title: 'Test story 3',
-      content: "Voici la premiere histoire de test que l'on va retrouver sur le site de Stories"
-    },
-    {
-      title: 'Test story 4',
-      content: "Voici la premiere histoire de test que l'on va retrouver sur le site de Stories"
-    },
-    {
-      title: 'Première feuille',
-      content: 'Mon premier est le cadet de Full Metal Alchemist'
-    },
-    {
-      title: 'Test story 5',
-      content: "Voici la premiere histoire de test que l'on va retrouver sur le site de Stories"
-    }
-  ],
+  stories: [],
   selectedStoryID: null,
   storyDetails: null
 }
 
 const actions = {
   [FETCH_STORIES_INFOS] ({ commit }) {
-    axios.get(`${apiUrl}/posts`)
+    axios.get(`${apiUrl}/stories`)
       .then(res => {
         if (res.status === 200) {
           let {stories} = res.data

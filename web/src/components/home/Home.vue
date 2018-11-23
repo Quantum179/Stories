@@ -6,7 +6,6 @@
         <div class="anim-item" v-if="selectedCategory == null">
           <h1>Accueil</h1>
             <exo-carousel :slides="news"></exo-carousel>
-            <post-list :posts="latestPosts"></post-list>
         </div>
         <div class="anim-item" v-if="selectedCategory !== null && selectedCategory.name == category.name"
           v-for="category in categories"
@@ -22,7 +21,6 @@ import ExosoftOpening from './ExosoftOpening'
 import HomeOpening from './HomeOpening'
 import ExoCarousel from '../shared/primitives/ExoCarousel'
 import CategoryCard from './CategoryCard'
-import PostList from '../shared/post/PostList'
 
 import { createNamespacedHelpers } from 'vuex'
 import {actionTypes} from '../../store/modules/home/types'
@@ -52,8 +50,7 @@ export default {
     ExosoftOpening,
     HomeOpening,
     ExoCarousel,
-    CategoryCard,
-    PostList
+    CategoryCard
   }
 }
 </script>

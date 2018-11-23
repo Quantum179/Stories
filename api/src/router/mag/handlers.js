@@ -10,9 +10,22 @@ export const getMag = (req, res, next) => {
     next()
 }
 
+export const getMagNumbers = (req, res, next) => {
+  let {params, options, ...out} = req.data
+  MagNumberModel._getMany(params, options)
+    .then(magNumbers => {
+      res.status(200)
+      res.locals.magNumbers = magNumbers
+      next()
+    })
+    .catch(err => {
+      next({err: err, code:NOT_FOUND})
+    })
+}
+
 export const getMagNumber = (req, res, next) => {
-    let {id, fields, ...out} = req.data
-    MagNumberModel.getById(id, fields)
+    let {id, options, ...out} = req.data
+    MagNumberModel._getById(id, fields)
         .then(magNumber => {
             if(!magNumber) {
                 next({code: NOT_FOUND})
@@ -28,10 +41,11 @@ export const getMagNumber = (req, res, next) => {
 }
 
 export const getMagNumberPreview = (req, res, next) => {
-    let {id} = req.data
-    MagNumberModel.getById(id)
-        .then()
-        .catch()
+  let id = req.params.id
+  let {options} = req.data
+  MagNumberModel._getById(id, options)
+      .then()
+      .catch()
 }
 
 export const postMagNumber = (req, res, next) => {

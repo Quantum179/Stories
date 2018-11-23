@@ -10,7 +10,7 @@
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn v-for="(action, i) in actions" :key="i" color="primary" flat @click="action.handler()">
+        <v-btn v-for="(action, i) in actions" :key="i" color="primary" flat @click="action.callback()">
           {{action.label}}
         </v-btn>
       </v-card-actions>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { getterTypes, mutationTypes } from '../../../store/root/types'
 
 const { GET_DIALOG_VALUE } = getterTypes
@@ -33,15 +33,31 @@ export default {
   data () {
     return {}
   },
+  watch: {
+    dialog (newVal, oldVal) {
+      if (newVal === true) {
+        this.actions.forEach(a => {
+          if (a.label == null || typeof a.callback !== 'function') {
+            this[CLOSE_DIALOG]()
+          }
+        })
+      } else {
+        // todo
+      }
+    }
+  },
   computed: {
+    ...mapGetters([GET_DIALOG_VALUE]),
+
     dialog: {
       get () {
         return this[GET_DIALOG_VALUE]()
       }
     }
   },
-  mouted () {
+  mounted () {
     // TODO : check if props are valid ?
+
   },
   methods: {
     ...mapMutations([CLOSE_DIALOG])

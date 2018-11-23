@@ -29,7 +29,7 @@ export default {
   computed: {
     ...mapState(['news', 'trendingArticles', 'latestArticles', 'topics'])
   },
-  mounted: function () {
+  mounted () {
     this[FETCH_BLOG_INFOS]()
   },
   methods: {

@@ -14,8 +14,7 @@ var options = {
   ,toJSON: {
     virtuals: true
   }
-  ,id:false 
-}; // TODO Quantum : delete role field in result queries
+}
 
 var UserSchema = new Schema (
   {
@@ -57,7 +56,7 @@ UserSchema.pre('save', function(next) {
 })
 
 //Plugins
-UserSchema.plugin(queryPlugin)
+UserSchema.plugin(queryPlugin) 
 
 // --- EXPORT MODULE ---
 export default UserSchema

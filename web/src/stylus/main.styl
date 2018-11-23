@@ -1,5 +1,8 @@
 
 @import '~vuetify/src/stylus/main'
+// global
+body
+  overflow hidden
 
 // flex.styl
 .flex
@@ -10,15 +13,32 @@
 .flex-y
   @extend .flex
   flex-direction column
+
+.align-center
+  align-items center
+.justify-between
+  justify-content space-between
+.justify-around
+  justify-content space-around
+
 .flex-x-between
   @extend .flex-x
-  justify-content space-between
-  align-items center
+  @extend .justify-between
+  @extend .align-center
 .flex-x-around
   @extend .flex-x
-  justify-content space-around
-  align-items center
+  @extend .justify-around
+  @extend .align-center
 
 // button.styl
 .v-btn
   font-size 10px
+
+// text.styl 
+.noSelect
+  -webkit-touch-callout none
+  -webkit-user-select none
+  -khtml-user-select none
+  -moz-user-select none
+  -ms-user-select none
+  user-select none

@@ -12,16 +12,6 @@ var ParagraphSchema = new Schema(
   }
 )
 
-ParagraphSchema.statics.getMany = function(query = {}, fields = null) {
-  return this.find(query, fields)
-    .exec()
-}
-
-ParagraphSchema.statics.getOne = function(query = {}, fields = null) {
-  return this.findOne(query, fields)
-    .exec()
-}
-
 ParagraphSchema.methods.render = function() {
   return this.sentences.join(" ")
 }

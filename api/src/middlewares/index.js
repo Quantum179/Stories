@@ -3,6 +3,7 @@ import validator from 'validator'
 import utils from '../utils'
 import { getStatusText } from 'http-status-codes'
 import util from 'util'
+import {isMongoData, toPlainObject} from '../db'
 
 
 // ========== Export variables ==========
@@ -45,8 +46,8 @@ export default {
           if(Object.prototype.hasOwnProperty.call(res.locals, key)) { //TODO: make global wrapper
               let item = payload[key]
 
-              if(utils.isMongoData(item)) {
-                  data[key] = utils.formatMongooseItem(item)
+              if(isMongoData(item)) {
+                  data[key] = toPlainObject(item)
               } else {
                   data[key] = item
               }

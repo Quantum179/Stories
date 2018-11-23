@@ -33,7 +33,7 @@ export default {
     }
   },
   mounted () {
-    /* this[FETCH_STORIES_INFOS]() */
+    this[FETCH_STORIES_INFOS]()
   },
   computed: {
     ...mapState(['news', 'stories'])
