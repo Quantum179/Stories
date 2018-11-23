@@ -8,6 +8,7 @@ const state = {
   news: [],
   trendingArticles: [],
   latestArticles: [],
+  selectedArticleID: null,
   articleDetails: null
 }
 
@@ -17,7 +18,7 @@ const { SET_BLOG_NEWS, SET_TRENDING_ARTICLES, SET_LATEST_ARTICLES, SET_ARTICLE_D
 // actions
 const actions = {
   [FETCH_BLOG_INFOS] ({ commit }) {
-    this.$http.get(apiUrl + '/blog')
+    this.$http.get(`${apiUrl}/blog`)
       .then(res => {
         if (res.status === OK) {
           // TODO : sanitize api response data
@@ -37,8 +38,8 @@ const actions = {
         console.log(err)
       })
   },
-  [FETCH_ARTICLE_DETAILS] ({commit}, id) {
-    this.$http.get(apiUrl + '/articles/' + id)
+  [FETCH_ARTICLE_DETAILS] ({commit, state}) {
+    this.$http.get(`${apiUrl}/articles/${state.selectedArticleID}`)
       .then(res => {
         if (res.status === OK) {
           let {article} = res.data

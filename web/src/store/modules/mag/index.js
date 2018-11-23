@@ -15,7 +15,7 @@ const state = {
 
 const actions = {
   [FETCH_MAG_INFOS] ({ commit }) {
-    axios.get(apiUrl + '/mag')
+    axios.get(`${apiUrl}/mag`)
       .then(res => {
         if (res.status === 200) {
           let {news, magNumbers} = res.data

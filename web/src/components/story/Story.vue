@@ -1,8 +1,8 @@
 <template>
 <div>
   <v-container>
-    <div class="title-story"><h1>{{story.title}}</h1></div>
-    <div class="subtitle-story">{{story.description}}</div>
+    <h1 class="title-story">{{story.title}}</h1>
+    <h2 class="subtitle-story">{{story.description}}</h2>
   </v-container>
   <v-container fluid>
     <v-layout row>
@@ -10,9 +10,11 @@
         <reading-nav :post="story"></reading-nav>
       </v-flex>
       <v-flex xs9>
-        <div class="story-body">
-          <chapter v-for="chapter in story.chapters" :key="chapter.title" :chapter="chapter"></chapter>
-        </div>
+        <v-container fluid class="story-body">
+          <v-flex>
+            <chapter v-for="chapter in story.chapters" :key="chapter.title" :chapter="chapter"></chapter>
+          </v-flex>
+        </v-container>
       </v-flex>
     </v-layout>
     <v-layout row></v-layout>
@@ -40,6 +42,7 @@ export default {
   },
   mounted () {
     this[FETCH_STORY_DETAILS]()
+    // todo : https://stackoverflow.com/questions/16670931/hide-scroll-bar-but-while-still-being-able-to-scroll
   },
   methods: {
     ...mapActions([FETCH_STORY_DETAILS]),
@@ -53,4 +56,6 @@ export default {
 
 <style lang="stylus">
 
+.story-body
+  overflow-y scroll
 </style>

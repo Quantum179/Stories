@@ -1,6 +1,6 @@
 import {OK, CREATED, BAD_REQUEST, NOT_FOUND} from 'http-status-codes'
 import StoryModel from '../../db/models/storyModel'
-
+import util from 'util'
 
 export const getHome = (req, res, next) => {
 
@@ -8,7 +8,7 @@ export const getHome = (req, res, next) => {
 }
 
 export const getStories = (req, res, next) => {
-    let {params, options, ...out} = req.data
+    let { params, options, ...out } = req.data
     StoryModel._getMany(params, options)
         .then(stories => {
           if (!stories || stories.length == 0) {
@@ -25,7 +25,7 @@ export const getStories = (req, res, next) => {
 }
 
 export const getStory = (req, res, next) => {
-    let {id, options, ...out} = req.data
+    let { id, options, ...out } = req.data
     StoryModel._getById(id, options)
         .then(story => {
           if(!story)  {
@@ -42,7 +42,7 @@ export const getStory = (req, res, next) => {
 }
 
 export const postStory = (req, res, next) => {
-    let {story} = req.data
+    let { story } = req.data
     StoryModel._create(story)
         .then(savedStory => {
             res.status(CREATED)
@@ -60,4 +60,72 @@ export const patchStory = (req, res, next) => {
 
 export const deleteStory = (req, res, next) => {
 
+}
+
+export const tesr = (req, res, next) => {
+  console.log('test111')
+  let authorID
+
+  var author = new Tank({
+    "name": {"first": "Saturn"},
+    "username": "Saturn",
+    "roles": ["Admin"],
+    "email": "testmail@gmail.com",
+    "password": "$2b$10$o6nuelFZrPgeYYIyIK11GeGWC.vT72QpjcVmtGAg.u4um7Y7/MkD."
+    // plain pass : testpass
+  });
+  author.save(function (err, author) {
+    authorID = author._id
+  });
+
+
+
+  let test = [
+    {
+      "title": "Le retour des Explorateurs",
+      "description":
+      `Les Magiciens astronautes sont revenus de leur mission spéciale. Ils ont
+      fait une grande découverte mais n'ont pas pu fournir de détails durant le
+      voyage. Une cérémonie officielle est organisée, tous les Elms sont invités.`,
+      "author": authorID,
+      "keywords": ["Exploration"]
+    },
+    {
+      "title": "Le retour des Explorateurs",
+      "description":
+      `Les Magiciens astronautes sont revenus de leur mission spéciale. Ils ont
+      fait une grande découverte mais n'ont pas pu fournir de détails durant le
+      voyage. Une cérémonie officielle est organisée, tous les Elms sont invités.`,
+      "author": authorID,
+      "keywords": ["Exploration"]
+    },
+    {
+      "title": "Le retour des Explorateurs",
+      "description":
+      `Les Magiciens astronautes sont revenus de leur mission spéciale. Ils ont
+      fait une grande découverte mais n'ont pas pu fournir de détails durant le
+      voyage. Une cérémonie officielle est organisée, tous les Elms sont invités.`,
+      "author": authorID,
+      "keywords": ["Exploration"]
+    },
+    {
+      "title": "Le retour des Explorateurs",
+      "description":
+      `Les Magiciens astronautes sont revenus de leur mission spéciale. Ils ont
+      fait une grande découverte mais n'ont pas pu fournir de détails durant le
+      voyage. Une cérémonie officielle est organisée, tous les Elms sont invités.`,
+      "author": authorID,
+      "keywords": ["Exploration"]
+    }
+  ]
+
+  StoryModel._create(test)
+  .then(savedStories => {
+    console.log('test')
+    res.status(200)
+    next()
+  })
+  .catch(err => {
+    next(err)
+  })
 }

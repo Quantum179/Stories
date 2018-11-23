@@ -21,8 +21,9 @@ export default {
     ...mapMutations([OPEN_DIALOG]),
 
     openDialog (post, labelPost, callback) {
-      this.actions.push(...[{label: labelPost, handler: callback}, {label: 'Annuler', handler: null}])
+      this.actions.push(...[{label: labelPost, callback: callback}, {label: 'Annuler', handler: null}])
       this.content = {title: post.title, body: post.preface}
+
       this[OPEN_DIALOG]()
     }
   },

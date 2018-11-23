@@ -8,7 +8,7 @@
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <div class="categories" v-if="width > 600">
-      <router-link tag="span" to="stories" class="pointer category">Histoires</router-link>
+      <router-link tag="span" to="stories" class="pointer category ">Histoires</router-link>
       <router-link tag="span" to="chronicles" class="pointer category">Chroniques</router-link>
       <router-link tag="span" to="blog" class="pointer category">Blog</router-link>
       <router-link tag="span" to="mag" class="pointer category">ExoMag</router-link>
@@ -28,24 +28,26 @@ const { TOGGLE_DRAWER } = mutationTypes
 export default {
   data () {
     return {
-      width: window.innerWidth,
-      height: window.innerHeight
+      width: null,
+      height: null
     }
   },
   mounted () {
-    // deplace
-    this.width = window.innerWidth
-    this.height = window.innerHeight
-    this.$nextTick(() => {
-      window.addEventListener('resize', () => {
-        this.width = window.innerWidth
-        this.height = window.innerHeight
-      })
-    })
+    this.setSize()
   },
   methods: {
     ...mapMutations([TOGGLE_DRAWER]),
 
+    setSize () {
+      this.width = window.innerWidth
+      this.height = window.innerHeight
+      this.$nextTick(() => {
+        window.addEventListener('resize', () => {
+          this.width = window.innerWidth
+          this.height = window.innerHeight
+        })
+      })
+    },
     toggleDrawer () {
       this[TOGGLE_DRAWER]()
     }
