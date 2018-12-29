@@ -9,9 +9,8 @@ var options = {
 
 var StorySchema = new Schema (
   {
-    dimension: String,
-    saga: String
-    //TODO : composite design pattern
+    saga: String,
+    storyCollection: { type: Schema.Types.ObjectId, ref: 'Collection'}
   }
 )
 

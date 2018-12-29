@@ -8,7 +8,7 @@ export const getHome = (req, res, next) => {
 }
 
 export const getStories = (req, res, next) => {
-    let { params, options, ...out } = req.data
+    let { params, options } = req.data
     StoryModel._getMany(params, options)
         .then(stories => {
           if (!stories || stories.length == 0) {
@@ -25,7 +25,7 @@ export const getStories = (req, res, next) => {
 }
 
 export const getStory = (req, res, next) => {
-    let { id, options, ...out } = req.data
+    let { id, options } = req.data
     StoryModel._getById(id, options)
         .then(story => {
           if(!story)  {

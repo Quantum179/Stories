@@ -2,17 +2,17 @@ import mongoose from 'mongoose'
 import postPlugin from './plugins/postPlugin';
 var Schema = mongoose.Schema
 
-var CollectionSchema = new Schema(
+var SerieSchema = new Schema(
   {
-    stories: [{
+    articles: [{
       type: {
-        story: Schema.Types.ObjectId, ref: 'Story', 
+        article: Schema.Types.ObjectId, ref: 'Article', 
         number: Number
       }
     }]
   }
 )
 
-CollectionSchema.plugin(postPlugin)
+SerieSchema.plugin(postPlugin)
 
-export default CollectionSchema
+export default SerieSchema

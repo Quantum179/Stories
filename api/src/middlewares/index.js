@@ -10,20 +10,19 @@ import {isMongoData, toPlainObject} from '../db'
 
 export default {
     sanitizer: function(req, res, next) {
-        req = utils.escapeRequest(req)
-        next()
+      // TODO Quantum : validate request with routing params
+      // TODO Quantum : R&D in mongoose validations and how to use it with validator module
+      sanitizer.escape(req)
+      next()
     },
     requestFormatter: function(req, res, next) {
         let data = {}
         data.options = {}
-        let keys = Object.keys(req.body) //TODO : use for in
 
-        if(keys.length > 0) {
-            keys.forEach(k => {data[k] = req.body[k]})
+        for(let key in req.body) {
+          data[key] = req.body[key]      
         }
-/*         if(req.params.hasOwnProperty('id')) {
-            data.id = req.params.id
-        } */
+
         if(req.query.hasOwnProperty('query')) {
             data.options.query = req.query.query || {}
         }
@@ -45,7 +44,6 @@ export default {
         for(let key in payload) {
           if(Object.prototype.hasOwnProperty.call(res.locals, key)) { //TODO: make global wrapper
               let item = payload[key]
-
               if(isMongoData(item)) {
                   data[key] = toPlainObject(item)
               } else {

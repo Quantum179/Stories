@@ -1,0 +1,6 @@
+export const USER = 'USER'
+export const SUBSCRIBER = 'SUBSCRIBER'
+export const IDENTITY = 'IDENTITY'
+export const REVIEWER = 'REVIEWER'
+export const ADMIN = 'ADMIN'
+export const AUTHOR = 'AUTHOR'

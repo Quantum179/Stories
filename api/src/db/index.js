@@ -16,6 +16,14 @@ function removeFields(object, fields) {
   return object
 }
 
+function toPlainItem(item) {
+  let plainItem = item.toObject()
+  removeFields(plainItem, defaultMongooseFields)
+  removeFields(plainItem, routeFields)
+
+  return plainItem
+}
+
 export const initDB = () => {
   Mongoose.connect(mongoDB);
   Mongoose.Promise = global.Promise;
@@ -36,15 +44,10 @@ export const closeDB = () => {
 export const toPlainObject = (item, routeFields = []) => {
   if(Array.isArray(item)) {
     return item.map(i => {
-      let _i = i.toObject()
-      return removeFields(_i, defaultMongooseFields)
+      return toPlainItem(item)
     })
   } else {
-    let plainItem = item.toObject()
-    removeFields(plainItem, defaultMongooseFields)
-    removeFields(plainItem, routeFields)
-
-    return plainItem
+    return toPlainItem(item)
   }
 }
 

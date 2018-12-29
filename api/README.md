@@ -1,6 +1,7 @@
 # API de Stories
 
 # TODOS
+- make a better auth guard in passport
 - Refactor schema definitions (global options and global plugins)
 - Find a way to use req.params in requestMiddleware
 - Create an accurate database model for the entire application

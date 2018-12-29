@@ -4,10 +4,10 @@ var options = { discriminatorKey: 'type', timestamps: true}; // TODO Quantum : d
 
 var MessageSchema = new Schema(
   {
-    author: {type: Schema.Types.ObjectId, ref: 'Author'},
+    user: {type: Schema.Types.ObjectId, ref: 'User'},
     content: String
   },
   options
 )
 
-export default CommentSchema
+export default MessageSchema
