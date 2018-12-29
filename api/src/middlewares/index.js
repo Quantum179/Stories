@@ -1,7 +1,6 @@
 import sanitizer from 'sanitizer'
 import validator from 'validator'
 import utils from '../utils'
-import { getStatusText } from 'http-status-codes'
 import util from 'util'
 import {isMongoData, toPlainObject} from '../db'
 
@@ -33,7 +32,7 @@ export default {
         req.data = data
         next()
     },
-    responseFormatter: function(req, res) {
+    responseFormatter: function(req, res, next) {
       //We assume the status is already set in the endpoint handler
       let data = {}
       let payload = res.locals //TODO : make sure res.locals only contains requested informations.
@@ -54,9 +53,5 @@ export default {
       
         return res.json(data)      
       }
-    },
-    errorHandler: function(err, req, res) {
-      res.status(err.code)
-      return res.json(err.hasOwnProperty('err') ? err.err : getStatusText(err.code))
     }
 }

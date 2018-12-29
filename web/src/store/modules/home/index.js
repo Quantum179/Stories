@@ -48,7 +48,7 @@ const actions = {
       .then(res => {
         if (res.status === 200) {
           // TODO : sanitize api response data
-          let {news, posts, categories} = res.data
+          let { news, posts, categories } = res.data
           commit(SET_HOME_NEWS, news)
           commit(SET_LATEST_POSTS, posts)
           commit(SET_CATEGORIES, categories)

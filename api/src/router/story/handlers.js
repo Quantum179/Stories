@@ -11,7 +11,8 @@ export const getStories = (req, res, next) => {
     let { params, options } = req.data
     StoryModel._getMany(params, options)
         .then(stories => {
-          if (!stories || stories.length == 0) {
+          if (!stories || stories.length === 0) {
+            console.log('nothing')
             next({code: NOT_FOUND})
           } else {
             res.status(OK)
@@ -63,7 +64,6 @@ export const deleteStory = (req, res, next) => {
 }
 
 export const tesr = (req, res, next) => {
-  console.log('test111')
   let authorID
 
   var author = new Tank({

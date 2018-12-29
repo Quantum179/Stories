@@ -18,7 +18,7 @@ const actions = {
     axios.get(`${apiUrl}/mag`)
       .then(res => {
         if (res.status === 200) {
-          let {news, magNumbers} = res.data
+          let { news, magNumbers } = res.data
           commit(SET_MAG_NEWS, news)
           commit(SET_MAG_NUMBERS, magNumbers)
         } else {
@@ -29,11 +29,11 @@ const actions = {
         console.log(err)
       })
   },
-  [FETCH_MAG_NUMBER_DETAILS] ({commit}, id) {
+  [FETCH_MAG_NUMBER_DETAILS] ({ commit }, id) {
     axios.get(apiUrl + '/mag/' + id)
       .then(res => {
         if (res.status === 200) {
-          let {magNumber} = res.data
+          let { magNumber } = res.data
           commit(SET_MAG_NUMBER_DETAILS, magNumber)
         } else {
           // TODO

@@ -4,6 +4,7 @@ const app = express()
 import http from 'http';
 const server = http.Server(app)
 import middlewares from './src/middlewares'
+import { getStatusText } from 'http-status-codes'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
@@ -11,6 +12,7 @@ import passport from './src/passport'
 import { initDB, closeDB } from './src/db'
 import SocketIO from 'socket.io'
 import router from './src/router'
+
 
 //Settings
 app.use(cors())
@@ -26,11 +28,16 @@ app.use(passport.initialize())
 // Database Configuration
 initDB()
 
-// Router Middleware
+// Router and formatters
 app.use(middlewares.requestFormatter)
-app.use('/api/v1', router) //TODO: use function object instead of class
+app.use('/api/v1', router)
 app.use(middlewares.responseFormatter)
-app.use(middlewares.errorHandler)
+
+// Error handler
+app.use(function (err, req, res, next) {
+  res.status(err.code)
+  return res.json(err.hasOwnProperty('err') ? err.err : getStatusText(err.code))
+})
 
 // Environment Configuration
 const env = process.env

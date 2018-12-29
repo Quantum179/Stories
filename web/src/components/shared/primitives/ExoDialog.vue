@@ -7,8 +7,8 @@
       <v-card-text>
         {{content.body}}
       </v-card-text>
-      <v-divider></v-divider>
-      <v-card-actions>
+      <v-divider v-if="actions.length > 0"></v-divider>
+      <v-card-actions v-if="actions.length > 0">
         <v-spacer></v-spacer>
         <v-btn v-for="(action, i) in actions" :key="i" color="primary" flat @click="action.callback()">
           {{action.label}}
@@ -34,7 +34,7 @@ export default {
     return {}
   },
   watch: {
-    dialog (newVal, oldVal) {
+    dialog (newVal) {
       if (newVal === true) {
         this.actions.forEach(a => {
           if (a.label == null || typeof a.callback !== 'function') {
