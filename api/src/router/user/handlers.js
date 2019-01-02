@@ -2,7 +2,7 @@ import {OK, CREATED, BAD_REQUEST, NOT_FOUND} from 'http-status-codes'
 import UserModel from '../../db/models/userModel'
 
 export const getUsers = (req, res, next) => { //TODO: vérifier que la syntaxe est safe
-    let {params, options, ...out} = req.data
+    let { params, options } = req.data
     UserModel._getMany(params, options)
         .then(users => {
             if (!users || users.length == 0) {
@@ -21,7 +21,7 @@ export const getUsers = (req, res, next) => { //TODO: vérifier que la syntaxe e
 
 export const getUser = (req, res, next) => {
     let id = req.params.id
-    let {options} = req.data
+    let { options } = req.data
     UserModel._getByID(id, options)
         .then(user => {
             if (!user) {
@@ -44,7 +44,7 @@ export const getProfile = (req, res, next) => {
 }
 
 export const postUser = (req, res, next) => {
-    let {user} = req.data
+    let { user } = req.data
     UserModel._create(user)
         .then(savedUser => {
             res.status(CREATED)

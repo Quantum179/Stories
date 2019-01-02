@@ -3,17 +3,17 @@ export const buildAnRunQuery = (query, options) => {
   if(Object.keys(options).length > 0) {
     let {fields, pop, sort, limit} = options
 
-    if(fields != undefined) {
-        query.select(fields)
-    }
     if(populate != null) {
-        query.populate(pop)
+      query.populate(pop)
     }
     if(sort != null) {
-        query.sort(sort)
+      query.sort(sort)
     }
     if(limit != null) {
-        query.limit(limit)
+      query.limit(limit)
+    }
+    if(select != null) {
+      query.select(fields)
     }
   }
 

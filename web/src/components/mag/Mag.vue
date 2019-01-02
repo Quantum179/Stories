@@ -7,7 +7,7 @@
         <mag-number-card v-for="magNumber in magNumbers" :key="magNumber.title"></mag-number-card>
       </v-flex>
     </v-container>
-    <preface-dialog></preface-dialog>
+    <preface-dialog v-if="dialog"></preface-dialog>
 </v-container>
 </template>
 
@@ -15,11 +15,13 @@
 import ExoCarousel from '../shared/primitives/ExoCarousel'
 import PrefaceDialog from '../shared/dialogs/PrefaceDialog'
 import MagNumberCard from './MagNumberCard'
-import { createNamespacedHelpers } from 'vuex'
+import { mapGetters, createNamespacedHelpers } from 'vuex'
 import { actionTypes } from '../../store/modules/mag/types'
+import * as rootTypes from '../../store/root/types'
 
 const { mapState, mapActions } = createNamespacedHelpers('mag')
 const { FETCH_MAG_INFOS } = actionTypes
+const { GET_DIALOG_VALUE } = rootTypes.getterTypes
 
 export default {
   data () {
@@ -28,10 +30,17 @@ export default {
     }
   },
   computed: {
-    ...mapState(['news', 'magNumbers'])
+    ...mapState(['news', 'magNumbers']),
+    ...mapGetters([GET_DIALOG_VALUE]),
+
+    dialog: {
+      get () {
+        return this[GET_DIALOG_VALUE]
+      }
+    }
   },
   mounted: function () {
-    this[FETCH_MAG_INFOS]()
+    /* this[FETCH_MAG_INFOS]() */
   },
   methods: {
     ...mapActions([FETCH_MAG_INFOS])

@@ -4,7 +4,7 @@
       <v-icon>menu</v-icon>
     </v-btn>
     <v-toolbar-title>
-      <router-link class="pointer" to="/home" tag="span">Stories</router-link>
+      <router-link class="pointer" to="/home" tag="span">Stories (alpha)</router-link>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <div class="categories" v-if="width > 600">

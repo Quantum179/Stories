@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { apiUrl } from '../../constants'
-import { OK, INTERNAL_SERVAL_ERROR } from 'http-status-code'
+import { apiUrl } from '../../../constants'
 
 import { actionTypes, mutationTypes } from './types'
 
@@ -21,7 +20,7 @@ const actions = {
   [FETCH_BLOG_INFOS] ({ commit }) {
     axios.get(`${apiUrl}/blog`)
       .then(res => {
-        if (res.status === OK) {
+        if (res.status === 200) {
           // TODO : sanitize api response data
           let { news, articles, categories } = res.data
           commit(SET_BLOG_NEWS, news)
@@ -29,7 +28,7 @@ const actions = {
           commit(SET_LATEST_ARTICLES, articles)
         } else {
           // TODO
-          if (res.status === INTERNAL_SERVAL_ERROR) {
+          if (res.status === 500) {
             // TODO: pop-up error state
             // commit(DISPLAY_ERROR)
           }
@@ -42,11 +41,11 @@ const actions = {
   [FETCH_ARTICLE_DETAILS] ({ commit, state }) {
     axios.get(`${apiUrl}/articles/${state.selectedArticleID}`)
       .then(res => {
-        if (res.status === OK) {
+        if (res.status === 200) {
           let { article } = res.data
           commit(SET_ARTICLE_DETAILS, article)
         } else {
-
+          // TODO
         }
       })
   }

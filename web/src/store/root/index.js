@@ -1,7 +1,7 @@
 import { getterTypes, actionTypes, mutationTypes } from './types'
 const { GET_DRAWER_VALUE, GET_DIALOG_VALUE } = getterTypes
-const { TOGGLE_DRAWER_ACTION, OPEN_DIALOG_ACTION } = actionTypes
-const { TOGGLE_DRAWER, OPEN_DIALOG } = mutationTypes
+const { TOGGLE_DRAWER_ACTION, OPEN_DIALOG_ACTION, CLOSE_DIALOG_ACTION } = actionTypes
+const { TOGGLE_DRAWER, OPEN_DIALOG, CLOSE_DIALOG } = mutationTypes
 
 export const state = {
   drawer: false,
@@ -34,7 +34,11 @@ export const actions = {
   },
   [OPEN_DIALOG_ACTION] ({commit}) {
     commit(OPEN_DIALOG)
-  }
+  },
+  [CLOSE_DIALOG_ACTION] ({commit}) {
+    commit(CLOSE_DIALOG)
+  },
+
 }
 
 export const mutations = {
@@ -42,6 +46,9 @@ export const mutations = {
     state.drawer = !state.drawer
   },
   [OPEN_DIALOG] (state) {
-    state.dialog = !state.dialog
+    state.dialog = true
+  },
+  [CLOSE_DIALOG] (state) {
+    state.dialog = false
   }
 }

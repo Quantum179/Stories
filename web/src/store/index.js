@@ -1,9 +1,13 @@
+import Vue from 'vue'
+import Vuex from 'vuex'
+
 import { state, getters, actions, mutations } from './root'
 import homeModule from './modules/home'
 import magModule from './modules/mag'
 import storyModule from './modules/story'
-import Vue from 'vue'
-import Vuex from 'vuex'
+import blogModule from './modules/blog'
+import authModule from './modules/auth'
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -14,7 +18,9 @@ const store = new Vuex.Store({
   modules: {
     home: homeModule,
     mag: magModule,
-    story: storyModule
+    story: storyModule,
+    blog: blogModule,
+    auth: authModule
   }
 })
 

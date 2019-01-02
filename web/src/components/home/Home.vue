@@ -57,10 +57,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['news', 'latestPosts', 'categories', 'selectedCategory'])
+    ...mapState(['news', 'latestPosts', 'trendingPosts', 'categories', 'selectedCategory'])
   },
   mounted () {
-    this[FETCH_HOME_INFOS]()
+    /* this[FETCH_HOME_INFOS]() */
     // TODO: $('#home').onScroll to set selected category
     // TODO: add transition animation for categories
   },

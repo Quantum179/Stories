@@ -32,3 +32,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+// this.viewport = `client w : ${window.clientWidth}, client h : ${window.clientHeight}, inner w : ${window.innerWidth}, inner h : ${window.innerHeight},` 

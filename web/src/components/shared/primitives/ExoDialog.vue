@@ -33,25 +33,12 @@ export default {
   data () {
     return {}
   },
-  watch: {
-    dialog (newVal) {
-      if (newVal === true) {
-        this.actions.forEach(a => {
-          if (a.label == null || typeof a.callback !== 'function') {
-            this[CLOSE_DIALOG]()
-          }
-        })
-      } else {
-        // todo
-      }
-    }
-  },
   computed: {
     ...mapGetters([GET_DIALOG_VALUE]),
 
     dialog: {
       get () {
-        return this[GET_DIALOG_VALUE]()
+        return this[GET_DIALOG_VALUE]
       }
     }
   },

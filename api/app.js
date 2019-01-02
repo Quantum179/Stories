@@ -1,8 +1,6 @@
 // Main variables
 import express from 'express'
-const app = express()
 import http from 'http';
-const server = http.Server(app)
 import middlewares from './src/middlewares'
 import { getStatusText } from 'http-status-codes'
 import cors from 'cors'
@@ -13,19 +11,16 @@ import { initDB, closeDB } from './src/db'
 import SocketIO from 'socket.io'
 import router from './src/router'
 
+const app = express()
+const server = http.Server(app)
 
-//Settings
+//Configuration
 app.use(cors())
 app.use(bodyParser.json())
-
-// Security
 app.use(helmet())
 app.use(middlewares.sanitizer)
-
-// Auth
 app.use(passport.initialize())
 
-// Database Configuration
 initDB()
 
 // Router and formatters
@@ -35,6 +30,7 @@ app.use(middlewares.responseFormatter)
 
 // Error handler
 app.use(function (err, req, res, next) {
+  console.log(err)
   res.status(err.code)
   return res.json(err.hasOwnProperty('err') ? err.err : getStatusText(err.code))
 })

@@ -1,21 +1,19 @@
 <template>
-  <v-container fluid id="blog">
+  <div id="blog">
     <topic-nav :topics="topics"></topic-nav>
-    <v-layout row>
-      <h1>Blog</h1>
-      <exo-carousel :news="news"></exo-carousel>
-      <div class="trending">
-        <article-card v-for="(article, i) in trendingArticles" :key="i" :article="article" @click="openArticle(i)"></article-card>
-      </div>
-    </v-layout>
-    <v-layout row>
-      
-    </v-layout>
-
-    <div class="latest">
-      <article-card v-for="(article, i) in latestArticles" :key="i" :article="article" @click="openArticle(i)"></article-card>
-    </div>
-  </v-container>
+    <v-container fluid>
+      <v-layout row>
+        <h1>Blog</h1>
+        <exo-carousel :news="news"></exo-carousel>
+        <div class="trending">
+          <article-card v-for="(article, i) in trendingArticles" :key="i" :article="article" @click="openArticle(i)"></article-card>
+        </div>
+        <div class="latest">
+          <article-card v-for="(article, i) in latestArticles" :key="i" :article="article" @click="openArticle(i)"></article-card>
+        </div>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>

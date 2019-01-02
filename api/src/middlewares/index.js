@@ -18,15 +18,24 @@ export default {
         let data = {}
         data.options = {}
 
-        for(let key in req.body) {
-          data[key] = req.body[key]      
+        if(req.query.hasOwnProperty('queryParams')) {
+          data.params = req.query.queryParams
         }
-
-        if(req.query.hasOwnProperty('query')) {
-            data.options.query = req.query.query || {}
-        }
+        
         if(req.query.hasOwnProperty('fields')) {
-            data.options.fields = req.query.fields
+          data.options.fields = req.query.fields
+        }
+        if(req.query.hasOwnProperty('populate')) {
+          data.options.pop = req.query.populate
+        }
+        if(req.query.hasOwnProperty('sort')) {
+          data.options.sort = req.query.sort
+        }
+        if(req.query.hasOwnProperty('limit')) {
+          data.options.limit = req.query.limit
+        }
+        if(req.query.hasOwnProperty('select')) {
+          data.options.select = req.query.select
         }
         
         req.data = data

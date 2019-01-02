@@ -26,14 +26,12 @@ const state = {
 }
 
 const actions = {
-  [FETCH_STORIES_INFOS] ({ commit }) {
-    axios.get(`${apiUrl}/stories`)
+  [FETCH_STORIES_INFOS] ({ commit }, params = null) {
+    axios.get(`${apiUrl}/stories/`, { params })
       .then(res => {
         if (res.status === 200) {
-          let { stories, collections } = res.data
-          /* commit(SET_STORIES_NEWS, news) */
+          let { stories } = res.data
           commit(SET_STORIES, stories)
-          commit(SET_COLLECTIONS, collections)
         } else {
           // TODO
         }
@@ -42,8 +40,8 @@ const actions = {
         console.log(err)
       })
   },
-  [FETCH_STORY_DETAILS] ({ commit, state }) {
-    axios.get(`${apiUrl}/stories/${state.selectedStoryID}`)
+  [FETCH_STORY_DETAILS] ({ commit, state }, params = null) {
+    axios.get(`${apiUrl}/stories/${state.selectedStoryID}`, { params })
       .then(res => {
         if (res.status === 200) {
           let { story } = res.data
@@ -56,8 +54,8 @@ const actions = {
         console.log(err)
       })
   },
-  [FETCH_COLLECTION_DETAILS] ({ commit, state }) {
-    axios.get(`${apiUrl}/collections/${state.selectedCollectionID}`)
+  [FETCH_COLLECTION_DETAILS] ({ commit, state }, params = null) {
+    axios.get(`${apiUrl}/collections/${state.selectedCollectionID}`, { params })
       .then(res => {
         if (res.status === 200) {
           let { collection } = res.data

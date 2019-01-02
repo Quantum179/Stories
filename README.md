@@ -108,6 +108,7 @@ TODO : Big UX R&D
 - Modular CSS : https://medium.com/@pioul/modular-css-with-react-61638ae9ea3e
 - https://codemyui.com/pure-css-animation-opening-flipping-pages-book/
 - Layout with shapes : http://jimmygleeson.com/HUCKBERRY
+- Wired articles layout : https://www.wired.com/
 
 
 ### Unstructures links
