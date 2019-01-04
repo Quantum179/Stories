@@ -40,7 +40,7 @@ export default {
     let params = {
       
     }
-    this[FETCH_STORY_DETAILS]()
+    this[FETCH_STORY_DETAILS](params)
     // todo : https://stackoverflow.com/questions/16670931/hide-scroll-bar-but-while-still-being-able-to-scroll
     // todo : togglable reading nav
   },

@@ -1,4 +1,6 @@
 import axios from 'axios'
+import qs from 'qs'
+import { formatParams } from '../../../utils'
 import { apiUrl } from '../../../constants'
 /* import { OK } from 'http-status-code' */
 
@@ -27,7 +29,7 @@ const state = {
 
 const actions = {
   [FETCH_STORIES_INFOS] ({ commit }, params = null) {
-    axios.get(`${apiUrl}/stories/`, { params })
+    axios.get(`${apiUrl}/stories?${qs.stringify(params)}`)
       .then(res => {
         if (res.status === 200) {
           let { stories } = res.data
@@ -41,7 +43,7 @@ const actions = {
       })
   },
   [FETCH_STORY_DETAILS] ({ commit, state }, params = null) {
-    axios.get(`${apiUrl}/stories/${state.selectedStoryID}`, { params })
+    axios.get(`${apiUrl}/stories/${state.selectedStoryID}`, formatParams(params))
       .then(res => {
         if (res.status === 200) {
           let { story } = res.data
@@ -55,7 +57,7 @@ const actions = {
       })
   },
   [FETCH_COLLECTION_DETAILS] ({ commit, state }, params = null) {
-    axios.get(`${apiUrl}/collections/${state.selectedCollectionID}`, { params })
+    axios.get(`${apiUrl}/collections/${state.selectedCollectionID}`, formatParams(params))
       .then(res => {
         if (res.status === 200) {
           let { collection } = res.data

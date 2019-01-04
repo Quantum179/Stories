@@ -8,6 +8,7 @@
       </v-container>
     </v-content>
     <footer-app></footer-app>
+    <exo-snackbar v-if="snackbar"></exo-snackbar>
   </v-app>
 </template>
 
@@ -15,12 +16,19 @@
 import HeaderApp from './components/app/HeaderApp'
 import NavApp from './components/app/NavApp'
 import FooterApp from './components/app/FooterApp'
+import ExoSnackbar from './components/shared/primitives/ExoSnackbar'
+
+import { mapState } from 'vuex'
 
 export default {
+  computed: {
+    ...mapState(['snackbar'])
+  },
   components: {
     HeaderApp,
     NavApp,
-    FooterApp
+    FooterApp,
+    ExoSnackbar
   }
 }
 </script>

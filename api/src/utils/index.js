@@ -6,11 +6,13 @@ export const checkPass = (password, hash) => {
 }
 
 export const hashPass = (password) => {
-  bcrypt.hash(password, saltRounds, function(err, hash) {
-    if(!err) {
-      return hash 
-    } else {
-      console.log(err) // todo : handle error
-    }
+  return new Promise(function(resolve, reject) {
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+      if(!err) {
+        resolve(hash)
+      } else {
+        reject(err) // todo : handle error
+      }
+    })
   })
 }

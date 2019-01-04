@@ -5,21 +5,22 @@ import { checkPass } from '../../utils'
 import { createToken } from '../../passport'
 
 export const postLogin = (req, res, next) => {
-  let { email, password } = req.data
   //TODO : Redirection when already logged (checks token in list)
-  UserModel._getOne(email)
+  let { email, password } = req.body.payload
+  UserModel._getOne({email: email})
     .then(user => {
       if (!user) {
         next({code: NOT_FOUND})
       } else {
         checkPass(password, user.password)
-          .then((passErr, result) => {
-            if(passErr || !result) {
+          .then(result => {
+            if(!result) {
               next({code: NOT_FOUND})
             } else {
               //check connexion status 
                 res.status(OK)
                 res.locals.token = createToken(user)
+                res.locals.user = user.username
                 next()
             }                
           })
@@ -31,7 +32,7 @@ export const postLogin = (req, res, next) => {
 }
 
 export const postRegister = (req, res, next) => {
-    let { user, wantsNews } = req.data
+    let { user, wantsNews } = req.body.payload
     UserModel._create(user)
       .then(savedUser => {
         if(wantsNews) {

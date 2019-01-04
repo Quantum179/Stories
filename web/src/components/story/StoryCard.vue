@@ -14,7 +14,8 @@
 <script>
 export default {
   props: {
-    story: Object
+    story: Object,
+    
   },
   data () {
     return {

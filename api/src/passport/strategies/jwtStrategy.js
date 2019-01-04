@@ -2,12 +2,12 @@ import passport from 'passport'
 import passportJWT from 'passport-jwt'
 var ExtractJwt = passportJWT.ExtractJwt
 var JWTStrategy = passportJWT.Strategy
-import {secret} from '../../constants'
+import { SECRET } from '../../constants'
 import models from '../../db/models'
 
 let jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-jwtOptions.secretOrKey = secret
+jwtOptions.secretOrKey = SECRET
 
 export default new JWTStrategy(jwtOptions, function(payload, done) {
     models.User.getById({id: payload.id})

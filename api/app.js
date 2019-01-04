@@ -30,9 +30,13 @@ app.use(middlewares.responseFormatter)
 
 // Error handler
 app.use(function (err, req, res, next) {
-  console.log(err)
-  res.status(err.code)
-  return res.json(err.hasOwnProperty('err') ? err.err : getStatusText(err.code))
+  if(err.hasOwnProperty('code')) {
+    res.status(err.code)
+    return res.json(err.hasOwnProperty('err') ? err.err : getStatusText(err.code))
+  } else {
+    res.status(500)
+    return res.json(err)
+  }
 })
 
 // Environment Configuration

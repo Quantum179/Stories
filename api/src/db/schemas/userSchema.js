@@ -46,8 +46,12 @@ var UserSchema = new Schema (
 
 //Hooks model
 UserSchema.pre('save', function(next) {
-  this.password = hashPass(this.password)
-  next()
+  hashPass(this.password)
+    .then(hash => {
+      this.password = hash
+      console.log(this.password)
+      next()
+    })
 })
 
 //Plugins

@@ -5,6 +5,8 @@ import queryPlugin from './schemas/plugins/queryPlugin'
 var mongoDB = 'mongodb://localhost/stories'
 import {defaultMongooseFields} from '../constants'
 
+import user from './init-data/users'
+
 let db
 
 function removeFields(object, fields) {
