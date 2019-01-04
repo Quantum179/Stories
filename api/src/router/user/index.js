@@ -1,17 +1,19 @@
 import express from 'express'
 let router = express.Router()
-import {jwtAuth} from '../../passport'
+
+import { authGuard } from '../../passport'
+import { IDENTITY, ADMIN } from '../../passport/roles'
 
 import {getUsers, getUser, getProfile, postUser, patchUser, deleteUser} from './handlers'
 
+//public routes
 router.get('/', getUsers)
 router.get('/:id', getUser)
-router.get('/:id/profile', jwtAuth('IDENTITY'), getProfile)
-router.post('/', jwtAuth('ADMIN'), postUser)
-router.patch('/:id', jwtAuth('IDENTITY'), patchUser)
-router.delete('/:id', jwtAuth('ADMIN'), deleteUser)
 
+//protected routes
+router.get('/:id/profile', authGuard(IDENTITY), getProfile)
+router.post('/', authGuard(ADMIN), postUser)
+router.patch('/:id', authGuard(IDENTITY), patchUser)
+router.delete('/:id', authGuard(ADMIN), deleteUser)
 
 export default router
-
-//TODO: refactor all sub-routers in main router with a loop

@@ -1,36 +1,32 @@
 <template>
-<div>
-  <v-container>
-    <h1 class="title-story">{{story.title}}</h1>
-    <h2 class="subtitle-story">{{story.description}}</h2>
-  </v-container>
   <v-container fluid>
     <v-layout row>
-      <v-flex xs3>
+      <h1 class="title-story">{{story.title}}</h1>
+      <h2 class="subtitle-story">{{story.description}}</h2>
+    </v-layout>
+    <v-layout row>
+      <v-flex sm3>
         <reading-nav :post="story"></reading-nav>
       </v-flex>
-      <v-flex xs9>
-        <v-container fluid class="story-body">
-          <v-flex>
+      <v-flex xs12 sm9>
+        <v-layout column class="story-body">
+          <v-flex xs12>
             <chapter v-for="chapter in story.chapters" :key="chapter.title" :chapter="chapter"></chapter>
           </v-flex>
-        </v-container>
-      </v-flex>
+        </v-layout>
+      </v-flex>    
     </v-layout>
-    <v-layout row></v-layout>
   </v-container>
-</div>
-
 </template>
 
 <script>
 import ReadingNav from '../shared/ReadingNav'
-import { actionTypes, mutationTypes } from '../../store/modules/story/types.js'
+import Chapter from '../shared/Chapter'
+import { actionTypes } from '../../store/modules/story/types.js'
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapState, mapActions, mapMutations } = createNamespacedHelpers('story')
+const { mapState, mapActions } = createNamespacedHelpers('story')
 const { FETCH_STORY_DETAILS } = actionTypes
-const { SET_SELECTED_STORY } = mutationTypes
 
 export default {
   data () {
@@ -41,15 +37,19 @@ export default {
     })
   },
   mounted () {
-    this[FETCH_STORY_DETAILS]()
+    let params = {
+      
+    }
+    this[FETCH_STORY_DETAILS](params)
     // todo : https://stackoverflow.com/questions/16670931/hide-scroll-bar-but-while-still-being-able-to-scroll
+    // todo : togglable reading nav
   },
   methods: {
-    ...mapActions([FETCH_STORY_DETAILS]),
-    ...mapMutations([SET_SELECTED_STORY])
+    ...mapActions([FETCH_STORY_DETAILS])
   },
   components: {
-    ReadingNav
+    ReadingNav,
+    Chapter
   }
 }
 </script>

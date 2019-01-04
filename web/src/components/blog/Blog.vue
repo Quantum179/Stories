@@ -1,18 +1,24 @@
 <template>
   <div id="blog">
     <topic-nav :topics="topics"></topic-nav>
-    <v-container>
-      <h1>Blog</h1>
-      <exo-carousel :news="news"></exo-carousel>
-      <article-list title="trending" :articles="trendingArticles"></article-list>
-      <article-list title="latest" :articles="latestArticles"></article-list>
+    <v-container fluid>
+      <v-layout row>
+        <h1>Blog</h1>
+        <exo-carousel :news="news"></exo-carousel>
+        <div class="trending">
+          <article-card v-for="(article, i) in trendingArticles" :key="i" :article="article" @click="openArticle(i)"></article-card>
+        </div>
+        <div class="latest">
+          <article-card v-for="(article, i) in latestArticles" :key="i" :article="article" @click="openArticle(i)"></article-card>
+        </div>
+      </v-layout>
     </v-container>
   </div>
 </template>
 
 <script>
 import TopicNav from './TopicNav'
-import ArticleList from './ArticleList'
+import ArticleCard from './ArticleCard'
 import ExoCarousel from '../shared/primitives/ExoCarousel'
 
 import { createNamespacedHelpers } from 'vuex'
@@ -38,7 +44,7 @@ export default {
   components: {
     ExoCarousel,
     TopicNav,
-    ArticleList
+    ArticleCard
   }
 }
 </script>

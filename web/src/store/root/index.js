@@ -1,11 +1,31 @@
 import { getterTypes, actionTypes, mutationTypes } from './types'
-const { GET_DRAWER_VALUE, GET_DIALOG_VALUE } = getterTypes
-const { TOGGLE_DRAWER_ACTION, OPEN_DIALOG_ACTION } = actionTypes
-const { TOGGLE_DRAWER, OPEN_DIALOG } = mutationTypes
+
+const { GET_DRAWER_VALUE, 
+  GET_DIALOG_VALUE, 
+  GET_SNACKBAR_VALUE 
+} = getterTypes
+const { 
+  TOGGLE_DRAWER_ACTION, 
+  OPEN_DIALOG_ACTION, 
+  CLOSE_DIALOG_ACTION, 
+  SHOW_SNACKBAR_ACTION,
+  CLOSE_SNACKBAR_ACTION
+} = actionTypes
+const { 
+  TOGGLE_DRAWER, 
+  OPEN_DIALOG, 
+  CLOSE_DIALOG, 
+  SHOW_SNACKBAR, 
+  CLOSE_SNACKBAR,
+  SET_SNACKBAR_TEXT,
+  CLEAR_SNACKBAR_TEXT 
+} = mutationTypes
 
 export const state = {
   drawer: false,
   dialog: false,
+  snackbar: false,
+  snackbarText: '',
   navCategories: [
     { title: 'Histoires', icon: 'dashboard', src: 'stories' },
     { title: 'Chroniques de Saturn', icon: 'dashboard', src: 'chronicles' },
@@ -25,16 +45,31 @@ export const getters = {
   },
   [GET_DIALOG_VALUE] (state) {
     return state.dialog
+  },
+  [GET_SNACKBAR_VALUE] (state) {
+    return state.snackbar
   }
 }
 
 export const actions = {
-  [TOGGLE_DRAWER_ACTION] ({commit}) {
+  [TOGGLE_DRAWER_ACTION] ({ commit }) {
     commit(TOGGLE_DRAWER)
   },
-  [OPEN_DIALOG_ACTION] ({commit}) {
+  [OPEN_DIALOG_ACTION] ({ commit }) {
     commit(OPEN_DIALOG)
+  },
+  [CLOSE_DIALOG_ACTION] ({ commit }) {
+    commit(CLOSE_DIALOG)
+  },
+  [SHOW_SNACKBAR_ACTION] ({ commit }, text) {
+    commit(SET_SNACKBAR_TEXT, text)
+    commit(SHOW_SNACKBAR)
+  },
+  [CLOSE_SNACKBAR_ACTION] ({ commit }) {
+    commit(CLEAR_SNACKBAR_TEXT)
+    commit(CLOSE_SNACKBAR)
   }
+
 }
 
 export const mutations = {
@@ -42,6 +77,21 @@ export const mutations = {
     state.drawer = !state.drawer
   },
   [OPEN_DIALOG] (state) {
-    state.dialog = !state.dialog
+    state.dialog = true
+  },
+  [CLOSE_DIALOG] (state) {
+    state.dialog = false
+  },
+  [SHOW_SNACKBAR] (state) {
+    state.snackbar = true
+  },
+  [CLOSE_SNACKBAR] (state) {
+    state.snackbar = false
+  },
+  [SET_SNACKBAR_TEXT] (state, text) {
+    state.snackbarText = text
+  },
+  [CLEAR_SNACKBAR_TEXT] (state) {
+    state.snackbarText = ''
   }
 }

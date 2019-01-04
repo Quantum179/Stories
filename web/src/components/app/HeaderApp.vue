@@ -4,26 +4,30 @@
       <v-icon>menu</v-icon>
     </v-btn>
     <v-toolbar-title>
-      <router-link class="pointer" to="/home" tag="span">Stories</router-link>
+      <router-link class="pointer" to="/home" tag="span">Stories (alpha)</router-link>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <div class="categories" v-if="width > 600">
-      <router-link tag="span" to="stories" class="pointer category ">Histoires</router-link>
-      <router-link tag="span" to="chronicles" class="pointer category">Chroniques</router-link>
-      <router-link tag="span" to="blog" class="pointer category">Blog</router-link>
-      <router-link tag="span" to="mag" class="pointer category">ExoMag</router-link>
+      <router-link tag="span" to="stories" class="pointer ">Histoires</router-link>
+      <router-link tag="span" to="chronicles" class="pointer">Chroniques</router-link>
+      <router-link tag="span" to="blog" class="pointer">Blog</router-link>
+      <router-link tag="span" to="mag" class="pointer">ExoMag</router-link>
     </div>
     <v-toolbar-items>
-        <v-btn to="login" small depressed flat color="primary"><v-icon>account_box</v-icon>LOGIN</v-btn>
+        <v-btn v-if="!token" to="login" small depressed flat color="primary"><v-icon>account_box</v-icon>LOGIN</v-btn>
+        <v-btn v-else small depressed flat color="secondary" @click="logout"><v-icon>account_box</v-icon>LOGOUT</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-import { mutationTypes } from '../../store/root/types'
+import { mapMutations, createNamespacedHelpers } from 'vuex'
+import { actionTypes } from '../../store/modules/auth/types'
+import * as rootTypes from '../../store/root/types'
 
-const { TOGGLE_DRAWER } = mutationTypes
+const { mapState, mapActions } = createNamespacedHelpers('auth')
+const { REQUEST_LOGOUT } = actionTypes
+const { TOGGLE_DRAWER } = rootTypes.mutationTypes
 
 export default {
   data () {
@@ -34,8 +38,13 @@ export default {
   },
   mounted () {
     this.setSize()
+    // todo: find if mapstate if not better to get drawer value
+  },
+  computed: {
+    ...mapState(['token'])
   },
   methods: {
+    ...mapActions([REQUEST_LOGOUT]),
     ...mapMutations([TOGGLE_DRAWER]),
 
     setSize () {
@@ -50,6 +59,12 @@ export default {
     },
     toggleDrawer () {
       this[TOGGLE_DRAWER]()
+    },
+    logout () {
+      this[REQUEST_LOGOUT]()
+        .then(() => {
+          this.updateRoute('login')
+        })
     }
   }
 }
@@ -61,9 +76,6 @@ export default {
 .categories
   @extend .flex-x-around
   width 45vw
-
-.categories > span
-  font-size 11px
 
 .header-actions
   @extend .flex-x-between

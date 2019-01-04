@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 var Schema = mongoose.Schema
-import { isEmail } from 'validator'
-import bcrypt from 'bcrypt'
+import { hashPass } from '../../utils'
 import { baseUrl } from '../../constants'
 import queryPlugin from './plugins/queryPlugin'
 
@@ -47,12 +46,12 @@ var UserSchema = new Schema (
 
 //Hooks model
 UserSchema.pre('save', function(next) {
-  bcrypt.hash(this.password, saltRounds, function(err, hash) {
-    if(!err) {
-      this.password = hash    
-    }
-  })
-  next()
+  hashPass(this.password)
+    .then(hash => {
+      this.password = hash
+      console.log(this.password)
+      next()
+    })
 })
 
 //Plugins

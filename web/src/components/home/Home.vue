@@ -1,18 +1,40 @@
 <template>
-  <div id="home">
+  <div id='root_home'>
     <exosoft-opening v-if="display === 'exo'"></exosoft-opening>
     <home-opening v-else-if="display === 'intro'"></home-opening>
-    <div v-else-if="display === 'home'">
-        <div class="anim-item" v-if="selectedCategory == null">
-          <h1>Accueil</h1>
-            <exo-carousel :slides="news"></exo-carousel>
-        </div>
-        <div class="anim-item" v-if="selectedCategory !== null && selectedCategory.name == category.name"
-          v-for="category in categories"
-          :key="category.name">
-            <category-card :category="category"></category-card>
-        </div>
-    </div>
+    <v-container fluid v-else-if="display === 'home'" id='home'>
+      <v-layout row>
+        <v-flex xs12 sm12 class="anim-item" v-if="selectedCategory === null">
+          <v-layout column>
+            <v-flex>
+              <h2>Accueil</h2>
+              <exo-carousel :slides="news"></exo-carousel>            
+            </v-flex>
+            <v-container>
+              <v-layout row>
+                <v-flex xs6>
+                  <div class="latest">
+                    <h3>Publication récentes</h3>
+                    <post-card v-for="(post, i) in latestPosts" :key="i" :post="post"></post-card>
+                  </div>
+                </v-flex>
+                <v-flex xs6>
+                  <div class="trending">
+                    <h3>Publications populaires</h3>
+                    <post-card v-for="(post, i) in trendingPosts" :key="i" :post="post"></post-card>
+                  </div>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-layout>
+        </v-flex>
+        <v-flex xs12 sm12 class="anim-item" v-if="selectedCategory !== null"> 
+          <v-layout row>
+            <category-card :category="selectedCategory"></category-card>
+          </v-layout>
+        </v-flex>
+      </v-layout>
+    </v-container>  
   </div>
 </template>
 
@@ -31,17 +53,16 @@ const { FETCH_HOME_INFOS } = actionTypes
 export default {
   data () {
     return {
-      display: 'home',
-      size: null
+      display: 'home'
     }
   },
   computed: {
-    ...mapState(['news', 'latestPosts', 'categories', 'selectedCategory'])
+    ...mapState(['news', 'latestPosts', 'trendingPosts', 'categories', 'selectedCategory'])
   },
   mounted () {
-    this.size = window.screen.availWidth
-    this[FETCH_HOME_INFOS]()
+    /* this[FETCH_HOME_INFOS]() */
     // TODO: $('#home').onScroll to set selected category
+    // TODO: add transition animation for categories
   },
   methods: {
     ...mapActions([FETCH_HOME_INFOS])

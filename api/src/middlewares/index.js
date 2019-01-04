@@ -1,7 +1,6 @@
 import sanitizer from 'sanitizer'
 import validator from 'validator'
 import utils from '../utils'
-import { getStatusText } from 'http-status-codes'
 import util from 'util'
 import {isMongoData, toPlainObject} from '../db'
 
@@ -10,31 +9,36 @@ import {isMongoData, toPlainObject} from '../db'
 
 export default {
     sanitizer: function(req, res, next) {
-        req = utils.escapeRequest(req)
-        next()
+      // TODO Quantum : validate request with routing params
+      // TODO Quantum : R&D in mongoose validations and how to use it with validator module
+      sanitizer.escape(req)
+      next()
     },
     requestFormatter: function(req, res, next) {
         let data = {}
         data.options = {}
-        let keys = Object.keys(req.body) //TODO : use for in
 
-        if(keys.length > 0) {
-            keys.forEach(k => {data[k] = req.body[k]})
+        if(req.query.hasOwnProperty('queryParams')) {
+          data.params = req.query.queryParams
         }
-/*         if(req.params.hasOwnProperty('id')) {
-            data.id = req.params.id
-        } */
-        if(req.query.hasOwnProperty('query')) {
-            data.options.query = req.query.query || {}
-        }
+
         if(req.query.hasOwnProperty('fields')) {
-            data.options.fields = req.query.fields
+          data.options.fields = req.query.fields
+        }
+        if(req.query.hasOwnProperty('populate')) {
+          data.options.populate = req.query.populate
+        }
+        if(req.query.hasOwnProperty('sort')) {
+          data.options.sort = req.query.sort
+        }
+        if(req.query.hasOwnProperty('limit')) {
+          data.options.limit = req.query.limit
         }
         
         req.data = data
         next()
     },
-    responseFormatter: function(req, res) {
+    responseFormatter: function(req, res, next) {
       //We assume the status is already set in the endpoint handler
       let data = {}
       let payload = res.locals //TODO : make sure res.locals only contains requested informations.
@@ -45,7 +49,6 @@ export default {
         for(let key in payload) {
           if(Object.prototype.hasOwnProperty.call(res.locals, key)) { //TODO: make global wrapper
               let item = payload[key]
-
               if(isMongoData(item)) {
                   data[key] = toPlainObject(item)
               } else {
@@ -56,9 +59,5 @@ export default {
       
         return res.json(data)      
       }
-    },
-    errorHandler: function(err, req, res) {
-      res.status(err.code)
-      return res.json(err.hasOwnProperty('err') ? err.err : getStatusText(err.code))
     }
 }

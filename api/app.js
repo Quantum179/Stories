@@ -1,39 +1,43 @@
 // Main variables
 import express from 'express'
-const app = express()
 import http from 'http';
-const server = http.Server(app)
 import middlewares from './src/middlewares'
-
-//Settings Middleware
+import { getStatusText } from 'http-status-codes'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import helmet from 'helmet'
+import passport from './src/passport'
+import { initDB, closeDB } from './src/db'
+import SocketIO from 'socket.io'
+import router from './src/router'
+
+const app = express()
+const server = http.Server(app)
+
+//Configuration
 app.use(cors())
 app.use(bodyParser.json())
-
-// Security Middlewares
-import helmet from 'helmet'
 app.use(helmet())
 app.use(middlewares.sanitizer)
-
-// Auth Middleware
-import {passport} from './src/passport'
 app.use(passport.initialize())
 
-// Database Configuration
-import {initDB, closeDB} from './src/db'
 initDB()
 
-// Web Sockets Configuration
-import SocketIO from 'socket.io'
-var io = new SocketIO(server)
-
-// Router Middleware
-import router from './src/router'
+// Router and formatters
 app.use(middlewares.requestFormatter)
-app.use('/api/v1', router) //TODO: use function object instead of class
+app.use('/api/v1', router)
 app.use(middlewares.responseFormatter)
-app.use(middlewares.errorHandler)
+
+// Error handler
+app.use(function (err, req, res, next) {
+  if(err.hasOwnProperty('code')) {
+    res.status(err.code)
+    return res.json(err.hasOwnProperty('err') ? err.err : getStatusText(err.code))
+  } else {
+    res.status(500)
+    return res.json(err)
+  }
+})
 
 // Environment Configuration
 const env = process.env
@@ -44,6 +48,9 @@ const PORT = env.PORT || 5000
 server.listen(5000, () =>
   console.log('Server is currently running at port 5000...')
 )
+
+// Web Sockets Configuration
+var io = new SocketIO(server)
 
 server.on('close', function() {
   console.log(' Stopping ...')

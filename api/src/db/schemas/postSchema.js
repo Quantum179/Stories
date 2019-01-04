@@ -18,8 +18,6 @@ let PostSchema = new Schema (
     author : {type: Schema.Types.ObjectId, ref: 'Author', required: true},
     chapters: [{type: Schema.Types.ObjectId, ref: 'Chapter'}],
     keywords: [String],
-    // mongoose createAt
-    // Mongoose updateAt
   },
   options
 )

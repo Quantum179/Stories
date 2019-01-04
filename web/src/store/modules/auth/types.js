@@ -1,0 +1,15 @@
+export const getterTypes = {
+  IS_AUTH: 'IS_AUTH'
+}
+
+export const actionTypes = {
+  REQUEST_LOGIN: 'REQUEST_LOGIN',
+  REQUEST_REGISTER: 'REQUEST_REGISTER',
+  REQUEST_SUBSCRIPTION: 'REQUEST_SUBSCRIPTION',
+  REQUEST_LOGOUT: 'REQUEST_LOGOUT'
+}
+
+export const mutationTypes = {
+  SET_TOKEN: 'SET_TOKEN',
+  SET_USER: 'SET_USER'
+}

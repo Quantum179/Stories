@@ -1,16 +1,24 @@
 <template>
   <v-container>
     <h2>{{post.title}}</h2>
-    <h3 v-for="(chapter, i) in post.chapters" :key="chapter.title" v-on:click="goToChapter(i)">
-      {{chapter.title}}
-    </h3>
+    <v-list>
+<!--       <v-card v-if="chapter.chapters == null" 
+      v-for="(chapter, i) in post.chapters" :key="i" 
+      :chapter="chapter"></v-card>
+      <v-expansion-panel v-else>
+        <v-expansion-panel-content v-for="(item,i) in 5" :key="i">
+            <v-card></v-card>
+        </v-expansion-panel-content>
+      </v-expansion-panel>     -->
+    </v-list>
   </v-container>
 </template>
 
 <script>
 export default {
   props: {
-    post: Object
+    post: Object,
+
   },
   data () {
     return {
@@ -21,7 +29,7 @@ export default {
 
   },
   methods: {
-    goToChapter (index) {
+    set (index) {
       this.$router.push({path: `chap-${index}`})
     }
   }

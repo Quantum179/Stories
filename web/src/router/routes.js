@@ -33,14 +33,17 @@ export const routes = [
   },
   {
     path: '/login',
+    name: 'login',
     component: LoginForm
   },
   {
     path: '/register',
+    name: 'register',
     component: RegisterForm
   },
   {
     path: '/subscribe',
+    name: 'subscribe',
     component: SubscribeForm
   },
   {
@@ -65,6 +68,7 @@ export const routes = [
   },
   {
     path: '/stories',
+    name: 'stories',
     component: Stories,
     children: [
       {
@@ -79,6 +83,7 @@ export const routes = [
   },
   {
     path: '/blog',
+    name: 'blog',
     component: Blog,
     children: [
       {
@@ -97,6 +102,7 @@ export const routes = [
   },
   {
     path: '/mag',
+    name: 'mag',
     component: Mag,
     children: [
       {
@@ -111,6 +117,7 @@ export const routes = [
   },
   {
     path: '/profile',
+    name: 'profile',
     component: Profile,
     children: [
       {

@@ -1,26 +1,28 @@
 <template>
-  <v-card :mouseover="hover = !hover" raised>
-    <div v-if="hover" class="hover-panel">
-      <span>VOIR LA PREFACE</span>
-    </div>
+  <v-card raised ripple>
     <v-card-title primary-title>
       <div>
         <h3>{{story.title}}</h3>
       </div>
     </v-card-title>
-    <v-card-text>{{story.description}}</v-card-text>
+    <v-card-text>
+      <v-flex>{{story.author.authorName}}</v-flex>
+    </v-card-text>
   </v-card>
 </template>
 
 <script>
 export default {
   props: {
-    story: Object
+    story: Object,
+    
   },
   data () {
     return {
-      hover: false
     }
+  },
+  mounted () {
+    // TODO fix mouseover infinite loop
   }
 }
 </script>

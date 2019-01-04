@@ -5,16 +5,28 @@ import queryPlugin from './schemas/plugins/queryPlugin'
 var mongoDB = 'mongodb://localhost/stories'
 import {defaultMongooseFields} from '../constants'
 
+import user from './init-data/users'
+
 let db
 
 function removeFields(object, fields) {
-  fields.forEach(f => {
-    if(object.hasOwnProperty(f)) {
-      object[f] = undefined
+  fields.forEach(field => {
+    if(object.hasOwnProperty(field)) {
+      object[field] = undefined
     }
   })
   return object
 }
+
+function toPlainItem(item, fields) {
+  let plainItem = item.toObject()
+  removeFields(plainItem, defaultMongooseFields)
+  removeFields(plainItem, fields)
+
+  return plainItem
+}
+
+// === EXPORTS ===
 
 export const initDB = () => {
   Mongoose.connect(mongoDB);
@@ -33,26 +45,24 @@ export const closeDB = () => {
   db.close()
 }
 
-export const toPlainObject = (item, routeFields = []) => {
+export const toPlainObject = (item, fields = []) => {
   if(Array.isArray(item)) {
     return item.map(i => {
-      let _i = i.toObject()
-      return removeFields(_i, defaultMongooseFields)
+      return toPlainItem(i, fields)
     })
   } else {
-    let plainItem = item.toObject()
-    removeFields(plainItem, defaultMongooseFields)
-    removeFields(plainItem, routeFields)
-
-    return plainItem
+    return toPlainItem(item, fields)
   }
 }
 
 export const isMongoData = (item) => {
-  //TODO: simplify
-  return Array.isArray(item) ? 
-    item[0].constructor.name === 'model' : 
-    item.constructor.name === 'model'
+  if(item === null) {
+    return false
+  } else {
+    return Array.isArray(item) ? 
+      item[0].constructor.name === 'model' : 
+      item.constructor.name === 'model'
+  }
 }
 
 export const mongoose = Mongoose
