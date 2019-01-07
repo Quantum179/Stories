@@ -6,7 +6,7 @@
     </v-layout>
     <v-layout row>
       <v-flex sm3>
-        <reading-nav :post="story"></reading-nav>
+        <!-- <reading-nav :post="story"></reading-nav> -->
       </v-flex>
       <v-flex xs12 sm9>
         <v-layout column class="story-body">
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import ReadingNav from '../shared/ReadingNav'
 import Chapter from '../shared/Chapter'
 import { actionTypes } from '../../store/modules/story/types.js'
 import { createNamespacedHelpers } from 'vuex'
@@ -30,6 +29,9 @@ const { FETCH_STORY_DETAILS } = actionTypes
 
 export default {
   data () {
+    return {
+
+    }
   },
   computed: {
     ...mapState({
@@ -38,9 +40,18 @@ export default {
   },
   mounted () {
     let params = {
-      
+      populate: [
+        { path: 'author', select: 'authorName' },
+        { path: 'chapters', populate: { path: 'paragraphs'}}
+      ]
     }
+
     this[FETCH_STORY_DETAILS](params)
+      .then(status => {
+        if(status === 401) {
+          // todo : open login dialog and keep context
+        }
+      })
     // todo : https://stackoverflow.com/questions/16670931/hide-scroll-bar-but-while-still-being-able-to-scroll
     // todo : togglable reading nav
   },
@@ -48,7 +59,6 @@ export default {
     ...mapActions([FETCH_STORY_DETAILS])
   },
   components: {
-    ReadingNav,
     Chapter
   }
 }

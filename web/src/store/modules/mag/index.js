@@ -1,6 +1,3 @@
-import axios from 'axios'
-import { apiUrl } from '../../../constants'
-
 import { actionTypes, mutationTypes } from './types'
 
 const { FETCH_MAG_INFOS, FETCH_MAG_NUMBER_DETAILS } = actionTypes
@@ -15,7 +12,7 @@ const state = {
 
 const actions = {
   [FETCH_MAG_INFOS] ({ commit }) {
-    axios.get(`${apiUrl}/mag`)
+    return this.$http.get(`/mag`)
       .then(res => {
         if (res.status === 200) {
           let { news, magNumbers } = res.data
@@ -30,7 +27,7 @@ const actions = {
       })
   },
   [FETCH_MAG_NUMBER_DETAILS] ({ commit }, id) {
-    axios.get(apiUrl + '/mag/' + id)
+    return this.$http.get('/mag/' + id)
       .then(res => {
         if (res.status === 200) {
           let { magNumber } = res.data

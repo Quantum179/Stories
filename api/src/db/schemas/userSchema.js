@@ -49,7 +49,6 @@ UserSchema.pre('save', function(next) {
   hashPass(this.password)
     .then(hash => {
       this.password = hash
-      console.log(this.password)
       next()
     })
 })

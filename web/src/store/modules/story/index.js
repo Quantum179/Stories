@@ -1,8 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-import { formatParams } from '../../../utils'
-import { apiUrl } from '../../../constants'
-/* import { OK } from 'http-status-code' */
+import $http from '../../../api'
 
 import { actionTypes, mutationTypes } from './types'
 
@@ -21,15 +19,15 @@ const state = {
   news: [],
   stories: [],
   selectedStoryID: null,
-  storyDetails: null,
+  storyDetails: {},
   collection: [],
   selectedCollectionID: null,
-  collectionDetails: null
+  collectionDetails: {}
 }
 
 const actions = {
-  [FETCH_STORIES_INFOS] ({ commit }, params = null) {
-    axios.get(`${apiUrl}/stories?${qs.stringify(params)}`)
+  [FETCH_STORIES_INFOS] ({ commit, rootState }, params = null) {
+    return $http.get(`/stories?${qs.stringify(params)}`, { headers: { Authorization: `JWT ${rootState.auth.token}` } })
       .then(res => {
         if (res.status === 200) {
           let { stories } = res.data
@@ -42,8 +40,9 @@ const actions = {
         console.log(err)
       })
   },
-  [FETCH_STORY_DETAILS] ({ commit, state }, params = null) {
-    axios.get(`${apiUrl}/stories/${state.selectedStoryID}`, formatParams(params))
+  [FETCH_STORY_DETAILS] ({ commit, state, rootState }, params = null) {
+    return $http.get(`/stories/${state.selectedStoryID}?${qs.stringify(params)}`, 
+    { headers: { Authorization: `JWT ${rootState.auth.token}` } })
       .then(res => {
         if (res.status === 200) {
           let { story } = res.data
@@ -53,11 +52,11 @@ const actions = {
         }
       })
       .catch(err => {
-        console.log(err)
+        return err.response.status
       })
   },
   [FETCH_COLLECTION_DETAILS] ({ commit, state }, params = null) {
-    axios.get(`${apiUrl}/collections/${state.selectedCollectionID}`, formatParams(params))
+    return axios.get(`/collections/${state.selectedCollectionID}?${qs.stringify(params)}`)
       .then(res => {
         if (res.status === 200) {
           let { collection } = res.data

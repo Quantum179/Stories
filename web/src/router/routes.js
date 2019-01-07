@@ -4,7 +4,8 @@ import LoginForm from '@/components/auth/LoginForm'
 import RegisterForm from '@/components/auth/RegisterForm'
 import SubscribeForm from '@/components/auth/SubscribeForm'
 
-import Stories from '@/components/story/Stories'
+import StoryPage from '@/components/story/StoryPage'
+import StoryList from '@/components/story/StoryList'
 import Story from '@/components/story/Story'
 import StoryForm from '@/components/story/StoryForm'
 
@@ -68,11 +69,16 @@ export const routes = [
   },
   {
     path: '/stories',
-    name: 'stories',
-    component: Stories,
+    component: StoryPage,
     children: [
       {
-        path: ':storyName',
+        path: '',
+        name: 'stories',
+        component: StoryList
+      },
+      {
+        path: ':id',
+        name:'story',
         component: Story
       },
       {

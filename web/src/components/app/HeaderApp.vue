@@ -4,28 +4,32 @@
       <v-icon>menu</v-icon>
     </v-btn>
     <v-toolbar-title>
-      <router-link class="pointer" to="/home" tag="span">Stories (alpha)</router-link>
+      <router-link class="pointer no-select" to="/home" tag="span">Stories (alpha)</router-link>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <div class="categories" v-if="width > 600">
-      <router-link tag="span" to="stories" class="pointer ">Histoires</router-link>
-      <router-link tag="span" to="chronicles" class="pointer">Chroniques</router-link>
-      <router-link tag="span" to="blog" class="pointer">Blog</router-link>
-      <router-link tag="span" to="mag" class="pointer">ExoMag</router-link>
+    <div class="categories" v-if="width > 600 && 
+      !isSearching">
+      <span v-for="(category, i) in categories" :key="i" 
+      class="pointer no-select" 
+      @click="updateRoute(category.src)">{{category.title}}</span>
     </div>
     <v-toolbar-items>
-        <v-btn v-if="!token" to="login" small depressed flat color="primary"><v-icon>account_box</v-icon>LOGIN</v-btn>
-        <v-btn v-else small depressed flat color="secondary" @click="logout"><v-icon>account_box</v-icon>LOGOUT</v-btn>
+        <v-layout row justify-end>
+          <v-flex><v-btn fab small flat><v-icon>search</v-icon></v-btn></v-flex>
+          <v-flex>      
+            <v-btn v-if="!token" small depressed flat color="primary" @click="updateRoute('login')"><v-icon>account_box</v-icon>LOGIN</v-btn>
+            <v-btn v-else small depressed flat color="secondary" @click="logout"><v-icon>account_box</v-icon>LOGOUT</v-btn>
+          </v-flex>
+        </v-layout> 
     </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
-import { mapMutations, createNamespacedHelpers } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import { actionTypes } from '../../store/modules/auth/types'
 import * as rootTypes from '../../store/root/types'
 
-const { mapState, mapActions } = createNamespacedHelpers('auth')
 const { REQUEST_LOGOUT } = actionTypes
 const { TOGGLE_DRAWER } = rootTypes.mutationTypes
 
@@ -39,12 +43,17 @@ export default {
   mounted () {
     this.setSize()
     // todo: find if mapstate if not better to get drawer value
+    // todo: breakpoints for differents displays
   },
   computed: {
-    ...mapState(['token'])
+    ...mapState({
+      categories: state => state.navCategories,
+      isSearching: state => state.isSearching
+    }),
+    ...mapState('auth', ['token'])
   },
   methods: {
-    ...mapActions([REQUEST_LOGOUT]),
+    ...mapActions('auth', [REQUEST_LOGOUT]),
     ...mapMutations([TOGGLE_DRAWER]),
 
     setSize () {

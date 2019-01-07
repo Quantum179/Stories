@@ -46,8 +46,8 @@ export default {
   data () {
     return {
       form: {
-        email: null,
-        password: null,
+        email: 'testmail@gmail.com',
+        password: 'testpass',
         rememberMe: false
       },
       valid: true,
@@ -88,6 +88,7 @@ export default {
           })
           .catch(err => {
             // todo: display errors in form
+            //this.
             console.log(err)
           })     
       }

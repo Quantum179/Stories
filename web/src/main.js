@@ -10,19 +10,14 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 Vue.config.productionTip = false
 Vue.use(Vuetify)
 
-window.axios = window.axios = require('axios')
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-window.axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-Vue.prototype.$http = window.axios
-const token = localStorage.getItem('token')
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}
-
 Vue.mixin({
   methods: {
     updateRoute (name, params) {
-      this.$router.push({ name: name, params: { params }})
+      if(name.hasOwnProperty('path')) {
+        this.$router.push(name)
+      } else {
+        this.$router.push({ name: name, params: params })
+      }
     }  
   }
 

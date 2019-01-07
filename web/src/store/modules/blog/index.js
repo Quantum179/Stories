@@ -1,6 +1,3 @@
-import axios from 'axios'
-import { apiUrl } from '../../../constants'
-
 import { actionTypes, mutationTypes } from './types'
 
 // state
@@ -18,7 +15,7 @@ const { SET_BLOG_NEWS, SET_TRENDING_ARTICLES, SET_LATEST_ARTICLES, SET_ARTICLE_D
 // actions
 const actions = {
   [FETCH_BLOG_INFOS] ({ commit }) {
-    axios.get(`${apiUrl}/blog`)
+    this.$http.get(`/blog`)
       .then(res => {
         if (res.status === 200) {
           // TODO : sanitize api response data
@@ -39,7 +36,7 @@ const actions = {
       })
   },
   [FETCH_ARTICLE_DETAILS] ({ commit, state }) {
-    axios.get(`${apiUrl}/articles/${state.selectedArticleID}`)
+    this.$http.get(`/articles/${state.selectedArticleID}`)
       .then(res => {
         if (res.status === 200) {
           let { article } = res.data

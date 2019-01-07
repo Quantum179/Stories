@@ -26,9 +26,10 @@ export const state = {
   dialog: false,
   snackbar: false,
   snackbarText: '',
+  isSearching: false,
   navCategories: [
     { title: 'Histoires', icon: 'dashboard', src: 'stories' },
-    { title: 'Chroniques de Saturn', icon: 'dashboard', src: 'chronicles' },
+    { title: 'Chroniques', icon: 'dashboard', src: 'chronicles' },
     { title: 'Blog', icon: 'dashboard', src: 'blog' },
     { title: 'ExoMag', icon: 'dashboard', src: 'mag' }
   ],

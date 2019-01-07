@@ -2,6 +2,7 @@ import {OK, CREATED, BAD_REQUEST, NOT_FOUND} from 'http-status-codes'
 import StoryModel from '../../db/models/storyModel'
 import AuthorModel from '../../db/models/authorModel'
 import ParagraphModel from '../../db/models/paragraphModel'
+import ChapterModel from '../../db/models/chapterModel'
 import util from 'util'
 
 export const getHome = (req, res, next) => {
@@ -11,6 +12,7 @@ export const getHome = (req, res, next) => {
 
 export const getStories = (req, res, next) => {
     let { params, options } = req.data
+    console.log(req.data)
     StoryModel._getMany(params, options)
         .then(stories => {
           if (!stories || stories.length === 0) {
@@ -28,20 +30,21 @@ export const getStories = (req, res, next) => {
 }
 
 export const getStory = (req, res, next) => {
-    let { id, options } = req.data
-    StoryModel._getById(id, options)
-        .then(story => {
-          if(!story)  {
-            next({code: NOT_FOUND})
-          } else {
-            res.status(OK)
-            res.locals.story = story
-            next()
-          }
-        })
-        .catch(err => {
-            next({err: err, code: BAD_REQUEST})
-        })  
+  let id = req.params.id
+  let { options } = req.data
+  StoryModel._getByID(id, options)
+      .then(story => {
+        if(!story)  {
+          next({code: NOT_FOUND})
+        } else {
+          res.status(OK)
+          res.locals.story = story
+          next()
+        }
+      })
+      .catch(err => {
+          next({err: err, code: BAD_REQUEST})
+      })  
 }
 
 export const postStory = (req, res, next) => {
@@ -80,7 +83,7 @@ export const tesr = (req, res, next) => {
 
   author.save(function (err, author) {
     authorID = author._id
-
+    console.log('author saved')
 
     var preface1 = new ParagraphModel({
       "sentences": [
@@ -89,17 +92,113 @@ export const tesr = (req, res, next) => {
         "Une cérémonie officielle est organisée, tous les Elms sont invités."
       ] 
     })
-    preface1.save((err, paragraph) => {
-      var story1 = new StoryModel({
-        "title": "Le retour des Explorateurs",
-        "author": authorID,
-        "keywords": ["Exploration"],
-        "preface": paragraph._id      
-      })
-      story1.save((err, story) => {
-        console.log('story 1 saved')
-      })
+
+    var paragraph1 = new ParagraphModel({
+      "sentences": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
+        "Nam sit amet mauris ut ligula venenatis rhoncus.", 
+        "Vestibulum posuere mi eget velit malesuada, nec finibus sem vulputate.",
+        "Mauris vitae placerat ex.", 
+        "Integer risus risus, bibendum a justo vitae, malesuada aliquet eros.",
+        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+        "Pellentesque nec purus nibh.",
+        "Mauris auctor eros at ultrices bibendum.",
+        "In feugiat eros nulla, et iaculis enim aliquam eget.",
+        "Sed consectetur, urna et efficitur suscipit, turpis ligula elementum ex, sit amet maximus urna massa et tortor.",
+        "Nunc tempus elit sapien, vitae interdum eros fringilla in.",
+        "Maecenas eu nisl magna.",
+        "Pellentesque dignissim nibh eu nulla ultricies rutrum.",
+        "Quisque tempus libero sit amet ligula auctor, nec iaculis risus dictum.",
+        "Sed vitae faucibus arcu.",
+        "Integer congue dolor eu ipsum rhoncus fermentum."
+      ]
     })
+
+    var paragraph2 = new ParagraphModel({
+      "sentences": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
+        "Nam sit amet mauris ut ligula venenatis rhoncus.", 
+        "Vestibulum posuere mi eget velit malesuada, nec finibus sem vulputate.",
+        "Mauris vitae placerat ex.", 
+        "Integer risus risus, bibendum a justo vitae, malesuada aliquet eros.",
+        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+        "Pellentesque nec purus nibh.",
+        "Mauris auctor eros at ultrices bibendum.",
+        "In feugiat eros nulla, et iaculis enim aliquam eget.",
+        "Sed consectetur, urna et efficitur suscipit, turpis ligula elementum ex, sit amet maximus urna massa et tortor.",
+        "Nunc tempus elit sapien, vitae interdum eros fringilla in.",
+        "Maecenas eu nisl magna.",
+        "Pellentesque dignissim nibh eu nulla ultricies rutrum.",
+        "Quisque tempus libero sit amet ligula auctor, nec iaculis risus dictum.",
+        "Sed vitae faucibus arcu.",
+        "Integer congue dolor eu ipsum rhoncus fermentum."
+      ]
+    })
+
+    var paragraph3 = new ParagraphModel({
+      "sentences": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
+        "Nam sit amet mauris ut ligula venenatis rhoncus.", 
+        "Vestibulum posuere mi eget velit malesuada, nec finibus sem vulputate.",
+        "Mauris vitae placerat ex.", 
+        "Integer risus risus, bibendum a justo vitae, malesuada aliquet eros.",
+        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+        "Pellentesque nec purus nibh.",
+        "Mauris auctor eros at ultrices bibendum.",
+        "In feugiat eros nulla, et iaculis enim aliquam eget.",
+        "Sed consectetur, urna et efficitur suscipit, turpis ligula elementum ex, sit amet maximus urna massa et tortor.",
+        "Nunc tempus elit sapien, vitae interdum eros fringilla in.",
+        "Maecenas eu nisl magna.",
+        "Pellentesque dignissim nibh eu nulla ultricies rutrum.",
+        "Quisque tempus libero sit amet ligula auctor, nec iaculis risus dictum.",
+        "Sed vitae faucibus arcu.",
+        "Integer congue dolor eu ipsum rhoncus fermentum."
+      ]
+    })
+    let id1, id2, id3
+
+    paragraph1.save((err, paragraph) => {
+      id1 = paragraph._id
+    })
+    paragraph2.save((err, paragraph) => {
+      id2 = paragraph._id
+    })
+    paragraph3.save((err, paragraph) => {
+      id3 = paragraph._id
+    })
+
+
+    setTimeout(function(){ 
+      console.log('timeout start')
+      let chapter = new ChapterModel({
+        "paragraphs": [id1, id2, id3],
+        "title": "La grande annonce"
+      })
+      chapter.save((err, chapter) => {
+        setTimeout(function(){ 
+          console.log('test2')
+          preface1.save((err, paragraph) => {
+            var story1 = new StoryModel({
+              "title": "Le retour des Explorateurs",
+              "author": authorID,
+              "keywords": ["Exploration"],
+              "preface": paragraph._id,
+              "chapters": [chapter._id]
+            })
+            story1.save((err, story) => {
+              console.log('story 1 saved')
+            })
+          })
+
+
+
+        }, 7000);
+      })
+    }, 7000);
+
+
+    console.log('continue')
+
 
 
 

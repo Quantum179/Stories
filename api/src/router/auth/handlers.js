@@ -1,12 +1,12 @@
 import bcrypt from 'bcryptjs'
 import {OK, CREATED, BAD_REQUEST, NOT_FOUND} from 'http-status-codes'
 import UserModel from '../../db/models/userModel'
-import { checkPass } from '../../utils'
+import { checkPass, getFlatBody } from '../../utils'
 import { createToken } from '../../passport'
 
 export const postLogin = (req, res, next) => {
   //TODO : Redirection when already logged (checks token in list)
-  let { email, password } = req.body.payload
+  let { email, password } = getFlatBody(req.body)
   UserModel._getOne({email: email})
     .then(user => {
       if (!user) {

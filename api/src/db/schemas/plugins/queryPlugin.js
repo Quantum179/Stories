@@ -29,14 +29,14 @@ export default function(schema, opts) {
     let query = this.findOne(params)
     return buildAnRunQuery(query, options)
   }
-  schema.statics._getByID = function(id, options) {
+  schema.statics._getByID = function(id = {}, options = {}) {
     let query = this.findById(id)
     return buildAnRunQuery(query, options)
   }
   schema.statics._create = function(item) {
     return this.create(item)
   }
-  schema.statics._update = function(params, item, options) {
+  schema.statics._update = function(params, item, options = {}) {
     let query = this.update(params, {$set: item})
     return buildAnRunQuery(query, options)
   }
