@@ -1,5 +1,5 @@
 <template>
-  <div id='root_home'>
+  <div id='home'>
     <exosoft-opening v-if="display === 'exo'"></exosoft-opening>
     <home-opening v-else-if="display === 'intro'"></home-opening>
     <v-container fluid v-else-if="display === 'home'" id='home'>

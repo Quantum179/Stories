@@ -18,6 +18,9 @@ Vue.mixin({
       } else {
         this.$router.push({ name: name, params: params })
       }
+    },
+    isSmallScreen () {
+      return this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm
     }  
   }
 

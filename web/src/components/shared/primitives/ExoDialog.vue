@@ -5,7 +5,7 @@
         {{content.title}}
       </v-card-title>
       <v-card-text>
-        {{content.body}}
+        {{content.text}}
       </v-card-text>
       <v-divider v-if="actions.length > 0"></v-divider>
       <v-card-actions v-if="actions.length > 0">

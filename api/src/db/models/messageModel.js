@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import paragraphModel from './paragraphModel'
 import messageSchema from '../schemas/messageSchema'
 
-export default mongoose.model('Message', messageSchema)
+export default paragraphModel.discriminator('Message', messageSchema)

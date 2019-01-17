@@ -1,28 +1,46 @@
+import qs from 'qs'
+import $http from '../../../services/http'
 import { actionTypes, mutationTypes } from './types'
 
 // state
 const state = {
   news: [],
+  topics: [],
+  selectedTopicID: null,
+  topicDetails: {},
   trendingArticles: [],
   latestArticles: [],
   selectedArticleID: null,
-  articleDetails: null
+  articleDetails: {}
 }
 
-const { FETCH_BLOG_INFOS, FETCH_ARTICLE_DETAILS } = actionTypes
-const { SET_BLOG_NEWS, SET_TRENDING_ARTICLES, SET_LATEST_ARTICLES, SET_ARTICLE_DETAILS } = mutationTypes
+const { 
+  FETCH_BLOG_INFOS, 
+  FETCH_TOPIC_DETAILS,
+  FETCH_ARTICLE_DETAILS
+} = actionTypes
+const { 
+  SET_BLOG_NEWS, 
+  SET_TOPICS, 
+  SET_TOPIC_DETAILS,
+  SET_TRENDING_ARTICLES, 
+  SET_LATEST_ARTICLES, 
+  SET_ARTICLE_DETAILS 
+} = mutationTypes
 
 // actions
 const actions = {
   [FETCH_BLOG_INFOS] ({ commit }) {
-    this.$http.get(`/blog`)
+    return $http.get(`/blog/news`)
       .then(res => {
         if (res.status === 200) {
           // TODO : sanitize api response data
-          let { news, articles, categories } = res.data
+          let { news, topics, trendingArticles, latestArticles } = res.data
           commit(SET_BLOG_NEWS, news)
-          commit(SET_TRENDING_ARTICLES, categories)
-          commit(SET_LATEST_ARTICLES, articles)
+          commit(SET_TOPICS, topics)
+          commit(SET_TRENDING_ARTICLES, trendingArticles)
+          commit(SET_LATEST_ARTICLES, latestArticles)
+          return 200
         } else {
           // TODO
           if (res.status === 500) {
@@ -35,8 +53,17 @@ const actions = {
         console.log(err)
       })
   },
-  [FETCH_ARTICLE_DETAILS] ({ commit, state }) {
-    this.$http.get(`/articles/${state.selectedArticleID}`)
+  [FETCH_TOPIC_DETAILS]({ commit }, params) {
+    return $http.get(`blog/topics/${state.selectedTopicID}?${qs.stringify(params)}`)
+    .then(res => {
+      if(res.status === 200) {
+        let { topic } = res.data
+        commit(SET_TOPIC_DETAILS, topic)
+      }
+    })
+  },
+  [FETCH_ARTICLE_DETAILS] ({ commit, state }, params) {
+    return $http.get(`blog/articles/${state.selectedArticleID}?${qs.stringify(params)}`)
       .then(res => {
         if (res.status === 200) {
           let { article } = res.data
@@ -53,6 +80,12 @@ const mutations = {
   [SET_BLOG_NEWS] (state, news) {
     state.news = news
   },
+  [SET_TOPICS] (state, topics) {
+    state.topics = topics
+  },
+  [SET_TOPIC_DETAILS] (state, topic) {
+    state.topicDetails = topic
+  },
   [SET_TRENDING_ARTICLES] (state, articles) {
     state.trendingArticles = articles
   },
@@ -61,7 +94,8 @@ const mutations = {
   },
   [SET_ARTICLE_DETAILS] (state, article) {
     state.articleDetails = article
-  }
+  },
+
 }
 
 export default {

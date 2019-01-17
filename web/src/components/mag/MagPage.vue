@@ -1,16 +1,16 @@
 <template>
-  <div id="story_page">
-    <story-nav></story-nav>
+  <div id="mag_page">
+    <mag-nav></mag-nav>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import StoryNav from './StoryNav'
+import MagNav from './MagNav'
 
 export default {
   components: {
-    StoryNav
+    MagNav
   }
 }
 </script>

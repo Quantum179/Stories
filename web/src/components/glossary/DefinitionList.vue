@@ -1,13 +1,15 @@
 <template>
-  <div></div>
+  <div id="definitions">
+
+  </div>
 </template>
 
 <script>
 export default {
-
+  
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 
 </style>

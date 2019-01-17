@@ -1,4 +1,7 @@
+import HomePage from '@/components/home/HomePage'
 import Home from '@/components/home/Home'
+import ExosoftOpening from '@/components/home/ExosoftOpening'
+import HomeOpening from '@/components/home/HomeOpening'
 
 import LoginForm from '@/components/auth/LoginForm'
 import RegisterForm from '@/components/auth/RegisterForm'
@@ -9,25 +12,39 @@ import StoryList from '@/components/story/StoryList'
 import Story from '@/components/story/Story'
 import StoryForm from '@/components/story/StoryForm'
 
-import Chronicles from '@/components/chronicle/Chronicles'
+import ChroniclePage from '@/components/chronicle/ChroniclePage'
+import ChronicleList from '@/components/chronicle/ChronicleList'
 import Chronicle from '@/components/chronicle/Chronicle'
 import ChronicleForm from '@/components/chronicle/ChronicleForm'
 
-import Blog from '@/components/blog/Blog'
+import BlogPage from '@/components/blog/BlogPage'
+import ArticleList from '@/components/blog/ArticleList'
 import Topic from '@/components/blog/Topic'
 import Article from '@/components/blog/Article'
 import ArticleForm from '@/components/blog/ArticleForm'
 
-import Mag from '@/components/mag/Mag'
+import MagPage from '@/components/mag/MagPage'
+import MagNumberList from '@/components/mag/MagNumberList'
 import MagNumber from '@/components/mag/MagNumber'
 import MagNumberForm from '@/components/mag/MagNumberForm'
 
+import GlossaryPage from '@/components/glossary/GlossaryPage'
+import DefinitionList from '@/components/glossary/DefinitionList'
+import Definition from '@/components/glossary/Definition'
+/* 
+import ProfilePage from '@/components/profile/ProfilePage'
 import Profile from '@/components/profile/Profile'
-import Readings from '@/components/profile/Readings'
-import Notifications from '@/components/profile/Notifications'
-import Friends from '@/components/profile/Friends'
+import ReadingList from '@/components/profile/ReadingList'
+import Reading from '@/components/profile/Reading'
+import NotificationList from '@/components/profile/NotificationList'
+import Notification from '@/components/profile/Notification'
+import FriendList from '@/components/profile/FriendList'
+import DiscussionList from '@/components/profile/DiscussionList'
+import Discussion from '@/components/profile/Discussion' */
 
-export const routes = [
+import { authGuard } from '../services/auth'
+
+export default Object.freeze([
   {
     path: '/',
     redirect: 'home'
@@ -49,21 +66,50 @@ export const routes = [
   },
   {
     path: '/home',
-    name: 'home',
-    component: Home
+    component: HomePage,
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: Home
+      },
+      {
+        path: 'opening',
+        name: 'opening',
+        component: HomeOpening
+      },
+      {
+        path: 'exosoft-opening',
+        name: 'exosoft-opening',
+        component: ExosoftOpening
+      }
+    ]
   },
   {
     path: '/chronicles',
-    name: 'chronicles',
-    component: Chronicles,
+    component: ChroniclePage,
     children: [
       {
-        path: ':chronicleName',
-        component: Chronicle
+        path: '',
+        name: 'chronicles',
+        component: ChronicleList
       },
       {
-        path: 'add-chronicle',
-        component: ChronicleForm
+        path: ':id',
+        name: 'chronicle',
+        component: Chronicle,
+        beforeEnter: (to, from, next) => {
+          authGuard()
+          next()
+        }
+      },
+      {
+        path: 'add',
+        component: ChronicleForm,
+        beforeEnter: (to, from, next) => {
+          authGuard('ADMIN')
+          next()
+        }
       }
     ]
   },
@@ -79,65 +125,128 @@ export const routes = [
       {
         path: ':id',
         name:'story',
-        component: Story
+        component: Story,
+        beforeEnter: (to, from, next) => {
+          authGuard()
+          next()
+        }
       },
       {
-        path: 'add-story',
-        component: StoryForm
+        path: 'add',
+        component: StoryForm,
+        beforeEnter: (to, from, next) => {
+          authGuard('AUTHOR')
+          next()
+        }
       }
     ]
   },
   {
     path: '/blog',
-    name: 'blog',
-    component: Blog,
+    component: BlogPage,
     children: [
       {
-        path: ':topicName',
+        path: '',
+        name: 'blog',
+        component: ArticleList
+      },
+      {
+        path: 'topics/:id',
         component: Topic
       },
       {
-        path: ':articleName',
+        path: ':id',
+        name: 'article',
         component: Article
       },
       {
-        path: 'add-article',
-        component: ArticleForm
+        path: 'add',
+        component: ArticleForm,
+        beforeEnter: (to, from, next) => {
+          authGuard('AUTHOR')
+          next()
+        }
       }
     ]
   },
   {
     path: '/mag',
-    name: 'mag',
-    component: Mag,
+    component: MagPage,
     children: [
       {
-        path: ':magNumberName',
-        component: MagNumber
+        path: '',
+        name: 'mag',
+        component: MagNumberList
       },
       {
-        path: 'add-mag-number',
-        component: MagNumberForm
+        path: ':id',
+        name: 'mag-number',
+        component: MagNumber,
+        beforeEnter: (to, from, next) => {
+          authGuard()
+          next()
+        }
+      },
+      {
+        path: 'add',
+        component: MagNumberForm,
+        beforeEnter: (to, from, next) => {
+          authGuard('ADMIN')
+          next()
+        }
       }
     ]
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: Profile,
+    path: '/glossary',
+    component: GlossaryPage,
     children: [
       {
-        path: 'readings',
-        component: Readings
+        path: '',
+        name: 'glossary',
+        component: DefinitionList
       },
       {
-        path: 'notifications',
-        component: Notifications
-      },
-      {
-        path: 'friends',
-        component: Friends
+        path: ':id',
+        name: 'definition',
+        component: Definition
       }
     ]
   }
-]
+/*   ,{
+    path: '/profile',
+    component: ProfilePage,
+    children: [
+      {
+        path: '',
+        name: 'profile',
+        component: Profile
+      },
+      {
+        path: 'discussions',
+        name: 'discussions',
+        component: DiscussionList
+      },
+      {
+        path: 'discussions/:id',
+        name: 'discussion',
+        component: Discussion
+      },
+      {
+        path: 'readings',
+        name: 'readings',
+        component: ReadingList
+      },
+      {
+        path: 'readings/:id',
+        name: 'reading',
+        component: Reading
+      },
+      {
+        path: 'friends',
+        name: 'friends',
+        component: FriendList
+      }
+    ]
+  } */
+])

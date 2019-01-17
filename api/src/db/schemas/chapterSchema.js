@@ -1,12 +1,18 @@
 import mongoose from 'mongoose'
+import ParagraphSchema from './paragraphSchema'
 var Schema = mongoose.Schema
+
 var options = { discriminatorKey: 'type', timestamps: true}
 
 var ChapterSchema = new Schema(
   {
     title: String,
-    number: Number,
-    paragraphes: [{type: Schema.Types.ObjectId, ref: 'Paragraph'}]
+    number: {type: Number, required: true},
+    paragraphes: {
+      type: [ParagraphSchema],
+      required: true
+    },
+    definitions: [{type: Schema.Types.ObjectId, ref: 'Definition'}]
   }
 )
 

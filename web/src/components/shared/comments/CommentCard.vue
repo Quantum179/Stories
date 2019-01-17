@@ -1,13 +1,17 @@
 <template>
-  <div></div>
+  
 </template>
 
 <script>
 export default {
+  date () {
+    return {
 
+    }
+  }
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 
 </style>

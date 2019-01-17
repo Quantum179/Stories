@@ -4,8 +4,7 @@ var options = { discriminatorKey: 'type', timestamps: true}; // TODO Quantum : d
 
 var MessageSchema = new Schema(
   {
-    user: {type: Schema.Types.ObjectId, ref: 'User'},
-    content: String
+    author: {type: Schema.Types.ObjectId, ref: 'User'}
   },
   options
 )

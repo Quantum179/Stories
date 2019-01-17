@@ -4,7 +4,10 @@
 
 <script>
 export default {
-  
+  props: {
+    sticky: Boolean,
+    inline: Boolean
+  }
 }
 </script>
 

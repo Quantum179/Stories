@@ -19,52 +19,45 @@
 <script>
 import PrefaceDialog from '../shared/dialogs/PrefaceDialog'
 import StoryCard from './StoryCard'
-import { createNamespacedHelpers } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import { actionTypes, mutationTypes } from '../../store/modules/story/types'
+import * as rootTypes from '../../store/root/types.js'
 
-const { mapState, mapActions, mapMutations } = createNamespacedHelpers('story')
 const { FETCH_STORIES_INFOS } = actionTypes
-const { SET_SELECTED_STORY, SET_SELECTED_COLLECTION } = mutationTypes
+const { SET_SELECTED_STORY } = mutationTypes
 
+const { CLOSE_DIALOG } = rootTypes.mutationTypes
 
 export default {
   data () {
     return {
+      params: {
+        populate: [
+          { path: 'author', select: 'authorName' }
+        ]
+      }
     }
   },
   mounted () {
     // todo: define defaultParams in vuex store
-    let params = {
-      populate: [
-        { path: 'author', select: 'authorName' }, 
-        { path: 'preface', select: 'sentences' }
-      ]
-    }
-
-    this[FETCH_STORIES_INFOS](params)
+    this[FETCH_STORIES_INFOS]()
   },
   computed: {
-    ...mapState(['news', 'stories', 'collections'])
+    ...mapState('story', ['news', 'stories', 'collections'])
   },
   methods: {
-    ...mapActions([FETCH_STORIES_INFOS]),
-    ...mapMutations([SET_SELECTED_STORY, SET_SELECTED_COLLECTION]),
+    ...mapActions('story', [FETCH_STORIES_INFOS]),
+    ...mapMutations([CLOSE_DIALOG]),
+    ...mapMutations('story', [SET_SELECTED_STORY]),
 
     openStoryPreface (story) {
       let that = this
       let callback = () => {
         that[SET_SELECTED_STORY](story.id)
+        that[CLOSE_DIALOG]()
         that.updateRoute('story', {id: story.id})
       }
       this.$refs.preface.openDialog(story, callback)
-    },
-    openCollectionPreface (collection) {
-      let that = this
-      let callback = () => {
-        that[SET_SELECTED_COLLECTION](collection.id)   
-        that.updateRoute('collections', collection.title)
-      }
-      this.$refs.preface.openDialog(collection, callback)
     },
     offset (i) {
       let offset = {}

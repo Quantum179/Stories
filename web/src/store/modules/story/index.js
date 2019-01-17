@@ -1,7 +1,5 @@
-import axios from 'axios'
 import qs from 'qs'
-import $http from '../../../api'
-
+import $http from '../../../services/http'
 import { actionTypes, mutationTypes } from './types'
 
 const { FETCH_STORIES_INFOS, FETCH_STORY_DETAILS, FETCH_COLLECTION_DETAILS } = actionTypes
@@ -26,8 +24,8 @@ const state = {
 }
 
 const actions = {
-  [FETCH_STORIES_INFOS] ({ commit, rootState }, params = null) {
-    return $http.get(`/stories?${qs.stringify(params)}`, { headers: { Authorization: `JWT ${rootState.auth.token}` } })
+  [FETCH_STORIES_INFOS] ({ commit }, params = null) {
+    return $http.get(`/stories?${qs.stringify(params)}`)
       .then(res => {
         if (res.status === 200) {
           let { stories } = res.data
@@ -56,7 +54,7 @@ const actions = {
       })
   },
   [FETCH_COLLECTION_DETAILS] ({ commit, state }, params = null) {
-    return axios.get(`/collections/${state.selectedCollectionID}?${qs.stringify(params)}`)
+    return $http.get(`/collections/${state.selectedCollectionID}?${qs.stringify(params)}`)
       .then(res => {
         if (res.status === 200) {
           let { collection } = res.data

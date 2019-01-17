@@ -1,16 +1,16 @@
 <template>
-  <div id="story_page">
-    <story-nav></story-nav>
+  <div id="blog">
+    <topic-nav :topics="topics"></topic-nav>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import StoryNav from './StoryNav'
+import TopicNav from './TopicNav'
 
 export default {
   components: {
-    StoryNav
+    TopicNav
   }
 }
 </script>

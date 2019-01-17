@@ -1,5 +1,8 @@
-import $http from '../../../api'
+import $http from '../../../services/http'
 import { actionTypes, mutationTypes } from './types'
+
+const { REQUEST_LOGIN, REQUEST_REGISTER, REQUEST_SUBSCRIPTION, REQUEST_LOGOUT } = actionTypes
+const { SET_TOKEN, REMOVE_TOKEN } = mutationTypes
 
 // https://blog.sqreen.io/authentication-best-practices-vue/
 
@@ -9,14 +12,9 @@ const state = {
   status: null
 }
 
-const { REQUEST_LOGIN, REQUEST_REGISTER, REQUEST_SUBSCRIPTION, REQUEST_LOGOUT } = actionTypes
-const { SET_TOKEN, REMOVE_TOKEN } = mutationTypes
 
 // actions
 const actions = {
-  test({commit}) {
-    commit(SET_TOKEN, null)
-  },
   [REQUEST_LOGIN] ({ commit }, payload) {
     return $http.post(`/auth/login`, { payload })
       .then(res => {

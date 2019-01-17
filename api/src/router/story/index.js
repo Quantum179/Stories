@@ -12,7 +12,7 @@ router.get('/home', getHome)
 router.get('/', getStories)
 
 // protected routes
-router.get('/:id', passport.authenticate('jwt', {session: false}), getStory) 
+router.get('/:id', authGuard(), getStory) 
 router.post('/', authGuard(AUTHOR), postStory)
 router.patch('/:id', authGuard(IDENTITY), patchStory)
 router.delete('/:id', authGuard(ADMIN), deleteStory)

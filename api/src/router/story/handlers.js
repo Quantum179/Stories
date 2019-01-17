@@ -11,22 +11,22 @@ export const getHome = (req, res, next) => {
 }
 
 export const getStories = (req, res, next) => {
-    let { params, options } = req.data
-    console.log(req.data)
-    StoryModel._getMany(params, options)
-        .then(stories => {
-          if (!stories || stories.length === 0) {
-            next({code: NOT_FOUND})
-          } else {
-            res.status(OK)
-            res.locals.stories = stories
-            next()
-          }
-        })
-        .catch(err => {
-          console.log(err)
-          next({err: err, code: BAD_REQUEST})
-        })
+  let { params, options } = req.data
+  
+  StoryModel._getMany(params, options)
+    .then(stories => {
+      if (!stories || stories.length === 0) {
+        next({code: NOT_FOUND})
+      } else {
+        res.status(OK)
+        res.locals.stories = stories
+        console.log(stories[2])
+        next()
+      }
+    })
+    .catch(err => {
+      next({err: err, code: BAD_REQUEST})
+    })
 }
 
 export const getStory = (req, res, next) => {
@@ -85,159 +85,101 @@ export const tesr = (req, res, next) => {
     authorID = author._id
     console.log('author saved')
 
-    var preface1 = new ParagraphModel({
-      "sentences": [
-        "Les Magiciens Explorateurs sont revenus de leur mission spéciale.",
-        "Ils ont fait une grande découverte mais n'ont pas pu fournir de détails durant le voyage.",
-        "Une cérémonie officielle est organisée, tous les Elms sont invités."
-      ] 
-    })
-
-    var paragraph1 = new ParagraphModel({
-      "sentences": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
-        "Nam sit amet mauris ut ligula venenatis rhoncus.", 
-        "Vestibulum posuere mi eget velit malesuada, nec finibus sem vulputate.",
-        "Mauris vitae placerat ex.", 
-        "Integer risus risus, bibendum a justo vitae, malesuada aliquet eros.",
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-        "Pellentesque nec purus nibh.",
-        "Mauris auctor eros at ultrices bibendum.",
-        "In feugiat eros nulla, et iaculis enim aliquam eget.",
-        "Sed consectetur, urna et efficitur suscipit, turpis ligula elementum ex, sit amet maximus urna massa et tortor.",
-        "Nunc tempus elit sapien, vitae interdum eros fringilla in.",
-        "Maecenas eu nisl magna.",
-        "Pellentesque dignissim nibh eu nulla ultricies rutrum.",
-        "Quisque tempus libero sit amet ligula auctor, nec iaculis risus dictum.",
-        "Sed vitae faucibus arcu.",
-        "Integer congue dolor eu ipsum rhoncus fermentum."
-      ]
-    })
-
-    var paragraph2 = new ParagraphModel({
-      "sentences": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
-        "Nam sit amet mauris ut ligula venenatis rhoncus.", 
-        "Vestibulum posuere mi eget velit malesuada, nec finibus sem vulputate.",
-        "Mauris vitae placerat ex.", 
-        "Integer risus risus, bibendum a justo vitae, malesuada aliquet eros.",
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-        "Pellentesque nec purus nibh.",
-        "Mauris auctor eros at ultrices bibendum.",
-        "In feugiat eros nulla, et iaculis enim aliquam eget.",
-        "Sed consectetur, urna et efficitur suscipit, turpis ligula elementum ex, sit amet maximus urna massa et tortor.",
-        "Nunc tempus elit sapien, vitae interdum eros fringilla in.",
-        "Maecenas eu nisl magna.",
-        "Pellentesque dignissim nibh eu nulla ultricies rutrum.",
-        "Quisque tempus libero sit amet ligula auctor, nec iaculis risus dictum.",
-        "Sed vitae faucibus arcu.",
-        "Integer congue dolor eu ipsum rhoncus fermentum."
-      ]
-    })
-
-    var paragraph3 = new ParagraphModel({
-      "sentences": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
-        "Nam sit amet mauris ut ligula venenatis rhoncus.", 
-        "Vestibulum posuere mi eget velit malesuada, nec finibus sem vulputate.",
-        "Mauris vitae placerat ex.", 
-        "Integer risus risus, bibendum a justo vitae, malesuada aliquet eros.",
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-        "Pellentesque nec purus nibh.",
-        "Mauris auctor eros at ultrices bibendum.",
-        "In feugiat eros nulla, et iaculis enim aliquam eget.",
-        "Sed consectetur, urna et efficitur suscipit, turpis ligula elementum ex, sit amet maximus urna massa et tortor.",
-        "Nunc tempus elit sapien, vitae interdum eros fringilla in.",
-        "Maecenas eu nisl magna.",
-        "Pellentesque dignissim nibh eu nulla ultricies rutrum.",
-        "Quisque tempus libero sit amet ligula auctor, nec iaculis risus dictum.",
-        "Sed vitae faucibus arcu.",
-        "Integer congue dolor eu ipsum rhoncus fermentum."
-      ]
-    })
-    let id1, id2, id3
-
-    paragraph1.save((err, paragraph) => {
-      id1 = paragraph._id
-    })
-    paragraph2.save((err, paragraph) => {
-      id2 = paragraph._id
-    })
-    paragraph3.save((err, paragraph) => {
-      id3 = paragraph._id
-    })
 
 
-    setTimeout(function(){ 
-      console.log('timeout start')
-      let chapter = new ChapterModel({
-        "paragraphs": [id1, id2, id3],
-        "title": "La grande annonce"
-      })
-      chapter.save((err, chapter) => {
-        setTimeout(function(){ 
-          console.log('test2')
-          preface1.save((err, paragraph) => {
-            var story1 = new StoryModel({
-              "title": "Le retour des Explorateurs",
-              "author": authorID,
-              "keywords": ["Exploration"],
-              "preface": paragraph._id,
-              "chapters": [chapter._id]
-            })
-            story1.save((err, story) => {
-              console.log('story 1 saved')
-            })
-          })
-
-
-
-        }, 7000);
-      })
-    }, 7000);
-
-
-    console.log('continue')
-
-
-
-
-    var preface2 = new ParagraphModel({
-      "sentences": [
-        "Saturn apprend de l'Elémentaire de l'Air qu'il est destiné à faire revivre l'Ordre des Magiciens.", 
-        "Il devra mener une quête, accompagné d'autres Elms choisis"
-      ]  
-    })
-    preface2.save((err, paragraph) => {
-      var story2 = new StoryModel({
-        "title": "La singularité magique",
-        "author": authorID,
-        "keywords": ["Quête"],
-        "preface": paragraph._id
-      })
-      story2.save((err, story) => {
-        console.log('story 2 saved')
-      })
+    var story1 = new StoryModel({
+      "title": "Le retour des Explorateurs",
+      "author": authorID,
+      "keywords": ["Exploration"],
+      "preface": {
+        "text": `Les Magiciens Explorateurs sont revenus de leur mission spéciale. 
+                  Ils ont fait une grande découverte mais n'ont pas pu fournir de détails durant le voyage.
+                  Une cérémonie officielle est organisée, tous les Elms sont invités.`
+      },
+      "chapters": [{
+        "number": 1,
+        "paragraphes": [{
+          "text": `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Nam sit amet mauris ut ligula venenatis rhoncus.
+          Vestibulum posuere mi eget velit malesuada, nec finibus sem vulputate.
+          Mauris vitae placerat ex.
+          Integer risus risus, bibendum a justo vitae, malesuada aliquet eros.
+          Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+          Pellentesque nec purus nibh.
+          Mauris auctor eros at ultrices bibendum.
+          In feugiat eros nulla, et iaculis enim aliquam eget.
+          Sed consectetur, urna et efficitur suscipit, turpis ligula elementum ex, sit amet maximus urna massa et tortor.
+          Nunc tempus elit sapien, vitae interdum eros fringilla in.
+          Maecenas eu nisl magna.
+          Pellentesque dignissim nibh eu nulla ultricies rutrum.
+          Quisque tempus libero sit amet ligula auctor, nec iaculis risus dictum.
+          Sed vitae faucibus arcu.
+          Integer congue dolor eu ipsum rhoncus fermentum.`
+        },
+        {
+          "text": `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Nam sit amet mauris ut ligula venenatis rhoncus.
+          Vestibulum posuere mi eget velit malesuada, nec finibus sem vulputate.
+          Mauris vitae placerat ex.
+          Integer risus risus, bibendum a justo vitae, malesuada aliquet eros.
+          Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+          Pellentesque nec purus nibh.
+          Mauris auctor eros at ultrices bibendum.
+          In feugiat eros nulla, et iaculis enim aliquam eget.
+          Sed consectetur, urna et efficitur suscipit, turpis ligula elementum ex, sit amet maximus urna massa et tortor.
+          Nunc tempus elit sapien, vitae interdum eros fringilla in.
+          Maecenas eu nisl magna.
+          Pellentesque dignissim nibh eu nulla ultricies rutrum.
+          Quisque tempus libero sit amet ligula auctor, nec iaculis risus dictum.
+          Sed vitae faucibus arcu.
+          Integer congue dolor eu ipsum rhoncus fermentum.`
+        },
+        {
+          "text": `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Nam sit amet mauris ut ligula venenatis rhoncus.
+          Vestibulum posuere mi eget velit malesuada, nec finibus sem vulputate.
+          Mauris vitae placerat ex.
+          Integer risus risus, bibendum a justo vitae, malesuada aliquet eros.
+          Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+          Pellentesque nec purus nibh.
+          Mauris auctor eros at ultrices bibendum.
+          In feugiat eros nulla, et iaculis enim aliquam eget.
+          Sed consectetur, urna et efficitur suscipit, turpis ligula elementum ex, sit amet maximus urna massa et tortor.
+          Nunc tempus elit sapien, vitae interdum eros fringilla in.
+          Maecenas eu nisl magna.
+          Pellentesque dignissim nibh eu nulla ultricies rutrum.
+          Quisque tempus libero sit amet ligula auctor, nec iaculis risus dictum.
+          Sed vitae faucibus arcu.
+          Integer congue dolor eu ipsum rhoncus fermentum.`                
+        }]
+      }]
     })
 
 
 
-    var preface3 = new ParagraphModel({
-      "sentences": [
-        "Les Elms de l'association dont Saturn est membre sont partis en excursion dans les Bois Dormants.",
-        "Un sage est spécialement venu pour l'occasion, afin de leur raconter une histoire sur les origines d'Elem"
-      ]   
+
+    var story2 = new StoryModel({
+      "title": "La singularité magique",
+      "author": authorID,
+      "keywords": ["Quête"],
+      "preface": {
+        "text": `Saturn apprend de l'Elémentaire de l'Air qu'il est destiné à faire revivre l'Ordre des Magiciens.
+        Il devra mener une quête, accompagné d'autres Elms choisis`
+      }
     })
-    preface3.save((err, paragraph) => {
-      var story3 = new StoryModel({
-        "title": "Le conte du Sage",
-        "author": authorID,
-        "keywords": ["Elem", "Conte"],
-        "preface": paragraph._id
-      })
-      story3.save((err, story) => {
-        console.log('story 3 saved')
-      })
+
+
+    var story3 = new StoryModel({
+      "title": "Le conte du Sage",
+      "author": authorID,
+      "keywords": ["Elem", "Conte"],
+      "preface": {
+        "text": `Les Elms de l'association dont Saturn est membre sont partis en excursion dans les Bois Dormants.
+        Un sage est spécialement venu pour l'occasion, afin de leur raconter une histoire sur les origines d'Elem` 
+      }
     })
+
+    StoryModel._create([story1, story2, story3])
+
   })
 }
