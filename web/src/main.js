@@ -12,6 +12,16 @@ Vue.use(Vuetify)
 
 Vue.mixin({
   methods: {
+    $$ (selector) {
+      let elements = document.querySelectorAll(selector)
+      if(elements.length === 0) {
+        return null
+      } else if(elements.length === 1) {
+        return elements[0]
+      } else {
+        return elements
+      }
+    },
     updateRoute (name, params) {
       if(name.hasOwnProperty('path')) {
         this.$router.push(name)

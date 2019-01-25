@@ -1,35 +1,40 @@
 <template>
   <div id="login">
     <v-layout column align-center>
-      <h2>Connexion</h2>
-      <v-card>
-        <v-form id="login-form" ref="form" v-model="valid" lazy-validation>
-          <v-container>
-            <v-layout column align-item>
-              <v-text-field
-              v-model="form.email"
-              :rules="emailRules"
-              label="Email"
-              required
-              ></v-text-field>
-              <v-text-field
-                v-model="form.password"
-                :rules="passwordRules"
-                label="Mot de passe"
-                type="password"
+      <v-flex xs12 sm12 md12 lg12>
+        <h2>Connexion</h2>
+      </v-flex>
+      <v-flex xs12 sm12 md12 lg12>
+        <v-card id="login_card">
+          <v-form id="login-form" ref="form" v-model="valid" lazy-validation>
+            <v-container>
+              <v-layout column align-item>
+                <v-text-field
+                v-model="form.email"
+                :rules="emailRules"
+                label="Email"
                 required
-              ></v-text-field>
-              <v-checkbox
-                v-model="form.rememberMe"
-                label="Se souvenir de moi ?"
-              ></v-checkbox>
-              <v-btn :disabled="!valid" color="info" @click="submit" @keyup.native.enter="submit">
-                Se connecter
-              </v-btn>          
-            </v-layout>
-          </v-container>        
-        </v-form>
-      </v-card>
+                ></v-text-field>
+                <v-text-field
+                  v-model="form.password"
+                  :rules="passwordRules"
+                  label="Mot de passe"
+                  type="password"
+                  required
+                ></v-text-field>
+                <v-checkbox
+                  v-model="form.rememberMe"
+                  label="Se souvenir de moi ?"
+                ></v-checkbox>
+                <v-btn :disabled="!valid" color="info" @click="submit" @keyup.native.enter="submit">
+                  Se connecter
+                </v-btn>          
+              </v-layout>
+            </v-container>        
+          </v-form>
+        </v-card>
+      </v-flex>
+
     </v-layout>
   </div>
 </template>
@@ -74,16 +79,20 @@ export default {
     window.removeEventListener('keyup', this.onEnterKeyPress)
   },
   methods: {
-    ...mapActions([SHOW_SNACKBAR_ACTION]),
-    ...mapActions('auth', [REQUEST_LOGIN]),
+    ...mapActions({
+      showSnackbar: SHOW_SNACKBAR_ACTION
+    }),
+    ...mapActions('auth', {
+      login: REQUEST_LOGIN
+    }),
 
     submit () {
       if (this.$refs.form.validate()) {
         let that = this
-        this[REQUEST_LOGIN](this.form)
+        this.login(this.form)
           .then(user => {
             const text = `Bienvenue sur Stories, ${user} !`
-            that[SHOW_SNACKBAR_ACTION](text)
+            that.showSnackbar(text)
             that.updateRoute('home')
           })
           .catch(err => {
@@ -93,7 +102,7 @@ export default {
           })     
       }
     },
-    onEnterKeyPress(event) {
+    onEnterKeyPress (event) {
       event.preventDefault()
       if(event.keyCode === 13) {
         this.submit()
@@ -110,5 +119,6 @@ export default {
 </script>
 
 <style lang="stylus">
-
+#login_card
+  width 50vw
 </style>

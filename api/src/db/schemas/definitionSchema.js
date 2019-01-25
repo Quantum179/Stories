@@ -1,10 +1,14 @@
 import mongoose from 'mongoose'
+import ParagraphSchema from './paragraphSchema'
 var Schema = mongoose.Schema
 
 var DefinitionSchema = new Schema(
   {
-    name: String,
-    description: [{type: Schema.Types.ObjectId, ref: 'Paragraph'}],
+    name: {type: String, required: true},
+    description: {
+      type: [ParagraphSchema],
+      required: true
+    },
     definitions: [{type: Schema.Types.ObjectId, ref:'Definition'}],
     keywords: [String] // todo: keyword scheama with links ?
   }

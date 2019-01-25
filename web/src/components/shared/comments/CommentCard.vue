@@ -1,10 +1,13 @@
 <template>
-  
+  <v-card></v-card>
 </template>
 
 <script>
 export default {
-  date () {
+  props: {
+    comment: Object
+  },
+  data () {
     return {
 
     }

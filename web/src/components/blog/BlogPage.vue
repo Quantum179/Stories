@@ -1,16 +1,31 @@
 <template>
   <div id="blog">
-    <topic-nav :topics="topics"></topic-nav>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import TopicNav from './TopicNav'
+import { mapMutations } from 'vuex'
+import { mutationTypes } from '../../store/root/types'
+
+const { 
+  ADD_EXTENSION, 
+  REMOVE_EXTENSION 
+} = mutationTypes
 
 export default {
-  components: {
-    TopicNav
+  mounted () {
+    this.addExtension('topic-tabs')
+  },
+  methods: {
+    ...mapMutations({
+      addExtension: ADD_EXTENSION,
+      removeExtension: REMOVE_EXTENSION
+    })
+  },
+  beforeRouteLeave (to, from, next) {
+    this.removeExtension()
+    next()
   }
 }
 </script>

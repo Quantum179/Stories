@@ -21,6 +21,7 @@
  </script>
  
  <style lang="stylus" scoped>
- 
+.paragraph 
+  font-size calc(7px + 1vw)
 </style>
  

@@ -11,7 +11,7 @@
         <v-flex xs12 sm12 md12 lg12>
           <v-layout>
             <v-flex v-if="!isSmallScreen()" md3 lg3>
-              <sharing-nav sticky></sharing-nav>
+              <sharing-section sticky></sharing-section>
             </v-flex>
             <v-flex xs12 sm12 md6 lg6>
               <v-layout column class="article_body">
@@ -25,11 +25,7 @@
         </v-flex>
         <v-flex xs12 sm12 md12 lg12>
           <v-layout column>
-            <sharing-nav v-if="isSmallScreen" inline></sharing-nav>
-            <p>Voulez-vous laisser un commentaire ?</p>
-            <comment-form></comment-form>
-            <h4>Commentaires</h4>
-            <comment-list></comment-list>
+            <comment-section :post="article"></comment-section>
           </v-layout>
         </v-flex>  
       </v-layout>
@@ -39,9 +35,8 @@
 
 <script>
 import Paragraph from '../shared/Paragraph'
-import SharingNav from '../shared/SharingNav'
-import CommentForm from '../shared/comments/CommentForm'
-import CommentList from '../shared/comments/CommentList'
+import SharingSection from '../shared/sharings/SharingSection'
+import CommentSection from '../shared/comments/CommentSection'
 import { createNamespacedHelpers } from 'vuex'
 import { actionTypes } from '../../store/modules/blog/types.js'
 
@@ -61,17 +56,22 @@ export default {
     })
   },
   mounted () {
-    this[FETCH_ARTICLE_DETAILS]()
+    this.fetchDetails()
       .then(status => {
         if(status === 500) {
           // todo: display internal server error message
         }
       })
   },
+  methods: {
+    ...mapActions({
+      fetchDetails: FETCH_ARTICLE_DETAILS
+    })
+  },
   components: {
     Paragraph,
-    SharingNav,
-    CommentForm
+    SharingSection,
+    CommentSection
   }
 }
 </script>

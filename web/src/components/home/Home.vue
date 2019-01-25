@@ -6,11 +6,11 @@
       <v-layout row>
         <v-flex xs12 sm12 class="anim-item" v-if="selectedCategory === null">
           <v-layout column>
-            <v-flex>
-              <h2>Accueil</h2>
+            <v-flex xs12 justify-center>
+              <h1>Accueil</h1>
               <exo-carousel :slides="news"></exo-carousel>            
             </v-flex>
-            <v-container>
+            <v-container v-if="!isSmallScreen()">
               <v-layout row>
                 <v-flex xs6>
                   <div class="latest">
@@ -45,9 +45,9 @@ import ExoCarousel from '../shared/primitives/ExoCarousel'
 import CategoryCard from './CategoryCard'
 
 import { createNamespacedHelpers } from 'vuex'
-import {actionTypes} from '../../store/modules/home/types'
+import { actionTypes } from '../../store/modules/home/types'
 
-const {mapState, mapActions} = createNamespacedHelpers('home')
+const { mapState, mapActions } = createNamespacedHelpers('home')
 const { FETCH_HOME_INFOS } = actionTypes
 
 export default {
@@ -65,7 +65,9 @@ export default {
     // TODO: add transition animation for categories
   },
   methods: {
-    ...mapActions([FETCH_HOME_INFOS])
+    ...mapActions({
+      fetchInfos: FETCH_HOME_INFOS
+    })
   },
   components: {
     ExosoftOpening,
@@ -80,4 +82,5 @@ export default {
 
 #home
   height 2000px
+
 </style>

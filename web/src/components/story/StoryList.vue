@@ -40,21 +40,27 @@ export default {
   },
   mounted () {
     // todo: define defaultParams in vuex store
-    this[FETCH_STORIES_INFOS]()
+    this.fetchInfos()
   },
   computed: {
     ...mapState('story', ['news', 'stories', 'collections'])
   },
   methods: {
-    ...mapActions('story', [FETCH_STORIES_INFOS]),
-    ...mapMutations([CLOSE_DIALOG]),
-    ...mapMutations('story', [SET_SELECTED_STORY]),
+    ...mapMutations({
+      closeDialog: CLOSE_DIALOG
+    }),
+    ...mapActions('story', {
+      fetchInfos: FETCH_STORIES_INFOS
+    }),
+    ...mapMutations('story', {
+      setSelectedStory: SET_SELECTED_STORY
+    }),
 
     openStoryPreface (story) {
       let that = this
       let callback = () => {
-        that[SET_SELECTED_STORY](story.id)
-        that[CLOSE_DIALOG]()
+        that.setSelectedStory(story.id)
+        that.closeDialog()
         that.updateRoute('story', {id: story.id})
       }
       this.$refs.preface.openDialog(story, callback)

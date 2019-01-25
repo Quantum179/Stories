@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
-var Schema = mongoose.Schema
+const Schema = mongoose.Schema
 
-var ParagraphSchema = new Schema(
+let ParagraphSchema = new Schema(
   {
     title: String,
     number: Number,

@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
-var Schema = mongoose.Schema
+import ParagraphSchema from './paragraphSchema';
+const Schema = mongoose.Schema
 
-var MailSchema = new Schema(
+let MailSchema = new Schema(
   {
-    title: String,
-    paragraphes: [{type: Schema.Types.ObjectId, ref:'Paragraph'}]
+    title: { type: String, required: true },
+    paragraphes: { type: [ParagraphSchema], required: true }
   }
 )
 

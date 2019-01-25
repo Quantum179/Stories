@@ -1,9 +1,16 @@
 import mongoose from 'mongoose'
-var Schema = mongoose.Schema
+import MessageSchema from './messageSchema'
+const Schema = mongoose.Schema
 
-export default new Schema(
+
+let DiscussionSchema = new Schema(
   {
-    users: [{type: Schema.Types.ObjectId, ref: 'User'}],
-    messages: [{type: Schema.Types.ObjectId, ref: 'Message'}]
+    users: {
+      type: [{type: Schema.Types.ObjectId, ref: 'User'}],
+      required: true
+    },
+    messages: [MessageSchema]
   }
 )
+
+export default DiscussionSchema

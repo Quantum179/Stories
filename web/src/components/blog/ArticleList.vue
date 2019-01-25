@@ -59,14 +59,18 @@ export default {
     }
   },
   mounted () {
-    this[FETCH_BLOG_INFOS]()
+    this.fetchInfos()
   },
   methods: {
-    ...mapActions([FETCH_BLOG_INFOS]),
-    ...mapMutations([SET_SELECTED_ARTICLE]),
+    ...mapActions({
+      fetchInfos: FETCH_BLOG_INFOS
+    }),
+    ...mapMutations({
+      setSelectedArticle: SET_SELECTED_ARTICLE
+    }),
 
     readArticle (article) {
-      this[SET_SELECTED_ARTICLE](article.id)
+      this.setSelectedArticle(article.id)
       this.updateRoute('article', {id: article.id})
     }
   },

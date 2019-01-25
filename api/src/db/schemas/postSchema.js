@@ -24,7 +24,7 @@ let PostSchema = new Schema (
     ratings : [Number],
     likes : Number,
     shares: Number,
-    comments : [{type: Schema.Types.ObjectId, ref: 'Comment'}],
+    comments : [CommentSchema],
     keywords: [String]
   },
   options

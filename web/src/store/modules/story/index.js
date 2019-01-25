@@ -10,7 +10,10 @@ const {
   SET_STORY_DETAILS, 
   SET_COLLECTION_DETAILS,
   SET_SELECTED_STORY,
-  SET_SELECTED_COLLECTION
+  SET_SELECTED_COLLECTION,
+  OPEN_DRAWER,
+  CLOSE_DRAWER,
+  TOGGLE_DRAWER
 } = mutationTypes
 
 const state = {
@@ -90,6 +93,15 @@ const mutations = {
   },
   [SET_COLLECTION_DETAILS] (state, collection) {
     state.collectionDetails = collection
+  },
+  [OPEN_DRAWER] (state) {
+    state.drawer = true
+  },
+  [CLOSE_DRAWER] (state) {
+    state.drawer = false
+  },
+  [TOGGLE_DRAWER] (state) {
+    state.drawer = !state.drawer
   }
 }
 

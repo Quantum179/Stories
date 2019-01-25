@@ -1,5 +1,5 @@
 /* import { OK, INTERNAL_SERVAL_ERROR } from 'http-status-code' */
-
+import $http from '../../../services/http'
 import { actionTypes, mutationTypes } from './types'
 
 /* TODO : mettre ça côté API
@@ -42,7 +42,7 @@ const { SET_HOME_NEWS, SET_LATEST_POSTS, SET_CATEGORIES, SET_SELECTED_CATEGORY }
 // actions
 const actions = {
   [FETCH_HOME_INFOS] ({ commit }) {
-    return this.$http.get(`/home`)
+    return $http.get(`/home`)
       .then(res => {
         if (res.status === 200) {
           // TODO : sanitize api response data

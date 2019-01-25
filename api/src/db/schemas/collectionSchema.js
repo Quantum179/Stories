@@ -4,6 +4,7 @@ var Schema = mongoose.Schema
 
 var CollectionSchema = new Schema(
   {
+    title: String,
     stories: [{
       type: {
         story: Schema.Types.ObjectId, ref: 'Story', 

@@ -1,5 +1,6 @@
 <template>
-  <v-navigation-drawer app v-model="drawer" absolute>
+  <v-navigation-drawer app v-model="drawer" absolute
+  @click="test()">
     <v-list class="pa-1">
       <v-list-tile-content>
         <h2 to="home">Stories</h2>
@@ -7,7 +8,8 @@
     </v-list>
     <v-list class="pt-0" dense>
       <v-divider light></v-divider>
-      <v-list-tile v-for="item in navCategories" :key="item.title" :to="item.src">
+      <v-list-tile v-for="item in navCategories" :key="item.title" class="pointer"
+      @click="handleClick(item.src)">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
@@ -16,13 +18,14 @@
         </v-list-tile-content>
       </v-list-tile>
       <v-divider light></v-divider>
-      <v-list-tile v-for="item in navOptions" :key="item.title" :to="item.src">
-      <v-list-tile-action>
-        <v-icon>{{ item.icon }}</v-icon>
-      </v-list-tile-action>
-      <v-list-tile-content>
-        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-      </v-list-tile-content>
+      <v-list-tile v-for="item in navOptions" :key="item.title" class="pointer"
+       @click="handleClick(item.src)">
+        <v-list-tile-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title @click="handleClick(item.src)">{{ item.title }}</v-list-tile-title>
+        </v-list-tile-content>
       </v-list-tile>
     </v-list>
   </v-navigation-drawer>
@@ -33,7 +36,7 @@ import { mapState, mapGetters, mapMutations } from 'vuex'
 import { getterTypes, mutationTypes } from '../../store/root/types'
 
 const { GET_DRAWER_VALUE } = getterTypes
-const { TOGGLE_DRAWER } = mutationTypes
+const { SHOW_DRAWER, CLOSE_DRAWER } = mutationTypes
 
 export default {
   data () {
@@ -42,21 +45,31 @@ export default {
   },
   computed: {
     ...mapState(['navCategories', 'navOptions']),
-    ...mapGetters([GET_DRAWER_VALUE]),
+    ...mapGetters({
+      getDrawerValue: GET_DRAWER_VALUE
+    }),
 
     drawer: {
       get () {
-        return this[GET_DRAWER_VALUE]
+        return this.getDrawerValue
       },
-      set (val) {
-        if (val !== this[GET_DRAWER_VALUE]) {
-          this[TOGGLE_DRAWER]()
-        }
+      set () {
+
       }
     }
   },
   methods: {
-    ...mapMutations([TOGGLE_DRAWER])
+    ...mapMutations({
+      showDrawer: SHOW_DRAWER,
+      closeDrawer: CLOSE_DRAWER
+    }),
+    test () {
+      debugger
+    },
+    handleClick(src) {
+      this.closeDrawer()
+      this.updateRoute(src)
+    }
   }
 }
 </script>

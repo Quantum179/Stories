@@ -6,9 +6,9 @@ var options = { discriminatorKey: 'type', timestamps: true}; // TODO Quantum : d
 
 var ChronicleSchema = new Schema(
   {
-    chronicleNumber: Number,
+    chronicleNumber: { type: Number, required: true },
     theme: String,
-    chapters: [{type: ChapterSchema, required: true}]
+    chapters: { type: [ChapterSchema], required: true }
   }
 )
 

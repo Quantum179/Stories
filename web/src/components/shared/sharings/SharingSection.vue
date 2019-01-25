@@ -1,5 +1,5 @@
 <template>
-  
+  <div>sharing</div>
 </template>
 
 <script>
