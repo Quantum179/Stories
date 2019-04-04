@@ -21,7 +21,6 @@ export default {
         if(req.query.hasOwnProperty('queryParams')) {
           data.params = req.query.queryParams
         }
-
         if(req.query.hasOwnProperty('fields')) {
           data.options.fields = req.query.fields
         }

@@ -5,8 +5,8 @@
     </v-flex>
     <v-container grid-list-md>
       <v-layout xs12 row wrap>
-        <v-flex class="story-flex pointer pa-2" @click="openStoryPreface(story)" v-for="(story, i) in stories" :key="i" 
-        xs12 sm4 md4 lg4
+        <v-flex class="story-flex pointer pa-2" @click="openPreface(story)" v-for="(story, i) in stories" :key="i" 
+        xs6 sm4 md4 lg4
         :class="offset(i)">
           <story-card class="story-card" :story="story"></story-card>
         </v-flex>
@@ -40,7 +40,8 @@ export default {
   },
   mounted () {
     // todo: define defaultParams in vuex store
-    this.fetchInfos()
+    this.fetchInfos(this.params)
+
   },
   computed: {
     ...mapState('story', ['news', 'stories', 'collections'])
@@ -56,12 +57,12 @@ export default {
       setSelectedStory: SET_SELECTED_STORY
     }),
 
-    openStoryPreface (story) {
+    openPreface (story) {
       let that = this
       let callback = () => {
         that.setSelectedStory(story.id)
         that.closeDialog()
-        that.updateRoute('story', {id: story.id})
+        that.updateRoute(`/stories/${story.id}`)
       }
       this.$refs.preface.openDialog(story, callback)
     },
@@ -86,9 +87,4 @@ export default {
   content ''
   float left
   padding-top 80%
-
-.v-card
-  height 100%
-  width 100%
-  margin 0
 </style>

@@ -1,11 +1,13 @@
 <template>
   <div id="login">
     <v-layout column align-center>
-      <v-flex xs12 sm12 md12 lg12>
+      <v-flex column xs12 sm12 md12 lg12>
         <h2>Connexion</h2>
       </v-flex>
       <v-flex xs12 sm12 md12 lg12>
         <v-card id="login_card">
+          <span class="text-error" v-if="this.redirect">Vous devez être connecté pour avoir accès à cette page.</span>
+
           <v-form id="login-form" ref="form" v-model="valid" lazy-validation>
             <v-container>
               <v-layout column align-item>
@@ -63,13 +65,17 @@ export default {
       emailRules: [
         v => !!v || 'L\'email est requis',
         v => /.+@.+/.test(v) || 'L\'email doit être valide'
-      ]      
+      ],
+      redirect: false
     }
   },
   computed: {
   },
   mounted () {
     window.addEventListener('keyup', this.onEnterKeyPress)
+    if(this.$route.query.hasOwnProperty('redirect')) {
+      this.redirect = true
+    }
     // todo: add guard system 
     // todo: propose browser cached data (email) when enter input
     // https://serversideup.net/vue-router-navigation-guards-vuex/
@@ -91,9 +97,9 @@ export default {
         let that = this
         this.login(this.form)
           .then(user => {
-            const text = `Bienvenue sur Stories, ${user} !`
+            const text = `Bienvenue sur Stories, Alpha testeur !`
             that.showSnackbar(text)
-            that.updateRoute('home')
+            that.updateRoute(that.$route.query.redirect || '/home')
           })
           .catch(err => {
             // todo: display errors in form
@@ -113,6 +119,10 @@ export default {
     },
     resetValidation () {
       this.$refs.form.resetValidation()
+    },
+    beforeRouterEnter (to, from, next) {
+      debugger
+      next()
     }
   }
 }
@@ -121,4 +131,7 @@ export default {
 <style lang="stylus">
 #login_card
   width 50vw
+
+.text-error
+  color red
 </style>

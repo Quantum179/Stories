@@ -116,5 +116,5 @@ export const mutations = {
   },
   [REMOVE_EXTENSION] (state) {
     state.extension = ''
-  },
+  }
 }

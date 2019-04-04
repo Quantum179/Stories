@@ -6,9 +6,9 @@ import { getBlog, getTopics, getTopic, getArticles, getArticle, postArticle } fr
 
 router.get('/', getBlog)
 router.get('/topics/', getTopics)
-router.get('/topics/:idTopic', getTopic)
+router.get('/topics/:id', getTopic)
 router.get('/articles', getArticles)
-router.get('/articles/:idArticle', getArticle)
+router.get('/articles/:id', getArticle)
 router.post('/articles', postArticle)
 
 export default router

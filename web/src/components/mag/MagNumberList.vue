@@ -1,10 +1,16 @@
 <template>
 <div id="mag">
-    <h1>ExoMag</h1>
+    <v-flex xs12 justify-center>
+      <h1>ExoMag</h1>
+    </v-flex>
     <v-container>
-      <v-flex>
-        <mag-number-card v-for="magNumber in magNumbers" :key="magNumber.title"></mag-number-card>
-      </v-flex>
+      <v-layout column align-center>
+        <v-flex xs12
+        @click="updateRoute()">
+          <mag-number-card v-for="magNumber in magNumbers" :key="magNumber.title"></mag-number-card>
+        </v-flex>      
+      </v-layout>
+
     </v-container>
     <preface-dialog v-if="dialog"></preface-dialog>
 </div>

@@ -7,12 +7,15 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
 import passport from './src/passport'
-import { initDB, closeDB } from './src/db'
+import {initDatabase, closeDatabase } from './src/db'
 import SocketIO from 'socket.io'
 import router from './src/router'
 
 const app = express()
 const server = http.Server(app)
+
+// Database
+initDatabase()
 
 //Configuration
 app.use(cors())
@@ -20,8 +23,6 @@ app.use(bodyParser.json())
 app.use(helmet())
 app.use(middlewares.sanitizer)
 app.use(passport.initialize())
-
-initDB()
 
 // Router and formatters
 app.use(middlewares.requestFormatter)
@@ -58,7 +59,7 @@ server.on('close', function() {
 })
 
 process.on('SIGINT', function() {
-  closeDB()
+  closeDatabase()
   server.close()
 })
 

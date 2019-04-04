@@ -6,6 +6,7 @@ import store from './store'
 import './stylus/main.styl'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import { clientUrl } from './constants'
 
 Vue.config.productionTip = false
 Vue.use(Vuetify)
@@ -22,16 +23,34 @@ Vue.mixin({
         return elements
       }
     },
-    updateRoute (name, params) {
-      if(name.hasOwnProperty('path')) {
-        this.$router.push(name)
-      } else {
-        this.$router.push({ name: name, params: params })
-      }
+    updateRoute (path, params, query) {
+      path.constructor === Object ?
+        this.$router.push(path) :
+        path.includes('/') ? 
+          this.$router.push({ 
+            path: path, 
+            query: query 
+          }) :
+          this.$router.push({ 
+            name: path, 
+            params: params, 
+            query: query 
+          })
     },
     isSmallScreen () {
       return this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm
-    }  
+    },
+    formatDate (date) {
+      if(date.constructor === Date) {
+        return `${date.getDay()}-${date.getMonth()}-${date.getYear()}`
+      } else {
+        //todo : format if not javascript object Date
+        return date.substring(0,10)
+      }
+    },
+    formatUrl(routeName, id) {
+      return `${clientUrl}/${routeName}/${id}`
+    }
   }
 
 })

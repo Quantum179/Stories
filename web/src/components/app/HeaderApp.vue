@@ -3,18 +3,12 @@
     prominent extended dense>
     <v-btn fab small flat depressed v-on:click.native="toggleDrawer"
     v-if="isSmallScreen()">
-      <v-icon>menu</v-icon>
+      <v-icon>home</v-icon>
     </v-btn>
-    <v-toolbar-title>
-      <router-link class="pointer no-select" to="/home" tag="span">Stories (alpha)</router-link>
+    <v-toolbar-title v-if="!isSmallScreen()">
+      <h1 class="pointer"><router-link to="/home" tag="span">Stories (alpha)</router-link></h1>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <div class="categories" v-if="!isSmallScreen() && 
-      !isSearching">
-      <span v-for="(category, i) in categories" :key="i" 
-      class="pointer no-select" 
-      @click="updateRoute(category.src)">{{category.title}}</span>
-    </div>
     <v-toolbar-items>
         <v-layout row justify-end>
           <v-flex><v-btn fab flat><v-icon>search</v-icon></v-btn></v-flex>
@@ -24,7 +18,7 @@
           </v-flex>
         </v-layout> 
     </v-toolbar-items>
-    <component v-if="extension != ''" :is="extension" slot="extension"></component>
+    <home-tabs slot="extension"></home-tabs>
   </v-toolbar>
 </template>
 
@@ -34,11 +28,9 @@ import { actionTypes } from '../../store/modules/auth/types'
 import * as rootTypes from '../../store/root/types'
 
 import HomeTabs from '../home/HomeTabs'
-import StoryTabs from '../story/StoryTabs'
-import TopicTabs from '../blog/TopicTabs'
 
 const { REQUEST_LOGOUT } = actionTypes
-const { TOGGLE_DRAWER } = rootTypes.mutationTypes
+const { TOGGLE_DRAWER, ADD_EXTENSION, REMOVE_EXTENSION } = rootTypes.mutationTypes
 
 export default {
   data () {
@@ -48,6 +40,7 @@ export default {
     }
   },
   mounted () {
+    this.addExtension('home-tabs')
     // todo: find if mapstate if not better to get drawer value
     // todo: breakpoints for differents displays
   },
@@ -58,13 +51,17 @@ export default {
       extension: state => state.extension
     }),
     ...mapState('auth', ['token'])
+
+
   },
   methods: {
     ...mapActions('auth', {
       logout: REQUEST_LOGOUT
     }),
     ...mapMutations({
-      toggleDrawer: TOGGLE_DRAWER
+      toggleDrawer : TOGGLE_DRAWER,
+      addExtension: ADD_EXTENSION,
+      removeExtension: REMOVE_EXTENSION
     }),
 
     _logout () {
@@ -74,10 +71,12 @@ export default {
         })
     }
   },
+  beforeRouteLeave (to, from, next) {
+    this.removeExtension()
+    next()
+  },
   components: {
-    HomeTabs,
-    StoryTabs,
-    TopicTabs
+    HomeTabs
   }
 }
 </script>

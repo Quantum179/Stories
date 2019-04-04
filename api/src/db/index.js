@@ -1,12 +1,10 @@
-import data from './init-data'
-import models from './models'
-import Mongoose from 'mongoose'
-import queryPlugin from './schemas/plugins/queryPlugin'
-var mongoDB = 'mongodb://localhost/stories'
-import {defaultMongooseFields} from '../constants'
+import mongoose from 'mongoose'
+import { loadModels } from './models'
+import queryPlugin from './models/schemas/plugins/queryPlugin'
+import { defaultMongooseFields } from '../constants'
+import { init } from './migrations'
 
-import user from './init-data/users'
-
+const mongoDB = 'mongodb://localhost/stories'
 let db
 
 function removeFields(object, fields) {
@@ -28,20 +26,22 @@ function toPlainItem(item, fields) {
 
 // === EXPORTS ===
 
-export const initDB = () => {
-  Mongoose.connect(mongoDB);
-  Mongoose.Promise = global.Promise;
+export const initDatabase = () => {
+  mongoose.connect(mongoDB)
+  mongoose.Promise = global.Promise
+  db = mongoose.connection
+  mongoose.plugin(queryPlugin)
+  loadModels()
 
-  db = Mongoose.connection;
   db.once('open', function() {
-    console.log('open db')
+    console.log('open db')    
+    init()
   })
   db.on('error', console.error.bind(console, 'MongoDB connection error:'))
   // Todo Quantum : close database on disconnect
-  //TODO : find how to implement global plugins
 }
 
-export const closeDB = () => {
+export const closeDatabase = () => {
   db.close()
 }
 
@@ -56,7 +56,7 @@ export const toPlainObject = (item, fields = []) => {
 }
 
 export const isMongoData = (item) => {
-  if(item === null) {
+  if(!item) {
     return false
   } else {
     return Array.isArray(item) ? 
@@ -64,5 +64,3 @@ export const isMongoData = (item) => {
       item.constructor.name === 'model'
   }
 }
-
-export const mongoose = Mongoose

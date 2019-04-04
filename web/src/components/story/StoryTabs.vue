@@ -1,7 +1,7 @@
 <template>
   <v-tabs>
-    <v-tab ripple @click="toggleDrawer()">
-      <v-icon>view_list</v-icon>
+    <v-tab ripple>
+
     </v-tab>
   </v-tabs>
 </template>

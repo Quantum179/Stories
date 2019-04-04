@@ -42,9 +42,9 @@ const actions = {
         if (res.status === 200) {
           let { chronicle } = res.data
           commit(SET_CHRONICLE_DETAILS, chronicle)
-        } else {
-          // TODO
         }
+        
+        return res.status
       })
       .catch(err => {
         return err.response.status
@@ -60,7 +60,7 @@ const mutations = {
     state.chronicles = chronicles
   },
   [SET_SELECTED_CHRONICLE] (state, chronicleID) {
-    state.selectedchronicleID = chronicleID
+    state.selectedChronicleID = chronicleID
   },
   [SET_CHRONICLE_DETAILS] (state, chronicle) {
     state.chronicleDetails = chronicle

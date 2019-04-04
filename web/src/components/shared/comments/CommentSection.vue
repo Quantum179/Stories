@@ -3,20 +3,27 @@
     <v-container fluid id="comment_section">
       <v-layout column>
         <v-flex>
-          <span>Souhaitez vous laissez un commentaire ?</span>
-        </v-flex>
-        <v-flex xs12>
-          <v-textarea
-            hint="Votre commentaire"
-          ></v-textarea>
-        </v-flex>
-        <v-flex xs12>        
-          <v-btn @click="postComment">Poster</v-btn>
+          <h3>Votre commentaire :</h3>
         </v-flex>
         <v-flex>
+          <v-layout>
+            <v-flex xs7>
+              <v-textarea v-model="comment.text" class="comment_textfield"></v-textarea>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex>        
+          <v-btn @click="postComment()">Poster</v-btn>
+          <!--Votre commentaire a bien été posté -->        
+        </v-flex>
+        <v-flex class="mt-5">
           <v-layout column>
-            <h3>Liste des commentaires</h3>
-            <comment-card v-for="(comment, i) in comments" :key="i"></comment-card>
+            <v-flex xs12>
+              <h3>Commentaires</h3>
+            </v-flex>
+            <v-flex xs12>
+              <comment-card v-for="(comment, i) in comments" :key="i"></comment-card>
+            </v-flex>
           </v-layout>
         </v-flex>
       </v-layout>
@@ -26,30 +33,39 @@
 
 <script>
 import CommentCard from './CommentCard'
-import { mapActions } from 'vuex'
-import { actionTypes } from '../../../store/modules/comments/types.js'
-/* import { createCommentModel } from '../../../factories' */
+import { mapState, mapActions } from 'vuex'
+import { actionTypes } from '../../../store/modules/comment/types.js'
+import { createCommentModel } from '../../../factories' 
 
 let { ADD_COMMENT } = actionTypes
 
 export default {
   props: {
-    comments: Array
+    comments: Array,
+    sourceID: String
   },
   data () {
     return {
-      
+      comment: createCommentModel()
     }
+  },
+  computed: {
+    ...mapState('auth', ['user'])
   },
   methods: {
     ...mapActions('comment', {
       addComment: ADD_COMMENT
     }),
+    
     postComment () {
-/*       this.addComment(this.newComment)
+      let comment = this.comment
+      comment.source = this.sourceID
+      comment.author = this.user.id !== 0 ? this.user.id : undefined
+      this.addComment(comment)
         .then(() => {
-          console.log(this.newComment)
-        }) */
+          //todo: popup
+          comment.text = ''
+        })
     }
   },
   components: {
@@ -59,5 +75,4 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
 </style>

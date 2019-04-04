@@ -42,8 +42,6 @@ import FriendList from '@/components/profile/FriendList'
 import DiscussionList from '@/components/profile/DiscussionList'
 import Discussion from '@/components/profile/Discussion' */
 
-import { authGuard } from '../services/auth'
-
 export default Object.freeze([
   {
     path: '/',
@@ -97,19 +95,11 @@ export default Object.freeze([
       {
         path: ':id',
         name: 'chronicle',
-        component: Chronicle,
-        beforeEnter: (to, from, next) => {
-          authGuard()
-          next()
-        }
+        component: Chronicle
       },
       {
         path: 'add',
-        component: ChronicleForm,
-        beforeEnter: (to, from, next) => {
-          authGuard('ADMIN')
-          next()
-        }
+        component: ChronicleForm
       }
     ]
   },
@@ -125,19 +115,11 @@ export default Object.freeze([
       {
         path: ':id',
         name:'story',
-        component: Story,
-        beforeEnter: (to, from, next) => {
-          authGuard()
-          next()
-        }
+        component: Story
       },
       {
         path: 'add',
-        component: StoryForm,
-        beforeEnter: (to, from, next) => {
-          authGuard('AUTHOR')
-          next()
-        }
+        component: StoryForm
       }
     ]
   },
@@ -161,11 +143,7 @@ export default Object.freeze([
       },
       {
         path: 'add',
-        component: ArticleForm,
-        beforeEnter: (to, from, next) => {
-          authGuard('AUTHOR')
-          next()
-        }
+        component: ArticleForm
       }
     ]
   },
@@ -181,19 +159,11 @@ export default Object.freeze([
       {
         path: ':id',
         name: 'mag-number',
-        component: MagNumber,
-        beforeEnter: (to, from, next) => {
-          authGuard()
-          next()
-        }
+        component: MagNumber
       },
       {
         path: 'add',
-        component: MagNumberForm,
-        beforeEnter: (to, from, next) => {
-          authGuard('ADMIN')
-          next()
-        }
+        component: MagNumberForm
       }
     ]
   },

@@ -25,20 +25,21 @@ const {
   SET_TOPIC_DETAILS,
   SET_TRENDING_ARTICLES, 
   SET_LATEST_ARTICLES, 
-  SET_ARTICLE_DETAILS 
+  SET_ARTICLE_DETAILS,
+  SET_SELECTED_ARTICLE
 } = mutationTypes
 
 // actions
 const actions = {
-  [FETCH_BLOG_INFOS] ({ commit }) {
-    return $http.get(`/blog/news`)
+  [FETCH_BLOG_INFOS] ({ commit }, params) {
+    return $http.get(`/blog/articles?${qs.stringify(params)}`)
       .then(res => {
         if (res.status === 200) {
           // TODO : sanitize api response data
-          let { news, topics, trendingArticles, latestArticles } = res.data
-          commit(SET_BLOG_NEWS, news)
+          let { latestArticles } = res.data
+/*           commit(SET_BLOG_NEWS, news)
           commit(SET_TOPICS, topics)
-          commit(SET_TRENDING_ARTICLES, trendingArticles)
+          commit(SET_TRENDING_ARTICLES, trendingArticles) */
           commit(SET_LATEST_ARTICLES, latestArticles)
           return 200
         } else {
@@ -49,8 +50,8 @@ const actions = {
           }
         }
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
+        //todo
       })
   },
   [FETCH_TOPIC_DETAILS]({ commit }, params) {
@@ -71,6 +72,7 @@ const actions = {
         } else {
           // TODO
         }
+        return res.status
       })
   }
 }
@@ -95,6 +97,9 @@ const mutations = {
   [SET_ARTICLE_DETAILS] (state, article) {
     state.articleDetails = article
   },
+  [SET_SELECTED_ARTICLE] ( state, articleID) {
+    state.selectedArticleID = articleID
+  }
 
 }
 

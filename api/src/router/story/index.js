@@ -1,13 +1,12 @@
 import express from 'express'
 let router = express.Router()
 
-import passport, { authGuard } from '../../passport'
+import { authGuard } from '../../passport'
 import { AUTHOR, IDENTITY, ADMIN } from '../../passport/roles'
 
-import {getHome, getStories, getStory, postStory, patchStory, deleteStory, tesr} from './handlers'
+import {getHome, getStories, getStory, postStory, patchStory, deleteStory} from './handlers'
 
 // public routes
-router.get('/test', tesr)
 router.get('/home', getHome)
 router.get('/', getStories)
 

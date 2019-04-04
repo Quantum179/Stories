@@ -1,13 +1,15 @@
 import $http from '../../../services/http'
 import { actionTypes, mutationTypes } from './types'
+import { createUserModel } from '../../../factories';
 
 const { REQUEST_LOGIN, REQUEST_REGISTER, REQUEST_SUBSCRIPTION, REQUEST_LOGOUT } = actionTypes
-const { SET_TOKEN, REMOVE_TOKEN } = mutationTypes
+const { SET_USER, SET_TOKEN, REMOVE_TOKEN } = mutationTypes
 
 // https://blog.sqreen.io/authentication-best-practices-vue/
 
 // state
 const state = {
+  user: createUserModel(),
   token: null,
   status: null
 }
@@ -20,14 +22,16 @@ const actions = {
       .then(res => {
         if (res.status === 200) {
           let { token, user } = res.data
+          commit(SET_USER, user)
           commit(SET_TOKEN, token)
+          localStorage.setItem('token', token)
           return user
         } else {
           // TODO
         }
       })
-      .catch(err => {
-        throw err
+      .catch(() => {
+        /* throw err */
       })
   },
   [REQUEST_REGISTER] (payload) {
@@ -60,6 +64,7 @@ const actions = {
     return new Promise((resolve) => {
        // todo: api call to invalidate token
       commit(SET_TOKEN, null)
+      commit(SET_USER, createUserModel())
       resolve()
     })
   }
@@ -67,6 +72,9 @@ const actions = {
 
 // mutations
 const mutations = {
+  [SET_USER] (state, user) {
+    state.user = user
+  },  
   [SET_TOKEN] (state, token) {
     state.token = token
   },

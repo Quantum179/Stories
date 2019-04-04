@@ -1,5 +1,5 @@
 <template>
-  <v-tabs v-if="isSmallScreen()" fixed-tabs>
+  <v-tabs ref="tabs" fixed-tabs :hide-slider="hideSlider">
     <v-tab v-for="(category, i) in categories" :key="i"
     ripple @click="updateRoute(category.src)">
       {{category.title}}
@@ -17,7 +17,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(['navCategories'])
+    ...mapState(['navCategories']),
+
+    hideSlider () {
+      return this.$route.name === 'home' || this.$route.name === 'login'
+    }
   },
   mounted () {
     this.categories = this.navCategories

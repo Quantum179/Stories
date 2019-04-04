@@ -1,9 +1,9 @@
 import {OK, CREATED, BAD_REQUEST, NOT_FOUND} from 'http-status-codes'
-import UserModel from '../../db/models/userModel'
+import { User } from '../../db/models'
 
 export const getUsers = (req, res, next) => { //TODO: vérifier que la syntaxe est safe
     let { params, options } = req.data
-    UserModel._getMany(params, options)
+    User._getMany(params, options)
         .then(users => {
             if (!users || users.length == 0) {
                 next({code: NOT_FOUND})  
@@ -22,7 +22,7 @@ export const getUsers = (req, res, next) => { //TODO: vérifier que la syntaxe e
 export const getUser = (req, res, next) => {
     let id = req.params.id
     let { options } = req.data
-    UserModel._getByID(id, options)
+    User._getByID(id, options)
         .then(user => {
             if (!user) {
             next({code: NOT_FOUND})
@@ -45,7 +45,7 @@ export const getProfile = (req, res, next) => {
 
 export const postUser = (req, res, next) => {
     let { user } = req.data
-    UserModel._create(user)
+    User._create(user)
         .then(savedUser => {
             res.status(CREATED)
             res.locals.user = savedUser
@@ -58,7 +58,7 @@ export const postUser = (req, res, next) => {
 
 export const patchUser = (req, res, next) => {
     let {id, user, options, ...out} = req.data
-    UserModel._updateOneById(id, user, options)
+    User._updateOneById(id, user, options)
         .then(updatedUser => {
             if(!updatedUser) {
                 // wrong status code ?
@@ -76,7 +76,7 @@ export const patchUser = (req, res, next) => {
 
 export const deleteUser = (req, res, next) => {
     let {id} = req.data
-    UserModel._delete(id)
+    User._delete(id)
         .then(deletedUser => {
             res.status(OK)
             res.locals.message = `User ${deletedUser.name} is deleted`

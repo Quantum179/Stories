@@ -1,4 +1,5 @@
 export default {
-  source: '',
+  author: 0,
+  source: 0,
   text: ''
 }

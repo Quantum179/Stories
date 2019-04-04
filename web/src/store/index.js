@@ -9,6 +9,8 @@ import storyModule from './modules/story'
 import blogModule from './modules/blog'
 import authModule from './modules/auth'
 import ioModule from './modules/io'
+import chronicleModule from './modules/chronicle'
+import commentModule from './modules/comment'
 
 Vue.use(Vuex)
 
@@ -22,6 +24,12 @@ const vuexPersist = {
     },
     story: {
       selectedStoryID: state.story.selectedStoryID
+    },
+    chronicle: {
+      selectedChronicleID: state.chronicle.selectedChronicleID
+    },
+    blog: {
+      selectedArticleID: state.blog.selectedArticleID
     }
   })
 }
@@ -37,7 +45,9 @@ const store = new Vuex.Store({
     story: storyModule,
     blog: blogModule,
     auth: authModule,
-    io: ioModule
+    io: ioModule,
+    chronicle: chronicleModule,
+    comment: commentModule
   },
   plugins: [createPersistedState(vuexPersist)]
 })

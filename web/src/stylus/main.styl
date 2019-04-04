@@ -1,5 +1,13 @@
 
 @import '~vuetify/src/stylus/main'
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed')
+
+html, body 
+  font-family 'Roboto Condensed', sans-serif
+
+#main-app {
+  font-family: 'Roboto Condensed', sans-serif;
+}
 // global
 body
   overflow hidden
@@ -35,7 +43,6 @@ main
   @extend .align-center
 
 // button.styl
-.v-btn
 
 
 // text.styl 
@@ -46,3 +53,17 @@ main
   -moz-user-select none
   -ms-user-select none
   user-select none
+
+// card.styl
+.v-card
+  height 100%
+  width 100%
+  margin 0
+
+// border.styl
+.border-blue
+  border-top('blue')
+
+// mixins folder
+border-top(color)
+  border-top 2px solid color !important

@@ -1,6 +1,6 @@
 <template>
   <p class="paragraph">
-    <span>{{ paragraph.text }}</span>
+    <span>{{paragraph.text}}</span>
   </p>
 </template>
 
@@ -22,6 +22,6 @@
  
  <style lang="stylus" scoped>
 .paragraph 
-  font-size calc(7px + 1vw)
+  font-size calc(8px + 1vw)
 </style>
  

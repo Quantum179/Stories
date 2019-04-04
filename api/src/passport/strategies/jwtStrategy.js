@@ -3,14 +3,14 @@ import passportJWT from 'passport-jwt'
 var ExtractJwt = passportJWT.ExtractJwt
 var JWTStrategy = passportJWT.Strategy
 import { SECRET } from '../../constants'
-import UserModel from '../../db/models/userModel'
+import { User } from '../../db/models'
 
 let jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
 jwtOptions.secretOrKey = SECRET
 
 export default new JWTStrategy(jwtOptions, function(payload, done) {
-  UserModel._getByID(payload.id)
+  User._getByID(payload.id)
     .then(u => {
       if(!u) {
         return done(new Error("User not found"), false)

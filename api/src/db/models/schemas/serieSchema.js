@@ -1,0 +1,1 @@
+// TODO : serie de plusieurs articles, même principe que collection

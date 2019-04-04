@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "npm run serve",
+    "dev-host": "ngrok http 8080 -host-header='localhost:8080'",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
@@ -11,6 +13,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "http-status-code": "^2.1.0",
+    "jsonwebtoken": "^8.4.0",
     "material-design-icons-iconfont": "^4.0.2",
     "qs": "^6.6.0",
     "stylus": "^0.54.5",

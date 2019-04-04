@@ -1,28 +1,15 @@
 <template>
   <div id="blog_home">
-    <v-flex>
+    <v-flex xs12 justify-center>
       <h1>Blog</h1>
     </v-flex>
     <v-container>
-      <v-layout>
-        <v-flex xs12 sm12 md6 lg8>
-          <v-layout>
-            <v-flex v-for="(article, i) in firstArticles" :key="i"
-            xs6 sm4 md6 lg4>
-              <article-card :article="article" @click="readArticle(article)"></article-card>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-        <v-flex xs12 sm12 md6 lg4>
-          <v-layout column>
-            <v-flex v-for="(article, i) in trendingArticles" :key="i">
-              <article-card trending :article="article" @click="readArticle(article)"></article-card>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-        <v-flex v-for="(article, i) in otherArticles" :key="i"
-        xs6 sm4 md4 lg3>
-          <article-card :article="article" @click="readArticle(article)"></article-card>
+      <v-layout xs12 row wrap>
+        <v-flex v-for="(article, i) in latestArticles" :key="i"
+        xs6 sm4 md6 lg4
+        class="article-flex pointer pa-3"
+        @click="readArticle(article)">
+          <article-card :article="article"></article-card>
         </v-flex>
       </v-layout>
     </v-container>
@@ -42,24 +29,19 @@ const { SET_SELECTED_ARTICLE } = mutationTypes
 export default {
   data () {
     return {
-      params: {
-
+    params: {
+        populate: [
+          { path: 'author', select: 'authorName' },
+          { path: 'topic', select: 'name'}
+        ]
       }
     }
   },
   computed: {
-    ...mapState(['news', 'trendingArticles', 'latestArticles']),
-
-    firstArticles () {
-      return null
-      // todo : return sliced latestArticles (use breapoints to determine lenght)
-    },
-    otherArticles () {
-      return null
-    }
+    ...mapState(['news', 'trendingArticles', 'latestArticles'])
   },
   mounted () {
-    this.fetchInfos()
+    this.fetchInfos(this.params)
   },
   methods: {
     ...mapActions({
@@ -71,7 +53,7 @@ export default {
 
     readArticle (article) {
       this.setSelectedArticle(article.id)
-      this.updateRoute('article', {id: article.id})
+      this.updateRoute(`/blog/${article.id}`)
     }
   },
   components: {
@@ -81,5 +63,4 @@ export default {
 </script>
 
 <style lang="stylus">
-
 </style>

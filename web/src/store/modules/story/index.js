@@ -51,6 +51,7 @@ const actions = {
         } else {
           // TODO
         }
+        return res.status
       })
       .catch(err => {
         return err.response.status
