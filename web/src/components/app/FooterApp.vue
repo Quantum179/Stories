@@ -14,6 +14,4 @@ export default {
   display flex
   justify-content center
 
-.footer-title
-  font-size 8px
 </style>

@@ -1,61 +1,59 @@
 <template>
-  <v-container fluid>
-    <v-layout row>
-      <h1 class="title-story">{{story.title}}</h1>
-      <h2 class="subtitle-story">{{story.description}}</h2>
-    </v-layout>
-    <v-layout row>
-      <v-flex sm3>
-        <reading-nav :post="story"></reading-nav>
-      </v-flex>
-      <v-flex xs12 sm9>
-        <v-layout column class="story-body">
-          <v-flex xs12>
-            <chapter v-for="chapter in story.chapters" :key="chapter.title" :chapter="chapter"></chapter>
-          </v-flex>
-        </v-layout>
-      </v-flex>    
-    </v-layout>
-  </v-container>
+  <post id="story_details" 
+  v-if="isFetched" 
+  :post="story" isNamed></post>
 </template>
 
 <script>
-import ReadingNav from '../shared/ReadingNav'
-import Chapter from '../shared/Chapter'
+import Post from '../shared/Post'
+import { mapState, mapActions } from 'vuex'
 import { actionTypes } from '../../store/modules/story/types.js'
-import { createNamespacedHelpers } from 'vuex'
+import { authGuard } from '../../services/auth.js'
 
-const { mapState, mapActions } = createNamespacedHelpers('story')
 const { FETCH_STORY_DETAILS } = actionTypes
 
 export default {
   data () {
+    return {
+      params: {
+        populate: [
+          { path: 'author', select: 'authorName' }
+        ]
+      },
+      isFetched: false
+    }
   },
   computed: {
-    ...mapState({
+    ...mapState('story', {
       story: state => state.storyDetails
-    })
+    }),
+    ...mapState('auth', ['token'])
   },
   mounted () {
-    let params = {
-      
+    if(!authGuard(this.token)) {
+      this.$router.push({path: '/login', query: {redirect: this.$route.path}})
+    } else {
+       this.fetchDetails(this.params)
+        .then(status => {
+          if(status === 200) {
+            this.isFetched = true
+          } else {
+            this.isFetched = false
+
+          }
+        })  
     }
-    this[FETCH_STORY_DETAILS](params)
-    // todo : https://stackoverflow.com/questions/16670931/hide-scroll-bar-but-while-still-being-able-to-scroll
-    // todo : togglable reading nav
   },
   methods: {
-    ...mapActions([FETCH_STORY_DETAILS])
+    ...mapActions('story', {
+      fetchDetails: FETCH_STORY_DETAILS
+    })
   },
   components: {
-    ReadingNav,
-    Chapter
+    Post
   }
 }
 </script>
 
 <style lang="stylus">
-
-.story-body
-  overflow-y scroll
 </style>

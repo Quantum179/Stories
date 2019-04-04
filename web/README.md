@@ -12,15 +12,12 @@ ngrok http 8080 -host-header="localhost:8080"
 
 # TODOS
 
-- use constants strings for Vuex store methods
+
 - override v-btn active and focus styles
 - think about vuetify important overrides and do it in main.styl
-- use sub-routers to display sub components ()
-- implement "ExoList" and ExoButton first
 - wraps router-link (Adapter design pattern) to simplify the tag creation (pass tag name and css classes as props)
 - try to add a vue command for new routes in vue cli (then propose a PR in github repo)
 - add translations for english (not urgent at all)
-- define state of the application and decide which data will be shared betweens all clients (so stored in the database) and which data will be specific to Desktop client
 - use CSS Grid (or Vuetify layout) to create original lists of posts 
 - Define global variables (like $ = document.querySelector) : https://dev.to/terabaud/snippets-for-vanilla-js-coding-19cg
 
@@ -42,4 +39,4 @@ ngrok http 8080 -host-header="localhost:8080"
  - https://css-tricks.com/easing-linear-gradients/
  - https://css-tricks.com/snippets/css/css-linear-gradient/
 - Home page designs for inspiration and key concepts : https://blog.hubspot.com/blog/tabid/6307/bid/34006/15-examples-of-brilliant-homepage-design.aspx
-
+- https://css-tricks.com/creating-sliding-effects-using-sticky-positioning/

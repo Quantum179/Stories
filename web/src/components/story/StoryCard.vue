@@ -1,5 +1,5 @@
 <template>
-  <v-card raised ripple>
+  <v-card raised>
     <v-card-title primary-title>
       <div>
         <h3>{{story.title}}</h3>
@@ -29,7 +29,4 @@ export default {
 
 <style lang="stylus" scoped>
 
-.hover-panel
-  width 100%
-  height 100%
 </style>

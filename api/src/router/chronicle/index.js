@@ -1,14 +1,18 @@
 import express from 'express'
-let router = express.Router()
-import { jwtAuth } from '../../passport'
+import { authGuard } from '../../passport'
 
-/* import {getChronicles, getChronicle, getChroniclePreview, postChronicle, patchChronicle, deleteChronicle} from './handlers'
- */
-/* router.get('/', getChronicles)
-router.get('/:id', jwtAuth('SUBSCRIBER'), getChronicle)
-router.get('/:id/preview', jwtAuth('USER'), getChroniclePreview)
-router.post('/', jwtAuth('ADMIN'), postChronicle)
-router.patch('/:id', jwtAuth('REVIEWER'), patchChronicle)
-router.delete('/:id', jwtAuth('ADMIN'), deleteChronicle) */
+import { AUTHOR, IDENTITY, ADMIN } from '../../passport/roles'
+import { getChronicles, getChronicle, postChronicle, patchChronicle, deleteChronicle } from './handlers'
+
+let router = express.Router()
+ 
+//public routes
+router.get('/', getChronicles)
+
+//protected routes
+router.get('/:id', authGuard(), getChronicle)
+router.post('/', authGuard(ADMIN), postChronicle)
+router.patch('/:id', authGuard(IDENTITY), patchChronicle)
+router.delete('/:id', authGuard(ADMIN), deleteChronicle)
 
 export default router

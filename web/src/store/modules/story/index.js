@@ -1,9 +1,5 @@
-import axios from 'axios'
 import qs from 'qs'
-import { formatParams } from '../../../utils'
-import { apiUrl } from '../../../constants'
-/* import { OK } from 'http-status-code' */
-
+import $http from '../../../services/http'
 import { actionTypes, mutationTypes } from './types'
 
 const { FETCH_STORIES_INFOS, FETCH_STORY_DETAILS, FETCH_COLLECTION_DETAILS } = actionTypes
@@ -14,22 +10,25 @@ const {
   SET_STORY_DETAILS, 
   SET_COLLECTION_DETAILS,
   SET_SELECTED_STORY,
-  SET_SELECTED_COLLECTION
+  SET_SELECTED_COLLECTION,
+  OPEN_DRAWER,
+  CLOSE_DRAWER,
+  TOGGLE_DRAWER
 } = mutationTypes
 
 const state = {
   news: [],
   stories: [],
   selectedStoryID: null,
-  storyDetails: null,
+  storyDetails: {},
   collection: [],
   selectedCollectionID: null,
-  collectionDetails: null
+  collectionDetails: {}
 }
 
 const actions = {
   [FETCH_STORIES_INFOS] ({ commit }, params = null) {
-    axios.get(`${apiUrl}/stories?${qs.stringify(params)}`)
+    return $http.get(`/stories?${qs.stringify(params)}`)
       .then(res => {
         if (res.status === 200) {
           let { stories } = res.data
@@ -42,8 +41,9 @@ const actions = {
         console.log(err)
       })
   },
-  [FETCH_STORY_DETAILS] ({ commit, state }, params = null) {
-    axios.get(`${apiUrl}/stories/${state.selectedStoryID}`, formatParams(params))
+  [FETCH_STORY_DETAILS] ({ commit, state, rootState }, params = null) {
+    return $http.get(`/stories/${state.selectedStoryID}?${qs.stringify(params)}`, 
+    { headers: { Authorization: `JWT ${rootState.auth.token}` } })
       .then(res => {
         if (res.status === 200) {
           let { story } = res.data
@@ -51,13 +51,14 @@ const actions = {
         } else {
           // TODO
         }
+        return res.status
       })
       .catch(err => {
-        console.log(err)
+        return err.response.status
       })
   },
   [FETCH_COLLECTION_DETAILS] ({ commit, state }, params = null) {
-    axios.get(`${apiUrl}/collections/${state.selectedCollectionID}`, formatParams(params))
+    return $http.get(`/collections/${state.selectedCollectionID}?${qs.stringify(params)}`)
       .then(res => {
         if (res.status === 200) {
           let { collection } = res.data
@@ -93,6 +94,15 @@ const mutations = {
   },
   [SET_COLLECTION_DETAILS] (state, collection) {
     state.collectionDetails = collection
+  },
+  [OPEN_DRAWER] (state) {
+    state.drawer = true
+  },
+  [CLOSE_DRAWER] (state) {
+    state.drawer = false
+  },
+  [TOGGLE_DRAWER] (state) {
+    state.drawer = !state.drawer
   }
 }
 

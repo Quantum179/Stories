@@ -33,7 +33,7 @@ export default {
       this.actions = []
       this.actions.push({label: 'Lire', callback: callback})
       this.actions.push({label: 'Annuler', callback: this[CLOSE_DIALOG]})
-      this.content = {title: post.title, body: post.preface.sentences.join(" ")}
+      this.content = {title: post.title || '', text: post.preface.text}
 
       this[OPEN_DIALOG]()
     }

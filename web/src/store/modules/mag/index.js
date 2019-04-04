@@ -1,6 +1,6 @@
-import axios from 'axios'
-import { apiUrl } from '../../../constants'
-
+import qs from 'qs'
+import $http from '../../../services/http'
+import { authHeader } from '../../../services/auth'
 import { actionTypes, mutationTypes } from './types'
 
 const { FETCH_MAG_INFOS, FETCH_MAG_NUMBER_DETAILS } = actionTypes
@@ -9,13 +9,13 @@ const { SET_MAG_NEWS, SET_MAG_NUMBERS, SET_MAG_NUMBER_DETAILS, SET_SELECTED_MAG_
 const state = {
   news: [],
   magNumbers: [],
-  selectedMagNumber: null,
+  selectedMagNumberID: null,
   magNumberDetails: null
 }
 
 const actions = {
-  [FETCH_MAG_INFOS] ({ commit }) {
-    axios.get(`${apiUrl}/mag`)
+  [FETCH_MAG_INFOS] ({ commit }, params) {
+    return $http.get(`/mag/news?${qs.stringify(params)}`)
       .then(res => {
         if (res.status === 200) {
           let { news, magNumbers } = res.data
@@ -29,8 +29,9 @@ const actions = {
         console.log(err)
       })
   },
-  [FETCH_MAG_NUMBER_DETAILS] ({ commit }, id) {
-    axios.get(apiUrl + '/mag/' + id)
+  [FETCH_MAG_NUMBER_DETAILS] ({ commit, state }, params) {
+    return $http.get(`/mag/${state.selectedMagNumberID}?${qs.stringify(params)}`, 
+    { headers: authHeader() }) // todo : simplify
       .then(res => {
         if (res.status === 200) {
           let { magNumber } = res.data

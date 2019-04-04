@@ -17,12 +17,12 @@ import HeaderApp from './components/app/HeaderApp'
 import NavApp from './components/app/NavApp'
 import FooterApp from './components/app/FooterApp'
 import ExoSnackbar from './components/shared/primitives/ExoSnackbar'
-
 import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['snackbar'])
+    ...mapState(['snackbar']),
+    ...mapState('auth', ['token'])
   },
   components: {
     HeaderApp,
@@ -34,6 +34,7 @@ export default {
 </script>
 
 <style lang="stylus">
+@import './stylus/main'
 
 .pointer
   cursor pointer

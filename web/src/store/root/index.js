@@ -1,24 +1,30 @@
 import { getterTypes, actionTypes, mutationTypes } from './types'
 
-const { GET_DRAWER_VALUE, 
+const { 
+  GET_DRAWER_VALUE, 
   GET_DIALOG_VALUE, 
   GET_SNACKBAR_VALUE 
 } = getterTypes
 const { 
-  TOGGLE_DRAWER_ACTION, 
+  SHOW_DRAWER_ACTION, 
+  CLOSE_DRAWER_ACTION, 
   OPEN_DIALOG_ACTION, 
   CLOSE_DIALOG_ACTION, 
   SHOW_SNACKBAR_ACTION,
   CLOSE_SNACKBAR_ACTION
 } = actionTypes
 const { 
-  TOGGLE_DRAWER, 
+  TOGGLE_DRAWER,
+  SHOW_DRAWER, 
+  CLOSE_DRAWER,
   OPEN_DIALOG, 
   CLOSE_DIALOG, 
   SHOW_SNACKBAR, 
   CLOSE_SNACKBAR,
   SET_SNACKBAR_TEXT,
-  CLEAR_SNACKBAR_TEXT 
+  CLEAR_SNACKBAR_TEXT ,
+  ADD_EXTENSION,
+  REMOVE_EXTENSION
 } = mutationTypes
 
 export const state = {
@@ -26,9 +32,11 @@ export const state = {
   dialog: false,
   snackbar: false,
   snackbarText: '',
+  isSearching: false,
+  extension: '',
   navCategories: [
     { title: 'Histoires', icon: 'dashboard', src: 'stories' },
-    { title: 'Chroniques de Saturn', icon: 'dashboard', src: 'chronicles' },
+    { title: 'Chroniques', icon: 'dashboard', src: 'chronicles' },
     { title: 'Blog', icon: 'dashboard', src: 'blog' },
     { title: 'ExoMag', icon: 'dashboard', src: 'mag' }
   ],
@@ -52,8 +60,11 @@ export const getters = {
 }
 
 export const actions = {
-  [TOGGLE_DRAWER_ACTION] ({ commit }) {
-    commit(TOGGLE_DRAWER)
+  [SHOW_DRAWER_ACTION] ({ commit }) {
+    commit(SHOW_DRAWER)
+  },
+  [CLOSE_DRAWER_ACTION] ({ commit }) {
+    commit(CLOSE_DRAWER)
   },
   [OPEN_DIALOG_ACTION] ({ commit }) {
     commit(OPEN_DIALOG)
@@ -76,6 +87,12 @@ export const mutations = {
   [TOGGLE_DRAWER] (state) {
     state.drawer = !state.drawer
   },
+  [SHOW_DRAWER] (state) {
+    state.drawer = true
+  },
+  [CLOSE_DRAWER] (state) {
+    state.drawer = false
+  },
   [OPEN_DIALOG] (state) {
     state.dialog = true
   },
@@ -93,5 +110,11 @@ export const mutations = {
   },
   [CLEAR_SNACKBAR_TEXT] (state) {
     state.snackbarText = ''
+  },
+  [ADD_EXTENSION] (state, name) {
+    state.extension = name
+  },
+  [REMOVE_EXTENSION] (state) {
+    state.extension = ''
   }
 }

@@ -1,53 +1,38 @@
 <template>
-  <div id='root_home'>
-    <exosoft-opening v-if="display === 'exo'"></exosoft-opening>
-    <home-opening v-else-if="display === 'intro'"></home-opening>
-    <v-container fluid v-else-if="display === 'home'" id='home'>
-      <v-layout row>
-        <v-flex xs12 sm12 class="anim-item" v-if="selectedCategory === null">
-          <v-layout column>
-            <v-flex>
-              <h2>Accueil</h2>
-              <exo-carousel :slides="news"></exo-carousel>            
+  <div id='home'>
+    <v-flex xs12 justify-center>
+      <h1 id="home-title">Accueil</h1>
+    </v-flex>
+    <v-container>
+        <v-flex xs12>
+          <v-layout column wrap>
+            <h2>Bienvenue sur Stories</h2>
+            <p>Stories est un blog regroupant des nouvelles et des chroniques issues de l'univers fictif d'Elem, la galaxie magique.</p>
+          </v-layout>
+        </v-flex>
+        <v-flex xs12>
+          <h2>Publications récentes</h2>
+          <v-layout row wrap>
+            <v-flex v-for="(post, key) in latestPosts" :key="key"
+            xs4>
+              <post-card :post="post"></post-card>
             </v-flex>
-            <v-container>
-              <v-layout row>
-                <v-flex xs6>
-                  <div class="latest">
-                    <h3>Publication récentes</h3>
-                    <post-card v-for="(post, i) in latestPosts" :key="i" :post="post"></post-card>
-                  </div>
-                </v-flex>
-                <v-flex xs6>
-                  <div class="trending">
-                    <h3>Publications populaires</h3>
-                    <post-card v-for="(post, i) in trendingPosts" :key="i" :post="post"></post-card>
-                  </div>
-                </v-flex>
-              </v-layout>
-            </v-container>
           </v-layout>
         </v-flex>
-        <v-flex xs12 sm12 class="anim-item" v-if="selectedCategory !== null"> 
-          <v-layout row>
-            <category-card :category="selectedCategory"></category-card>
-          </v-layout>
-        </v-flex>
-      </v-layout>
     </v-container>  
   </div>
 </template>
 
 <script>
-import ExosoftOpening from './ExosoftOpening'
+/* import ExosoftOpening from './ExosoftOpening'
 import HomeOpening from './HomeOpening'
-import ExoCarousel from '../shared/primitives/ExoCarousel'
-import CategoryCard from './CategoryCard'
+import CategoryCard from './CategoryCard' */
+import PostCard from './PostCard'
 
 import { createNamespacedHelpers } from 'vuex'
-import {actionTypes} from '../../store/modules/home/types'
+import { actionTypes } from '../../store/modules/home/types'
 
-const {mapState, mapActions} = createNamespacedHelpers('home')
+const { mapState, mapActions } = createNamespacedHelpers('home')
 const { FETCH_HOME_INFOS } = actionTypes
 
 export default {
@@ -57,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['news', 'latestPosts', 'trendingPosts', 'categories', 'selectedCategory'])
+    ...mapState(['news', 'latestPosts'])
   },
   mounted () {
     /* this[FETCH_HOME_INFOS]() */
@@ -65,13 +50,12 @@ export default {
     // TODO: add transition animation for categories
   },
   methods: {
-    ...mapActions([FETCH_HOME_INFOS])
+    ...mapActions({
+      fetchInfos: FETCH_HOME_INFOS
+    })
   },
   components: {
-    ExosoftOpening,
-    HomeOpening,
-    ExoCarousel,
-    CategoryCard
+    PostCard
   }
 }
 </script>
@@ -80,4 +64,8 @@ export default {
 
 #home
   height 2000px
+
+#home-title
+  font-size 50px
+
 </style>

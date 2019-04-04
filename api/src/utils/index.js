@@ -16,3 +16,15 @@ export const hashPass = (password) => {
     })
   })
 }
+
+export const getFlatBody = (body) => {
+  let data
+  if(body.hasOwnProperty('payload')) {
+    data = body.payload
+  } else {
+    // todo : handle others cases ?
+    data = body
+  }
+
+  return data
+}

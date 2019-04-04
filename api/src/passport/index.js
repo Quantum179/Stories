@@ -10,17 +10,17 @@ passport.use(jwtStrategy)
 
 
 export const authGuard = function(roles) {
-    return passport.authenticate('jwt', {session: false})
+  return passport.authenticate('jwt', {session: false})
 
 /*     if (Array.isArray(roles)) {
 
-    } else if (roles != null) {
+  } else if (roles != null) {
 
-    } */
+  } */
 }
 
 export const createToken = function(user) {
-  return jwt.sign({idUser:user._id}, SECRET, { expiresIn: '1h' }) //TODO : add env variables (hash and jwt secrets)
+  return jwt.sign({id:user._id}, SECRET, { expiresIn: '1h' }) //TODO : add env variables (hash and jwt secrets)
   // todo: add roles to token
 }
 
