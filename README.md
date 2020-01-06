@@ -3,7 +3,7 @@
 Novels from Tales of Universe
 
 ## ===== IMPORTANT =====
-A new version of the application is available at this new repository : https://github.com/Quantum179/stories_light
+A new version of the application will be available at this new repository : https://github.com/Quantum179/stories_light
 # Functionalities
 
 - Novels dashboard
