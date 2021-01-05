@@ -11,7 +11,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "http-status-code": "^2.1.0",
     "jsonwebtoken": "^8.4.0",
     "material-design-icons-iconfont": "^4.0.2",
